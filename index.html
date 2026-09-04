@@ -115,6 +115,14 @@
     position:relative; background:var(--wine); color:var(--cream-on-wine);
     padding:96px 0 84px; overflow:hidden;
   }
+  .hero-video{
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    object-fit:cover; z-index:0;
+  }
+  .hero-video-scrim{
+    position:absolute; inset:0; z-index:0;
+    background: rgba(20,6,4,.58);
+  }
   .hero::before{
     content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
     background:radial-gradient(52% 60% at 82% 8%, rgba(195,79,59,.35), transparent 70%),
@@ -209,7 +217,14 @@
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
   .reveal.is-visible{ opacity:1; transform:none; }
 
-  /* ============ About / bite scroller ============ */
+  /* ============ About ============ */
+  .about{ padding:110px 0; background:var(--bg); }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,70px); align-items:center; }
+  .about-photo img{ width:100%; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+  .about-copy p{ color:var(--ink-soft); font-size:1.04rem; margin-top:16px; max-width:44ch; }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
+
+  /* ============ Bite scroller ============ */
   .bite-section{ position:relative; height:260vh; background:var(--surface); }
   .bite-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
   .bite-grid{ width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
@@ -247,17 +262,65 @@
     .bento-card.is-event, .bento-card.is-detail, .bento-card:nth-of-type(3){ grid-column:span 2; }
   }
 
+  /* ============ Treats ============ */
+  .treats{ background:var(--surface); }
+  .treats-banner{ position:relative; height:44vh; min-height:300px; overflow:hidden; }
+  .treats-banner img{ width:100%; height:100%; object-fit:cover; }
+  .treats-banner-scrim{ position:absolute; inset:0; background:linear-gradient(0deg, rgba(20,8,7,.85) 0%, rgba(20,8,7,.25) 60%, rgba(20,8,7,.15) 100%); }
+  .treats-banner-copy{ position:absolute; left:0; right:0; bottom:0; padding:40px clamp(20px,5vw,56px); max-width:1160px; margin:0 auto; }
+  .treats-cards{ display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:44px 0; }
+  .treats-card{ margin:0; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); }
+  .treats-card img{ width:100%; aspect-ratio:4/3; object-fit:cover; }
+  .treats-card figcaption{ padding:16px 18px; font-size:.92rem; color:var(--ink-soft); background:var(--surface-raised); }
+  @media (max-width:760px){ .treats-cards{ grid-template-columns:1fr; } }
+
   /* ============ Menu ============ */
   .menu{ padding:120px 0; background:var(--surface); }
-  .menu-head{ margin-bottom:56px; max-width:600px; }
-  .menu-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(28px,4vw,60px); }
-  .menu-col-title{ font-family:var(--font-display); font-weight:800; font-size:1.05rem; text-transform:uppercase; letter-spacing:.03em; margin-bottom:22px; color:var(--accent); }
-  .menu-item{ display:flex; align-items:baseline; gap:8px; padding:13px 0; border-bottom:1px solid var(--line); }
-  .menu-item:last-child{ border-bottom:none; }
-  .menu-item-name{ font-weight:600; }
-  .menu-item-fill{ flex:1; border-bottom:1.5px dotted var(--line); transform:translateY(-4px); min-width:12px; }
-  .menu-item-price{ font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink-soft); white-space:nowrap; }
-  @media (max-width:760px){ .menu-cols{ grid-template-columns:1fr; gap:40px; } }
+  .menu-head{ margin-bottom:40px; max-width:600px; }
+  .menu-tabs{ display:flex; gap:10px; margin-bottom:40px; flex-wrap:wrap; }
+  .menu-tab{
+    background:none; border:1.5px solid var(--line); border-radius:999px; padding:11px 22px;
+    font-weight:600; font-size:.9rem; color:var(--ink-soft); transition:all .25s;
+  }
+  .menu-tab:hover{ border-color:var(--accent); color:var(--accent); }
+  .menu-tab.is-active{ background:var(--ink); border-color:var(--ink); color:var(--bg); }
+  .menu-featured-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .menu-feat-card{ background:var(--surface-raised); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); transition:transform .3s; }
+  .menu-feat-card:hover{ transform:translateY(-4px); }
+  .menu-feat-card.is-hidden{ display:none; }
+  .menu-feat-card img{ width:100%; aspect-ratio:4/3; object-fit:cover; }
+  .menu-feat-body{ padding:18px 20px 20px; }
+  .menu-feat-top{ display:flex; justify-content:space-between; gap:10px; font-family:var(--font-display); font-weight:700; margin-bottom:6px; }
+  .menu-feat-price{ color:var(--accent); white-space:nowrap; }
+  .menu-feat-body p{ font-size:.88rem; color:var(--ink-soft); }
+  .menu-full-cta{ display:flex; justify-content:center; margin-top:44px; }
+  @media (max-width:900px){ .menu-featured-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .menu-featured-grid{ grid-template-columns:1fr; } }
+
+  /* ============ Menu modal ============ */
+  .menu-modal{
+    position:fixed; inset:0; z-index:1000; background:rgba(20,8,7,.92);
+    display:flex; align-items:center; justify-content:center; padding:30px;
+    opacity:0; visibility:hidden; transition:opacity .35s ease;
+  }
+  .menu-modal.is-open{ opacity:1; visibility:visible; }
+  .menu-modal-inner{ position:relative; max-width:900px; width:100%; max-height:90vh; overflow-y:auto; background:var(--surface-raised); border-radius:20px; padding:36px; }
+  .menu-modal-close{
+    position:absolute; top:16px; right:16px; width:40px; height:40px; border-radius:50%;
+    border:1px solid var(--line); background:var(--bg); color:var(--ink); font-size:1.1rem; z-index:1;
+  }
+  .menu-modal-pages{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .menu-modal-pages img{ width:100%; border-radius:10px; box-shadow:var(--shadow); }
+  .menu-modal-actions{ display:flex; justify-content:center; margin-top:26px; }
+  @media (max-width:760px){ .menu-modal-pages{ grid-template-columns:1fr; } }
+
+  /* ============ Gallery ============ */
+  .gallery{ padding:120px 0; background:var(--bg); }
+  .gallery-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .gallery-item{ border-radius:14px; overflow:hidden; aspect-ratio:1/1; }
+  .gallery-item img{ width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+  .gallery-item:hover img{ transform:scale(1.06); }
+  @media (max-width:900px){ .gallery-grid{ grid-template-columns:repeat(2,1fr); } }
 
   /* ============ Merch ============ */
   .merch{ padding:120px 0; background:var(--wine); color:var(--cream-on-wine); }
@@ -310,10 +373,12 @@
       <span class="logo-word">Настроение</span>
     </a>
     <nav class="main-nav">
-      <a href="#menu">Меню</a>
       <a href="#about">О нас</a>
       <a href="#moments">Моменты</a>
+      <a href="#treats">Выпечка</a>
+      <a href="#menu">Меню</a>
       <a href="#merch">Мерч</a>
+      <a href="#gallery">Галерея</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <a href="#contacts" class="btn btn-ink nav-cta" style="padding:11px 20px;font-size:.86rem;">Заглянуть в гости</a>
@@ -324,6 +389,10 @@
 
   <!-- HERO -->
   <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline aria-hidden="true">
+      <source src="assets/img/hero-bg-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-scrim" aria-hidden="true"></div>
     <div class="wrap hero-inner">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
@@ -391,8 +460,22 @@
     </div>
   </div>
 
-  <!-- ABOUT / BITE SCROLLER -->
-  <section class="bite-section" id="about">
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-photo reveal">
+        <img src="assets/img/about-sandwich-matcha.jpg" alt="Сэндвич и голубая матча на круглом деревянном столе">
+      </div>
+      <div class="about-copy reveal">
+        <p class="eyebrow">О кофейне</p>
+        <h2 class="h2">Настроение — это не только про кофе</h2>
+        <p>Мы печём с раннего утра: закваска подходит ночью, круассаны слоятся при нас, а зёрна для эспрессо обжариваются небольшими партиями специально под наши бленды. Место, куда заходят на пять минут и остаются на час.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BITE SCROLLER -->
+  <section class="bite-section">
     <div class="bite-sticky">
       <div class="bite-grid">
         <div class="bite-copy reveal">
@@ -459,41 +542,102 @@
     </div>
   </section>
 
+  <!-- TREATS -->
+  <section class="treats" id="treats">
+    <div class="treats-banner reveal">
+      <img src="assets/img/gallery-croissants.jpg" alt="Круассаны на деревянном подносе">
+      <div class="treats-banner-scrim"></div>
+      <div class="treats-banner-copy">
+        <p class="eyebrow eyebrow-mist">Наши хиты</p>
+        <h2 class="h2" style="color:var(--cream-on-wine);">Свежая выпечка каждый день</h2>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="treats-cards">
+        <figure class="treats-card reveal">
+          <img src="assets/img/sandwich-front.jpg" alt="Сэндвич «Зверский аппетит» крупным планом">
+          <figcaption>«Зверский аппетит» — говядина, красный лук, маринованный огурец</figcaption>
+        </figure>
+        <figure class="treats-card reveal">
+          <img src="assets/img/treats-drink.jpg" alt="Голубой холодный напиток на бордовом стуле">
+          <figcaption>Матча анчан-кокос — авторский холодный напиток</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- MENU -->
   <section class="menu" id="menu">
     <div class="wrap">
       <div class="menu-head reveal">
         <p class="eyebrow">Меню</p>
-        <h2 class="h2">Наше меню</h2>
+        <h2 class="h2">Топ позиций</h2>
       </div>
-      <div class="menu-cols">
-        <div class="reveal">
-          <h3 class="menu-col-title">Кофе</h3>
-          <div class="menu-item"><span class="menu-item-name">Эспрессо</span><span class="menu-item-fill"></span><span class="menu-item-price">200 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Капучино</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Латте</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Раф лесной орех</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Айс латте</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
-        </div>
-        <div class="reveal">
-          <h3 class="menu-col-title">Не кофе</h3>
-          <div class="menu-item"><span class="menu-item-name">Ассам / Сенча</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Матча анчан-кокос</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Какао</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Лимонад манго-малина</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Догпучино *</span><span class="menu-item-fill"></span><span class="menu-item-price">0 ₽</span></div>
-        </div>
-        <div class="reveal">
-          <h3 class="menu-col-title">Выпечка</h3>
-          <div class="menu-item"><span class="menu-item-name">Круассан классический</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Круассан миндальный</span><span class="menu-item-fill"></span><span class="menu-item-price">360 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">ШУ солёная карамель</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">«Зверский аппетит»</span><span class="menu-item-fill"></span><span class="menu-item-price">490 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">«Острый на язык»</span><span class="menu-item-fill"></span><span class="menu-item-price">560 ₽</span></div>
-        </div>
+
+      <div class="menu-tabs" role="tablist" aria-label="Категории меню">
+        <button class="menu-tab is-active" data-category="all" type="button">Все</button>
+        <button class="menu-tab" data-category="drinks" type="button">Напитки</button>
+        <button class="menu-tab" data-category="sandwiches" type="button">Сэндвичи</button>
+        <button class="menu-tab" data-category="bakery" type="button">Выпечка</button>
+      </div>
+
+      <div class="menu-featured-grid" id="menuFeaturedGrid">
+        <article class="menu-feat-card reveal" data-category="sandwiches">
+          <img src="assets/img/sandwich-front.jpg" alt="«Зверский аппетит»">
+          <div class="menu-feat-body">
+            <div class="menu-feat-top"><span>«Зверский аппетит»</span><span class="menu-feat-price">490 ₽</span></div>
+            <p>Говядина, красный лук, маринованный огурец, руккола</p>
+          </div>
+        </article>
+        <article class="menu-feat-card reveal" data-category="drinks">
+          <img src="assets/img/matcha-blue.jpg" alt="Матча анчан-кокос">
+          <div class="menu-feat-body">
+            <div class="menu-feat-top"><span>Матча анчан-кокос</span><span class="menu-feat-price">330 ₽</span></div>
+            <p>Авторская матча на кокосовом молоке, со льдом</p>
+          </div>
+        </article>
+        <article class="menu-feat-card reveal" data-category="bakery">
+          <img src="assets/img/gallery-croissants.jpg" alt="Круассан миндальный">
+          <div class="menu-feat-body">
+            <div class="menu-feat-top"><span>Круассан миндальный</span><span class="menu-feat-price">360 ₽</span></div>
+            <p>С хрустящей миндальной корочкой</p>
+          </div>
+        </article>
+        <article class="menu-feat-card reveal" data-category="drinks">
+          <img src="assets/img/photo-01.jpg" alt="Капучино">
+          <div class="menu-feat-body">
+            <div class="menu-feat-top"><span>Капучино</span><span class="menu-feat-price">260 ₽</span></div>
+            <p>250 мл, классика с бархатной пенкой</p>
+          </div>
+        </article>
+        <article class="menu-feat-card reveal" data-category="sandwiches">
+          <img src="assets/img/sandwich-dramatic.jpg" alt="«Острый на язык»">
+          <div class="menu-feat-body">
+            <div class="menu-feat-top"><span>«Острый на язык»</span><span class="menu-feat-price">560 ₽</span></div>
+            <p>Чоризо, соус чеддер, карамелизированный лук</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="menu-full-cta reveal">
+        <button class="btn btn-fill" id="openMenuModal" type="button">Смотреть полное меню</button>
       </div>
     </div>
   </section>
+
+  <!-- MENU MODAL -->
+  <div class="menu-modal" id="menuModal" role="dialog" aria-modal="true" aria-label="Полное меню">
+    <div class="menu-modal-inner">
+      <button class="menu-modal-close" id="closeMenuModal" aria-label="Закрыть">✕</button>
+      <div class="menu-modal-pages">
+        <img src="assets/img/menu-page-1.jpg" alt="Меню «Настроение», страница 1">
+        <img src="assets/img/menu-page-2.jpg" alt="Меню «Настроение», страница 2">
+      </div>
+      <div class="menu-modal-actions">
+        <a href="assets/files/nastroenie-menu.pdf" download class="btn btn-fill">Скачать PDF</a>
+      </div>
+    </div>
+  </div>
 
   <!-- MERCH -->
   <section class="merch" id="merch">
@@ -522,6 +666,22 @@
           <div class="merch-thanks-tag">Приняли ✓</div>
           <p style="color:var(--ink-soft);">Спасибо! Если выберем твою фразу для дропа — напишем сами.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <div class="menu-head reveal">
+        <p class="eyebrow">Галерея</p>
+        <h2 class="h2">Атмосфера, которую видно на фото</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item reveal"><img src="assets/img/gallery-hands-sandwich.jpg" alt="Гость держит сэндвич и холодный напиток" loading="lazy"></div>
+        <div class="gallery-item reveal"><img src="assets/img/sandwich-dramatic.jpg" alt="Сэндвич на тарелке с рельефной тенью" loading="lazy"></div>
+        <div class="gallery-item reveal"><img src="assets/img/about-sandwich-matcha.jpg" alt="Сэндвич и матча на столе" loading="lazy"></div>
+        <div class="gallery-item reveal"><img src="assets/img/treats-drink.jpg" alt="Холодный напиток на бордовом стуле" loading="lazy"></div>
       </div>
     </div>
   </section>
@@ -667,6 +827,31 @@
     document.getElementById('merchFormWrap').style.display = 'none';
     document.getElementById('merchThanks').classList.add('is-active');
   });
+
+  // Menu tabs
+  var menuTabs = document.querySelectorAll('.menu-tab');
+  var menuCards = document.querySelectorAll('.menu-feat-card');
+  menuTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      menuTabs.forEach(function(t){ t.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+      var cat = tab.dataset.category;
+      menuCards.forEach(function(card){
+        card.classList.toggle('is-hidden', cat !== 'all' && card.dataset.category !== cat);
+      });
+    });
+  });
+
+  // Menu modal
+  var menuModal = document.getElementById('menuModal');
+  var openMenuModalBtn = document.getElementById('openMenuModal');
+  var closeMenuModalBtn = document.getElementById('closeMenuModal');
+  function openMenuModal(){ menuModal.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+  function closeMenuModal(){ menuModal.classList.remove('is-open'); document.body.style.overflow = ''; }
+  openMenuModalBtn.addEventListener('click', openMenuModal);
+  closeMenuModalBtn.addEventListener('click', closeMenuModal);
+  menuModal.addEventListener('click', function(e){ if(e.target === menuModal) closeMenuModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMenuModal(); });
 })();
 </script>
 </body>
