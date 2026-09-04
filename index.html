@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Настроение</title>
+<meta name="description" content="Настроение — кофейня с авторской выпечкой и спешелти-кофе в Сириусе.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ============ Tokens ============ */
+  :root{
+    --bg:#FFEDDD;
+    --surface:#FFF7ED;
+    --surface-raised:#FFFFFF;
+    --ink:#2A0E0C;
+    --ink-soft:rgba(42,14,12,.64);
+    --wine:#520501;
+    --wine-deep:#390300;
+    --cream-on-wine:#FFEEDF;
+    --accent:#C34F3B;
+    --accent-deep:#9C3A28;
+    --mist:#C9CFDD;
+    --mist-deep:#7C88A6;
+    --line:rgba(42,14,12,.14);
+    --line-on-wine:rgba(255,238,223,.22);
+    --shadow: 0 24px 60px -24px rgba(42,14,12,.35);
+    --font-display:'Poppins',-apple-system,sans-serif;
+    --font-body:'Libre Franklin',-apple-system,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1B0807; --surface:#2B0F0C; --surface-raised:#341410;
+      --ink:#FBEEE4; --ink-soft:rgba(251,238,228,.66);
+      --wine:#7A1108; --wine-deep:#4A0904; --cream-on-wine:#FFEEDF;
+      --accent:#E5715A; --accent-deep:#C34F3B;
+      --mist:#C9CFDD; --mist-deep:#9AA6C4;
+      --line:rgba(251,238,228,.14); --line-on-wine:rgba(255,238,223,.22);
+      --shadow: 0 24px 60px -24px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1B0807; --surface:#2B0F0C; --surface-raised:#341410;
+    --ink:#FBEEE4; --ink-soft:rgba(251,238,228,.66);
+    --wine:#7A1108; --wine-deep:#4A0904; --cream-on-wine:#FFEEDF;
+    --accent:#E5715A; --accent-deep:#C34F3B;
+    --mist:#C9CFDD; --mist-deep:#9AA6C4;
+    --line:rgba(251,238,228,.14); --line-on-wine:rgba(255,238,223,.22);
+    --shadow: 0 24px 60px -24px rgba(0,0,0,.6);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  img,svg{ max-width:100%; display:block; }
+  a{ color:inherit; }
+  button{ font-family:inherit; cursor:pointer; }
+  input{ font-family:inherit; }
+  h1,h2,h3,p{ margin:0; text-wrap:balance; }
+  .wrap{ max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); }
+  .eyebrow{
+    font-family:var(--font-body); font-weight:700; font-size:.76rem;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;
+  }
+  .eyebrow-mist{ color:var(--mist-deep); }
+  .h2{
+    font-family:var(--font-display); font-weight:800; text-transform:uppercase;
+    font-size:clamp(1.9rem,4vw,3rem); line-height:1.04; letter-spacing:-.01em; text-wrap:balance;
+  }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:15px 28px; border-radius:999px; font-weight:700; font-size:.95rem;
+    border:1.5px solid transparent; cursor:pointer; transition:transform .3s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s,color .25s;
+    white-space:nowrap; text-decoration:none;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn:focus-visible{ outline:2px solid var(--mist-deep); outline-offset:3px; }
+  .btn-fill{ background:var(--accent); color:#fff; }
+  .btn-fill:hover{ background:var(--accent-deep); }
+  .btn-outline{ border-color:var(--line-on-wine); color:var(--cream-on-wine); }
+  .btn-outline:hover{ background:rgba(255,238,223,.1); border-color:var(--cream-on-wine); }
+  .btn-ink{ border-color:var(--line); color:var(--ink); }
+  .btn-ink:hover{ background:var(--ink); color:var(--bg); border-color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ============ Header ============ */
+  .site-header{
+    position:sticky; top:0; z-index:400; background:color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter:blur(12px) saturate(1.3); border-bottom:1px solid var(--line);
+  }
+  .header-inner{ display:flex; align-items:center; gap:24px; padding:15px clamp(20px,5vw,56px); max-width:1160px; margin:0 auto; }
+  .logo{ display:flex; align-items:center; gap:9px; margin-right:auto; text-decoration:none; }
+  .logo-mark{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:700; font-size:1rem; flex-shrink:0; color:var(--ink);
+  }
+  .logo-word{ font-family:var(--font-display); font-weight:700; font-size:1rem; letter-spacing:.02em; text-transform:uppercase; }
+  .main-nav{ display:flex; align-items:center; gap:26px; }
+  .main-nav a{ font-size:.9rem; font-weight:600; color:var(--ink-soft); text-decoration:none; transition:color .2s; }
+  .main-nav a:hover{ color:var(--ink); }
+  .nav-cta{ flex-shrink:0; }
+  @media (max-width:760px){ .main-nav{ display:none; } }
+
+  /* ============ Hero ============ */
+  .hero{
+    position:relative; background:var(--wine); color:var(--cream-on-wine);
+    padding:96px 0 84px; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background:radial-gradient(52% 60% at 82% 8%, rgba(195,79,59,.35), transparent 70%),
+               radial-gradient(46% 50% at 6% 96%, rgba(201,207,221,.14), transparent 70%);
+  }
+  .hero-inner{ position:relative; z-index:1; }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:8px; padding:7px 16px 7px 7px;
+    border:1px solid var(--line-on-wine); border-radius:999px; margin-bottom:28px;
+  }
+  .hero-badge-dot{ width:22px; height:22px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+  .hero-badge span{ font-size:.76rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+  .hero-title{
+    font-family:var(--font-display); font-weight:900; text-transform:uppercase;
+    font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:.98; letter-spacing:-.015em;
+    max-width:15ch; margin-bottom:26px;
+  }
+  .hero-sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:rgba(255,238,223,.82); max-width:46ch; margin-bottom:38px; }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+  .hero-spin-link{
+    display:inline-flex; align-items:center; gap:8px; margin-top:30px; font-weight:700; font-size:.92rem;
+    color:var(--cream-on-wine); text-decoration:none; border-bottom:1.5px dashed var(--line-on-wine); padding-bottom:3px;
+    background:none; border-left:none; border-right:none; border-top:none; padding-left:0; padding-right:0;
+  }
+  .hero-spin-link:hover{ color:var(--mist); border-color:var(--mist); }
+  .hero-stamp{
+    position:absolute; right:clamp(-40px,-2vw,20px); top:70px; width:170px; height:170px;
+    display:flex; align-items:center; justify-content:center; opacity:.9;
+  }
+  .hero-stamp svg{ animation:spin-slow 22s linear infinite; }
+  @keyframes spin-slow{ to{ transform:rotate(360deg); } }
+  @media (max-width:900px){ .hero-stamp{ display:none; } }
+
+  /* ============ Spinner overlay ============ */
+  .spin-overlay{
+    position:fixed; inset:0; z-index:900; display:flex; align-items:center; justify-content:center;
+    padding:20px; background:rgba(20,6,4,.6); backdrop-filter:blur(3px);
+    opacity:0; visibility:hidden; transition:opacity .35s ease;
+  }
+  .spin-overlay.is-open{ opacity:1; visibility:visible; }
+  .spin-card{
+    position:relative; width:100%; max-width:460px; background:var(--surface-raised);
+    border-radius:28px; padding:clamp(28px,4vw,44px); box-shadow:0 40px 90px -20px rgba(0,0,0,.5);
+    max-height:92vh; overflow-y:auto;
+  }
+  .spin-close{
+    position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%;
+    border:1px solid var(--line); background:none; color:var(--ink); font-size:1rem; line-height:1;
+  }
+  .spin-close:hover{ background:var(--bg); }
+  .spin-eyebrow{ font-weight:700; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .spin-title{ font-family:var(--font-display); font-weight:800; font-size:1.4rem; line-height:1.2; margin-bottom:22px; padding-right:30px; }
+  .wheel-zone{ display:flex; flex-direction:column; align-items:center; gap:22px; }
+  .wheel-pointer{ width:0; height:0; border-left:12px solid transparent; border-right:12px solid transparent; border-top:16px solid var(--accent); margin-bottom:-4px; }
+  .wheel{
+    width:min(260px,72vw); height:min(260px,72vw); border-radius:50%; position:relative;
+    background:conic-gradient(var(--wine) 0deg 90deg, var(--accent) 90deg 180deg, var(--wine-deep) 180deg 270deg, var(--mist-deep) 270deg 360deg);
+    border:5px solid var(--surface-raised); outline:2px solid var(--line); transition:transform 4.2s cubic-bezier(.14,.67,.24,1);
+  }
+  .wheel-label{
+    position:absolute; top:50%; left:50%; width:50%; transform-origin:0% 50%;
+    font-family:var(--font-display); font-weight:700; font-size:.72rem; color:var(--cream-on-wine);
+    text-transform:uppercase; letter-spacing:.02em; padding-left:14px;
+  }
+  .wheel-hub{
+    position:absolute; top:50%; left:50%; width:20%; height:20%; transform:translate(-50%,-50%);
+    background:var(--surface-raised); border-radius:50%; border:2px solid var(--line);
+  }
+  .spin-btn{ width:100%; }
+  .spin-result{ display:none; text-align:center; }
+  .spin-result.is-active{ display:block; }
+  .spin-prize-tag{
+    display:inline-block; background:var(--accent); color:#fff; font-family:var(--font-display); font-weight:800;
+    padding:12px 22px; border-radius:14px; font-size:1.15rem; margin-bottom:16px; text-transform:uppercase;
+  }
+  .spin-result p{ color:var(--ink-soft); font-size:.94rem; margin-bottom:20px; }
+  .spin-email-row{ display:flex; gap:10px; margin-bottom:12px; }
+  .spin-email-row input{
+    flex:1; min-width:0; padding:13px 16px; border-radius:12px; border:1.5px solid var(--line);
+    background:var(--bg); color:var(--ink); font-size:.94rem;
+  }
+  .spin-email-row input:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+  .spin-skip{ font-size:.82rem; color:var(--ink-soft); background:none; border:none; text-decoration:underline; padding:6px; }
+  .mail-preview{ display:none; margin-top:20px; border:1.5px dashed var(--line); border-radius:16px; padding:18px; text-align:left; }
+  .mail-preview.is-active{ display:block; }
+  .mail-preview-head{ font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin-bottom:10px; font-weight:700; }
+  .mail-preview-body{ font-family:var(--font-display); font-weight:700; }
+  .mail-preview-code{ display:inline-block; margin-top:10px; padding:8px 14px; background:var(--bg); border-radius:8px; letter-spacing:.08em; }
+  .spin-fine{ font-size:.76rem; color:var(--ink-soft); margin-top:18px; }
+
+  /* ============ Reveal ============ */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.is-visible{ opacity:1; transform:none; }
+
+  /* ============ About / bite scroller ============ */
+  .bite-section{ position:relative; height:260vh; background:var(--surface); }
+  .bite-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
+  .bite-grid{ width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
+  .bite-copy .h2{ margin-bottom:22px; }
+  .bite-copy p{ font-size:1.06rem; color:var(--ink-soft); max-width:44ch; }
+  .bite-progress{ display:flex; gap:6px; margin-top:30px; }
+  .bite-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line); transition:background .3s; }
+  .bite-progress i.is-active{ background:var(--accent); }
+  .sandwich{ position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1; }
+  .sw-layer{ position:absolute; left:8%; right:8%; border-radius:999px; transition:transform .25s ease, opacity .25s ease; }
+  .sw-top{ top:8%; height:16%; background:var(--accent); }
+  .sw-lettuce{ top:24%; height:10%; background:var(--mist-deep); clip-path:polygon(0% 50%,8% 0%,16% 60%,24% 5%,32% 55%,40% 0%,48% 60%,56% 5%,64% 55%,72% 0%,80% 60%,88% 5%,100% 50%,100% 100%,0% 100%); }
+  .sw-patty{ top:36%; height:16%; background:var(--wine); }
+  .sw-cheese{ top:53%; height:8%; background:var(--mist); clip-path:polygon(0 0,100% 0,96% 100%,4% 100%); }
+  .sw-bottom{ top:63%; height:20%; background:var(--accent-deep); border-radius:999px 999px 40px 40px; }
+  .sw-seed{ position:absolute; width:6%; aspect-ratio:1/1; background:var(--surface); border-radius:50%; top:11%; }
+
+  /* ============ Moments (bento) ============ */
+  .moments{ padding:120px 0; background:var(--bg); }
+  .moments-head{ max-width:640px; margin-bottom:52px; }
+  .moments-head p{ color:var(--ink-soft); font-size:1.02rem; margin-top:14px; }
+  .bento{ display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:170px; gap:20px; }
+  .bento-card{ border-radius:22px; padding:26px; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; }
+  .bento-card.is-event{ grid-column:span 2; grid-row:span 2; background:var(--wine); color:var(--cream-on-wine); }
+  .bento-card.is-detail{ grid-column:span 2; background:var(--surface); border:1px solid var(--line); }
+  .bento-card:nth-of-type(3){ grid-column:span 2; }
+  .bento-tag{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; opacity:.72; }
+  .bento-card.is-event .bento-tag{ color:var(--mist); opacity:1; }
+  .bento-card.is-detail .bento-tag{ color:var(--accent); }
+  .bento-title{ font-family:var(--font-display); font-weight:800; font-size:1.28rem; line-height:1.18; margin:12px 0 6px; text-wrap:balance; }
+  .bento-card.is-event .bento-title{ font-size:1.5rem; }
+  .bento-desc{ font-size:.92rem; opacity:.82; max-width:32ch; }
+  @media (max-width:900px){
+    .bento{ grid-template-columns:repeat(2,1fr); grid-auto-rows:auto; }
+    .bento-card.is-event, .bento-card.is-detail, .bento-card:nth-of-type(3){ grid-column:span 2; }
+  }
+
+  /* ============ Menu ============ */
+  .menu{ padding:120px 0; background:var(--surface); }
+  .menu-head{ margin-bottom:56px; max-width:600px; }
+  .menu-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(28px,4vw,60px); }
+  .menu-col-title{ font-family:var(--font-display); font-weight:800; font-size:1.05rem; text-transform:uppercase; letter-spacing:.03em; margin-bottom:22px; color:var(--accent); }
+  .menu-item{ display:flex; align-items:baseline; gap:8px; padding:13px 0; border-bottom:1px solid var(--line); }
+  .menu-item:last-child{ border-bottom:none; }
+  .menu-item-name{ font-weight:600; }
+  .menu-item-fill{ flex:1; border-bottom:1.5px dotted var(--line); transform:translateY(-4px); min-width:12px; }
+  .menu-item-price{ font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink-soft); white-space:nowrap; }
+  @media (max-width:760px){ .menu-cols{ grid-template-columns:1fr; gap:40px; } }
+
+  /* ============ Merch ============ */
+  .merch{ padding:120px 0; background:var(--wine); color:var(--cream-on-wine); }
+  .merch-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,80px); align-items:start; }
+  .merch-head p{ color:rgba(255,238,223,.78); font-size:1.02rem; margin-top:14px; max-width:38ch; }
+  .merch-swatches{ display:flex; gap:14px; margin-top:34px; }
+  .merch-swatch{ width:64px; height:64px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+  .merch-form{ background:var(--surface-raised); color:var(--ink); border-radius:24px; padding:clamp(24px,3.4vw,36px); }
+  .merch-form label{ display:block; font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin:0 0 8px; }
+  .merch-form input,.merch-form textarea{
+    width:100%; padding:13px 15px; border-radius:12px; border:1.5px solid var(--line); background:var(--bg);
+    color:var(--ink); font-size:.95rem; margin-bottom:18px; resize:vertical;
+  }
+  .merch-form input:focus-visible,.merch-form textarea:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+  .merch-fine{ font-size:.8rem; color:var(--ink-soft); margin-top:16px; }
+  .merch-thanks{ display:none; text-align:center; padding:20px 0; }
+  .merch-thanks.is-active{ display:block; }
+  .merch-thanks-tag{ font-family:var(--font-display); font-weight:800; font-size:1.2rem; margin-bottom:8px; }
+  @media (max-width:860px){ .merch-grid{ grid-template-columns:1fr; } }
+
+  /* ============ Contacts ============ */
+  .contacts{ padding:110px 0 60px; background:var(--bg); }
+  .contacts-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,70px); align-items:center; }
+  .contacts-list{ margin:24px 0 28px; display:flex; flex-direction:column; gap:16px; }
+  .contacts-list li{ list-style:none; }
+  .contacts-label{ font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:700; display:block; margin-bottom:3px; }
+  .contacts-value{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; }
+  .socials{ display:flex; gap:20px; }
+  .socials a{ font-weight:700; font-size:.92rem; text-decoration:none; border-bottom:1.5px solid var(--line); padding-bottom:2px; }
+  .socials a:hover{ border-color:var(--accent); color:var(--accent); }
+  .locate-card{
+    background:var(--surface); border-radius:26px; padding:44px; text-align:center; position:relative; overflow:hidden;
+    border:1px solid var(--line); min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  }
+  .locate-ping{ position:relative; width:70px; height:70px; display:flex; align-items:center; justify-content:center; }
+  .locate-ping-ring{ position:absolute; inset:0; border-radius:50%; border:2px solid var(--accent); animation:ping 2.6s cubic-bezier(.2,.7,.3,1) infinite; }
+  .locate-ping-dot{ width:16px; height:16px; border-radius:50%; background:var(--accent); }
+  @keyframes ping{ 0%{ transform:scale(.5); opacity:.9; } 100%{ transform:scale(2.1); opacity:0; } }
+  .locate-card a{ margin-top:6px; font-weight:700; font-size:.9rem; color:var(--accent); text-decoration:none; border-bottom:1.5px dashed var(--accent); padding-bottom:2px; }
+
+  footer{ padding:36px 0 30px; text-align:center; font-size:.82rem; color:var(--ink-soft); background:var(--bg); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark">Н</span>
+      <span class="logo-word">Настроение</span>
+    </a>
+    <nav class="main-nav">
+      <a href="#menu">Меню</a>
+      <a href="#about">О нас</a>
+      <a href="#moments">Моменты</a>
+      <a href="#merch">Мерч</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="#contacts" class="btn btn-ink nav-cta" style="padding:11px 20px;font-size:.86rem;">Заглянуть в гости</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        <span>Настроение // Сириус</span>
+      </div>
+      <h1 class="hero-title">Не всё имеет смысл. И слава богу.</h1>
+      <p class="hero-sub">Твой главный спешелти — этот вайб.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-fill">Заглянуть в меню</a>
+        <a href="#contacts" class="btn btn-outline">Проложить маршрут</a>
+      </div>
+      <button class="hero-spin-link" id="openSpinBtn" type="button">☕ Крутани колесо настроения →</button>
+    </div>
+    <div class="hero-stamp" aria-hidden="true">
+      <svg viewBox="0 0 170 170" width="170" height="170">
+        <defs><path id="stampCircle" d="M85,85 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs>
+        <circle cx="85" cy="85" r="80" fill="none" stroke="rgba(255,238,223,.5)" stroke-width="1"/>
+        <circle cx="85" cy="85" r="6" fill="var(--accent)"/>
+        <text font-family="Poppins" font-size="10.5" font-weight="700" letter-spacing="3" fill="var(--cream-on-wine)">
+          <textPath href="#stampCircle" startOffset="0%">SPECIALTY COFFEE • СИРИУС • НАСТРОЕНИЕ •</textPath>
+        </text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- SPINNER MODAL -->
+  <div class="spin-overlay" id="spinOverlay" role="dialog" aria-modal="true" aria-labelledby="spinTitle">
+    <div class="spin-card">
+      <button class="spin-close" id="spinClose" aria-label="Закрыть">✕</button>
+
+      <div id="spinIntro">
+        <p class="spin-eyebrow">Настроение дня</p>
+        <h3 class="spin-title" id="spinTitle">Какое у тебя сегодня настроение? Прокрути и зафиксируй фаворита!</h3>
+        <div class="wheel-zone">
+          <div class="wheel-pointer" aria-hidden="true"></div>
+          <div class="wheel" id="wheel" aria-hidden="true">
+            <span class="wheel-label" style="transform:rotate(45deg);">Скидка 15%</span>
+            <span class="wheel-label" style="transform:rotate(135deg);">Секретный десерт</span>
+            <span class="wheel-label" style="transform:rotate(225deg);">Догпучино</span>
+            <span class="wheel-label" style="transform:rotate(315deg);">Стикерпак</span>
+            <div class="wheel-hub"></div>
+          </div>
+          <button class="btn btn-fill spin-btn" id="spinBtn" type="button">Крутить колесо</button>
+        </div>
+      </div>
+
+      <div class="spin-result" id="spinResult">
+        <span class="spin-prize-tag" id="prizeTag">Скидка 15%</span>
+        <p>Оставь почту — продублируем приз, чтобы не потерять. Или просто покажи этот экран бариста.</p>
+        <form id="spinForm">
+          <div class="spin-email-row">
+            <input type="email" placeholder="почта@пример.ру" id="spinEmail" required>
+            <button class="btn btn-fill" type="submit" style="padding:13px 18px;">Ок</button>
+          </div>
+        </form>
+        <button class="spin-skip" id="spinSkip" type="button">Пропустить, просто покажу экран</button>
+
+        <div class="mail-preview" id="mailPreview">
+          <div class="mail-preview-head">Так будет выглядеть письмо (демо превью)</div>
+          <div class="mail-preview-body">Настроение — твой приз внутри ✨</div>
+          <div class="mail-preview-code" id="mailCode">NASTR-15OFF</div>
+        </div>
+        <p class="spin-fine">* Демо-механика для питча. Реальная отправка письма подключается на бэкенде.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT / BITE SCROLLER -->
+  <section class="bite-section" id="about">
+    <div class="bite-sticky">
+      <div class="bite-grid">
+        <div class="bite-copy reveal">
+          <p class="eyebrow">О нас</p>
+          <h2 class="h2">Всё временно. Даже этот сэндвич.</h2>
+          <p>Ничего не задерживается навсегда — ни очереди, ни список дел, составленный вчерашним оптимистом. Заходи выдохнуть, съесть свежий круассан и пересобрать мысли.</p>
+          <div class="bite-progress" aria-hidden="true">
+            <i data-step="0" class="is-active"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i>
+          </div>
+        </div>
+        <div class="sandwich" aria-hidden="true">
+          <div class="sw-layer sw-top" id="swTop"></div>
+          <div class="sw-layer sw-lettuce" id="swLettuce"></div>
+          <div class="sw-layer sw-patty" id="swPatty"></div>
+          <div class="sw-layer sw-cheese" id="swCheese"></div>
+          <div class="sw-layer sw-bottom" id="swBottom"></div>
+          <div class="sw-seed" style="left:30%;"></div>
+          <div class="sw-seed" style="left:46%;top:9.5%;"></div>
+          <div class="sw-seed" style="left:62%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOMENTS -->
+  <section class="moments" id="moments">
+    <div class="wrap">
+      <div class="moments-head reveal">
+        <p class="eyebrow">Не случайные моменты</p>
+        <h2 class="h2">Из чего складывается вайб</h2>
+        <p>От утренних сетов до уютных деталей, которые обычно замечают только постоянные.</p>
+      </div>
+      <div class="bento">
+        <article class="bento-card is-event reveal">
+          <span class="bento-tag">Анонс</span>
+          <div>
+            <h3 class="bento-title">Утренняя дискотека</h3>
+            <p class="bento-desc">Винил, фильтр и рассвет на берегу. Дата — скоро в сторис.</p>
+          </div>
+        </article>
+        <article class="bento-card is-event reveal">
+          <span class="bento-tag">Анонс</span>
+          <div>
+            <h3 class="bento-title">Dog &amp; Coffee Party</h3>
+            <p class="bento-desc">Тусовка для пушистых: догпучино, фотозона и спешелти хозяевам.</p>
+          </div>
+        </article>
+        <article class="bento-card is-detail reveal">
+          <span class="bento-tag">Деталь</span>
+          <h3 class="bento-title">Pet-friendly вайб</h3>
+          <p class="bento-desc">Свежая вода, внимание бариста и дофамин — для тех, кто пришёл на четырёх лапах.</p>
+        </article>
+        <article class="bento-card is-detail reveal">
+          <span class="bento-tag">Деталь</span>
+          <h3 class="bento-title">Secret Menu</h3>
+          <p class="bento-desc">Авторские миксы бариста, которых нет на доске — спроси у стойки.</p>
+        </article>
+        <article class="bento-card is-detail reveal">
+          <span class="bento-tag">Деталь</span>
+          <h3 class="bento-title">Плотная керамика</h3>
+          <p class="bento-desc">Никаких бумажных стаканов внутри зала — только если совсем на бегу.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="wrap">
+      <div class="menu-head reveal">
+        <p class="eyebrow">Меню</p>
+        <h2 class="h2">Наше меню</h2>
+      </div>
+      <div class="menu-cols">
+        <div class="reveal">
+          <h3 class="menu-col-title">Кофе</h3>
+          <div class="menu-item"><span class="menu-item-name">Эспрессо</span><span class="menu-item-fill"></span><span class="menu-item-price">200 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Капучино</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Латте</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Раф лесной орех</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Айс латте</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+        </div>
+        <div class="reveal">
+          <h3 class="menu-col-title">Не кофе</h3>
+          <div class="menu-item"><span class="menu-item-name">Ассам / Сенча</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Матча анчан-кокос</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Какао</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Лимонад манго-малина</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Догпучино *</span><span class="menu-item-fill"></span><span class="menu-item-price">0 ₽</span></div>
+        </div>
+        <div class="reveal">
+          <h3 class="menu-col-title">Выпечка</h3>
+          <div class="menu-item"><span class="menu-item-name">Круассан классический</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Круассан миндальный</span><span class="menu-item-fill"></span><span class="menu-item-price">360 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">ШУ солёная карамель</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">«Зверский аппетит»</span><span class="menu-item-fill"></span><span class="menu-item-price">490 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">«Острый на язык»</span><span class="menu-item-fill"></span><span class="menu-item-price">560 ₽</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MERCH -->
+  <section class="merch" id="merch">
+    <div class="wrap merch-grid">
+      <div class="merch-head reveal">
+        <p class="eyebrow eyebrow-mist">Скоро</p>
+        <h2 class="h2">Носи настроение с собой</h2>
+        <p>Готовим кастомный дроп худи, кепок и шопперов.</p>
+        <div class="merch-swatches" aria-hidden="true">
+          <div class="merch-swatch" style="background:var(--accent);">🧥</div>
+          <div class="merch-swatch" style="background:var(--mist);">🧢</div>
+          <div class="merch-swatch" style="background:var(--surface-raised);">👜</div>
+        </div>
+      </div>
+
+      <div class="merch-form reveal">
+        <div id="merchFormWrap">
+          <label for="merchPhrase">Предложи фразу или принт</label>
+          <textarea id="merchPhrase" rows="3" placeholder="«Не всё имеет смысл. И слава богу.»" required></textarea>
+          <label for="merchContact">Почта или Telegram для связи</label>
+          <input type="text" id="merchContact" placeholder="@ник или почта" required>
+          <button class="btn btn-fill" id="merchSubmit" type="button" style="width:100%;">Отправить идею</button>
+          <p class="merch-fine">* Автор фразы, которая пойдёт в печать, получит безлимитный кофе на полгода.</p>
+        </div>
+        <div class="merch-thanks" id="merchThanks">
+          <div class="merch-thanks-tag">Приняли ✓</div>
+          <p style="color:var(--ink-soft);">Спасибо! Если выберем твою фразу для дропа — напишем сами.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="contacts" id="contacts">
+    <div class="wrap contacts-grid">
+      <div class="reveal">
+        <p class="eyebrow">Контакты</p>
+        <h2 class="h2">Заглядывай в гости</h2>
+        <ul class="contacts-list">
+          <li><span class="contacts-label">Адрес</span><span class="contacts-value">Сириус, ул. Триумфальная, 26/1</span></li>
+          <li><span class="contacts-label">Часы работы</span><span class="contacts-value">Ежедневно 09:00–21:00</span></li>
+        </ul>
+        <div class="socials">
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">Telegram</a>
+          <a href="#" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+      <div class="locate-card reveal">
+        <div class="locate-ping" aria-hidden="true">
+          <div class="locate-ping-ring"></div>
+          <div class="locate-ping-dot"></div>
+        </div>
+        <p style="color:var(--ink-soft);font-size:.94rem;max-width:26ch;">Сириус, Триумфальная улица, 26/1</p>
+        <a href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">Построить маршрут →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Настроение · концепт-питч, не финальная версия сайта</footer>
+
+<script>
+(function(){
+  // Reveal on scroll
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, { threshold:.15 });
+  els.forEach(function(el){ io.observe(el); });
+
+  // Sandwich bite scroller
+  var biteSection = document.getElementById('about');
+  var layers = {
+    top: document.getElementById('swTop'),
+    lettuce: document.getElementById('swLettuce'),
+    patty: document.getElementById('swPatty'),
+    cheese: document.getElementById('swCheese'),
+    bottom: document.getElementById('swBottom')
+  };
+  var dots = document.querySelectorAll('.bite-progress i');
+  function applyBite(step){
+    var order = [layers.top, layers.lettuce, layers.cheese, layers.patty];
+    order.forEach(function(layer, i){
+      if(i < step){ layer.style.opacity = '0'; layer.style.transform = 'translateY(-40px)'; }
+      else { layer.style.opacity = '1'; layer.style.transform = 'none'; }
+    });
+    dots.forEach(function(d){ d.classList.toggle('is-active', +d.dataset.step === step); });
+  }
+  function onScroll(){
+    if(!biteSection) return;
+    var rect = biteSection.getBoundingClientRect();
+    var total = biteSection.offsetHeight - window.innerHeight;
+    var scrolled = -rect.top;
+    var progress = Math.min(1, Math.max(0, scrolled / total));
+    var step = Math.min(3, Math.floor(progress * 4));
+    applyBite(step);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // Spinner
+  var overlay = document.getElementById('spinOverlay');
+  var openBtn = document.getElementById('openSpinBtn');
+  var closeBtn = document.getElementById('spinClose');
+  var spinBtn = document.getElementById('spinBtn');
+  var wheel = document.getElementById('wheel');
+  var intro = document.getElementById('spinIntro');
+  var result = document.getElementById('spinResult');
+  var prizeTag = document.getElementById('prizeTag');
+  var mailPreview = document.getElementById('mailPreview');
+  var mailCode = document.getElementById('mailCode');
+  var spinForm = document.getElementById('spinForm');
+  var spinSkip = document.getElementById('spinSkip');
+  var prizes = [
+    { name:'Скидка 15%', code:'NASTR-15OFF' },
+    { name:'Секретный десерт', code:'NASTR-DESERT' },
+    { name:'Догпучино', code:'NASTR-DOGCUP' },
+    { name:'Стикерпак', code:'NASTR-STICKR' }
+  ];
+  var hasSpun = false;
+
+  function openSpin(){ overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+  function closeSpin(){ overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+
+  openBtn.addEventListener('click', openSpin);
+  closeBtn.addEventListener('click', closeSpin);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeSpin(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSpin(); });
+
+  spinBtn.addEventListener('click', function(){
+    if(hasSpun) return;
+    hasSpun = true;
+    var index = Math.floor(Math.random() * prizes.length);
+    var spins = 5;
+    var target = spins * 360 + (360 - (index * 90 + 45));
+    wheel.style.transform = 'rotate(' + target + 'deg)';
+    spinBtn.disabled = true;
+    setTimeout(function(){
+      prizeTag.textContent = prizes[index].name;
+      mailCode.textContent = prizes[index].code;
+      intro.style.display = 'none';
+      result.classList.add('is-active');
+      try{ localStorage.setItem('nastroenie_spin_prize', prizes[index].name); }catch(e){}
+    }, 4300);
+  });
+
+  function revealMail(){
+    mailPreview.classList.add('is-active');
+    spinForm.style.display = 'none';
+    spinSkip.style.display = 'none';
+  }
+  spinForm.addEventListener('submit', function(e){ e.preventDefault(); revealMail(); });
+  spinSkip.addEventListener('click', revealMail);
+
+  var already = false;
+  try{ already = !!localStorage.getItem('nastroenie_spin_prize'); }catch(e){}
+  if(!already && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    setTimeout(openSpin, 7000);
+  }
+
+  // Merch form
+  var merchSubmit = document.getElementById('merchSubmit');
+  merchSubmit.addEventListener('click', function(){
+    var phrase = document.getElementById('merchPhrase').value.trim();
+    var contact = document.getElementById('merchContact').value.trim();
+    if(!phrase || !contact) return;
+    document.getElementById('merchFormWrap').style.display = 'none';
+    document.getElementById('merchThanks').classList.add('is-active');
+  });
+})();
+</script>
+</body>
+</html>
