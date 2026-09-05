@@ -217,13 +217,6 @@
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
   .reveal.is-visible{ opacity:1; transform:none; }
 
-  /* ============ Interior / Atmosphere ============ */
-  .interior{ position:relative; height:72vh; min-height:460px; overflow:hidden; }
-  .interior-img{ width:100%; height:100%; object-fit:cover; object-position:50% 40%; }
-  .interior-scrim{ position:absolute; inset:0; background:linear-gradient(0deg, rgba(20,8,7,.82) 0%, rgba(20,8,7,.15) 55%, rgba(20,8,7,.35) 100%); }
-  .interior-copy{ position:absolute; left:0; right:0; bottom:0; padding:44px clamp(20px,5vw,56px); max-width:1160px; margin:0 auto; color:var(--cream-on-wine); }
-  .interior-copy .h2{ color:var(--cream-on-wine); }
-
   /* ============ Bite scroller ============ */
   .bite-section{ position:relative; height:260vh; background:var(--surface); }
   .bite-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
@@ -266,8 +259,21 @@
   .menu{ position:relative; padding:150px 0 130px; background:var(--surface); overflow:hidden; }
   .menu-layout{ position:relative; z-index:2; }
   .menu-head{ margin-bottom:56px; max-width:600px; }
-  .menu-columns{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(28px,4vw,60px); }
-  .menu-col{ position:relative; }
+
+  .menu-tabs{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px; position:relative; z-index:1; }
+  .menu-tab{
+    font-family:var(--font-body); font-weight:700; font-size:.92rem; padding:12px 22px; border-radius:999px;
+    border:1.5px solid var(--line); background:var(--surface-raised); color:var(--ink-soft); cursor:pointer;
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .menu-tab:hover{ border-color:var(--accent); color:var(--ink); }
+  .menu-tab.is-active{ background:var(--wine); border-color:var(--wine); color:var(--cream-on-wine); }
+
+  .menu-panels{ position:relative; z-index:1; }
+  .menu-panel{ display:none; }
+  .menu-panel.is-active{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(28px,4vw,60px); animation:menuFade .4s ease; }
+  @keyframes menuFade{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+  .menu-group{ position:relative; }
   .menu-col-title{ font-family:var(--font-display); font-weight:800; font-size:1.05rem; text-transform:uppercase; letter-spacing:.03em; margin-bottom:22px; color:var(--accent); position:relative; z-index:1; }
   .menu-item{ display:flex; align-items:baseline; gap:8px; padding:13px 0; border-bottom:1px solid var(--line); position:relative; z-index:1; }
   .menu-item:last-child{ border-bottom:none; }
@@ -275,53 +281,43 @@
   .menu-item-fill{ flex:1; border-bottom:1.5px dotted var(--line); transform:translateY(-4px); min-width:12px; }
   .menu-item-price{ font-variant-numeric:tabular-nums; font-weight:700; color:var(--accent); white-space:nowrap; }
   .menu-full-cta{ display:flex; justify-content:center; margin-top:64px; }
-
-  /* --- Diagonal blue-drink scroll accent --- */
-  .menu-drink-deco{
-    position:absolute; left:-4%; top:8%; width:200px; z-index:3;
-    border-radius:24px; box-shadow:0 30px 60px -20px rgba(20,8,7,.4);
-    transform:rotate(-10deg); pointer-events:none; will-change:transform;
-  }
-  @media (max-width:1100px){ .menu-drink-deco{ display:none; } }
-
-  /* --- Hands+sandwich micro-interaction --- */
-  .menu-col-sandwiches{ padding-bottom:220px; }
-  .menu-hands-deco{
-    position:absolute; left:50%; bottom:0; width:230px; border-radius:20px;
-    box-shadow:0 26px 50px -18px rgba(20,8,7,.45); transform:translateX(-50%) scale(1);
-    animation:squeeze 3.6s ease-in-out infinite; cursor:pointer;
-  }
-  .menu-hands-deco:hover{ animation-play-state:paused; transform:translateX(-50%) scale(1.04); }
-  @keyframes squeeze{ 0%,100%{ transform:translateX(-50%) scale(1); } 50%{ transform:translateX(-50%) scale(1.025); } }
-  @media (max-width:900px){ .menu-col-sandwiches{ padding-bottom:0; } .menu-hands-deco{ position:static; transform:none; width:100%; margin-top:24px; animation:none; } .menu-hands-deco:hover{ transform:scale(1.02); } }
+  .menu-allergy-note{ margin-top:36px; font-size:.82rem; color:var(--ink-soft); text-align:center; position:relative; z-index:1; }
 
   /* --- Croissant ambient background --- */
-  .menu-col-bakery{ overflow:visible; }
   .menu-croissant-deco{
     position:absolute; right:-60%; top:-18%; width:220%; max-width:none;
     opacity:.14; transform:rotate(-9deg); z-index:0; pointer-events:none;
   }
   @media (max-width:900px){ .menu-croissant-deco{ display:none; } }
-  @media (max-width:900px){ .menu-columns{ grid-template-columns:1fr 1fr; } .menu-col:first-child{ grid-column:span 2; } }
-  @media (max-width:600px){ .menu-columns{ grid-template-columns:1fr; } .menu-col:first-child{ grid-column:span 1; } }
-
-  /* ============ Menu modal ============ */
-  .menu-modal{
-    position:fixed; inset:0; z-index:1000; background:rgba(20,8,7,.92);
-    display:flex; align-items:center; justify-content:center; padding:30px;
-    opacity:0; visibility:hidden; transition:opacity .35s ease;
+  @media (max-width:640px){
+    .menu-panel.is-active{ grid-template-columns:1fr; }
+    .menu-tabs{ gap:8px; }
+    .menu-tab{ padding:10px 16px; font-size:.86rem; }
   }
-  .menu-modal.is-open{ opacity:1; visibility:visible; }
-  .menu-modal-inner{ position:relative; max-width:900px; width:100%; max-height:90vh; overflow-y:auto; background:var(--surface-raised); border-radius:20px; padding:36px; }
-  .menu-modal-close{
-    position:absolute; top:16px; right:16px; width:40px; height:40px; border-radius:50%;
-    border:1px solid var(--line); background:var(--bg); color:var(--ink); font-size:1.1rem; z-index:1;
-  }
-  .menu-modal-pages{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  .menu-modal-pages img{ width:100%; border-radius:10px; box-shadow:var(--shadow); }
-  .menu-modal-actions{ display:flex; justify-content:center; margin-top:26px; }
-  @media (max-width:760px){ .menu-modal-pages{ grid-template-columns:1fr; } }
 
+  /* ============ Breakfast ============ */
+  .breakfast{ padding:120px 0; background:var(--bg); }
+  .breakfast-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(22px,3vw,32px); margin-top:52px; }
+  .breakfast-card{ background:var(--surface-raised); border-radius:24px; overflow:hidden; border:1px solid var(--line); transition:transform .3s ease, box-shadow .3s ease; }
+  .breakfast-card:hover{ transform:translateY(-6px); box-shadow:0 24px 48px -24px rgba(20,8,7,.28); }
+  .breakfast-card-img{ aspect-ratio:4/3; overflow:hidden; }
+  .breakfast-card-img img{ width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+  .breakfast-card:hover .breakfast-card-img img{ transform:scale(1.06); }
+  .breakfast-card-body{ padding:22px 24px 26px; }
+  .breakfast-card-body h3{ font-family:var(--font-display); font-weight:800; font-size:1.12rem; margin-bottom:8px; }
+  .breakfast-card-body p{ font-size:.92rem; color:var(--ink-soft); line-height:1.5; min-height:2.7em; }
+  .breakfast-card-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:18px; padding-top:14px; border-top:1px solid var(--line); font-size:.86rem; color:var(--ink-soft); }
+  .breakfast-card-price{ font-family:var(--font-display); font-weight:800; font-size:1.15rem; color:var(--accent); }
+  .breakfast-tagline{ margin-top:44px; text-align:center; font-size:1.02rem; color:var(--ink-soft); }
+  @media (max-width:900px){ .breakfast-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:600px){ .breakfast-grid{ grid-template-columns:1fr; } }
+
+  /* ============ Delivery promo ============ */
+  .delivery-promo{ padding:76px 0; background:var(--wine); }
+  .delivery-promo-inner{ display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap; }
+  .delivery-promo-inner .h2{ max-width:640px; }
+  .eyebrow-mist{ color:var(--mist); }
+  @media (max-width:700px){ .delivery-promo-inner{ flex-direction:column; align-items:flex-start; text-align:left; } .delivery-promo-inner .btn{ width:100%; text-align:center; } }
 
   /* ============ Merch ============ */
   .merch{ padding:120px 0; background:var(--wine); color:var(--cream-on-wine); }
@@ -374,13 +370,13 @@
       <span class="logo-word">Настроение</span>
     </a>
     <nav class="main-nav">
-      <a href="#interior">Интерьер</a>
-      <a href="#moments">Моменты</a>
       <a href="#menu">Меню</a>
+      <a href="#breakfast">Завтраки</a>
+      <a href="#moments">Моменты</a>
       <a href="#merch">Мерч</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <a href="#contacts" class="btn btn-ink nav-cta" style="padding:11px 20px;font-size:.86rem;">Заглянуть в гости</a>
+    <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill nav-cta" style="padding:11px 20px;font-size:.86rem;">Заказать доставку</a>
   </div>
 </header>
 
@@ -459,16 +455,6 @@
     </div>
   </div>
 
-  <!-- INTERIOR / ATMOSPHERE -->
-  <section class="interior" id="interior">
-    <img src="assets/img/interior-atmosphere.jpg" alt="Зал кофейни «Настроение»: терракотовый потолок, барная стойка, витрина с выпечкой" class="interior-img">
-    <div class="interior-scrim"></div>
-    <div class="interior-copy reveal">
-      <p class="eyebrow eyebrow-mist">Интерьер</p>
-      <h2 class="h2">Атмосфера нашего пространства</h2>
-    </div>
-  </section>
-
   <!-- BITE SCROLLER -->
   <section class="bite-section">
     <div class="bite-sticky">
@@ -539,57 +525,172 @@
 
   <!-- MENU -->
   <section class="menu" id="menu">
-    <img class="menu-drink-deco" id="menuDrinkDeco" src="assets/img/blue-drink-hand.jpg" alt="Матча анчан-кокос со льдом" aria-hidden="true">
+    <img class="menu-croissant-deco" src="assets/img/croissant-ambient.jpg" alt="" aria-hidden="true">
     <div class="wrap menu-layout">
       <div class="menu-head reveal">
         <p class="eyebrow">Меню</p>
         <h2 class="h2">Из нашей кухни</h2>
       </div>
 
-      <div class="menu-columns">
-        <div class="menu-col reveal">
-          <h3 class="menu-col-title">Напитки</h3>
-          <div class="menu-item"><span class="menu-item-name">Капучино</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Матча анчан-кокос</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Раф лесной орех</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Айс латте</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
-        </div>
-
-        <div class="menu-col menu-col-sandwiches reveal">
-          <h3 class="menu-col-title">Сэндвичи</h3>
-          <div class="menu-item"><span class="menu-item-name">«Зверский аппетит»</span><span class="menu-item-fill"></span><span class="menu-item-price">490 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">«Острый на язык»</span><span class="menu-item-fill"></span><span class="menu-item-price">560 ₽</span></div>
-          <img class="menu-hands-deco" src="assets/img/hands-sandwich.jpg" alt="Гость держит сэндвич «Зверский аппетит»">
-        </div>
-
-        <div class="menu-col menu-col-bakery reveal">
-          <img class="menu-croissant-deco" src="assets/img/croissant-ambient.jpg" alt="" aria-hidden="true">
-          <h3 class="menu-col-title">Выпечка</h3>
-          <div class="menu-item"><span class="menu-item-name">Круассан классический</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">Круассан миндальный</span><span class="menu-item-fill"></span><span class="menu-item-price">360 ₽</span></div>
-          <div class="menu-item"><span class="menu-item-name">ШУ солёная карамель</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-        </div>
+      <div class="menu-tabs" role="tablist" aria-label="Категории меню">
+        <button class="menu-tab is-active" data-tab="coffee" type="button">Кофе</button>
+        <button class="menu-tab" data-tab="tea" type="button">Чай и матча</button>
+        <button class="menu-tab" data-tab="food" type="button">Сэндвичи и выпечка</button>
+        <button class="menu-tab" data-tab="sweets" type="button">Десерты и напитки</button>
       </div>
 
+      <div class="menu-panels">
+
+        <div class="menu-panel is-active" data-panel="coffee">
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Классика</h3>
+            <div class="menu-item"><span class="menu-item-name">Эспрессо</span><span class="menu-item-fill"></span><span class="menu-item-price">200 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Американо</span><span class="menu-item-fill"></span><span class="menu-item-price">200 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Капучино</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Протеиновый капучино</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Латте</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Раф кофе</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+          </div>
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Айс кофе</h3>
+            <div class="menu-item"><span class="menu-item-name">Айс латте</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Эспрессо-кола-вишня</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Эспрессо-тоник-малина</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Бамбл на апельсиновом соке</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Бамбл на гранатовом соке</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+          </div>
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Авторский кофе</h3>
+            <div class="menu-item"><span class="menu-item-name">Раф лесной орех</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Капучино солёный попкорн</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Латте фисташка-малина</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Айс какао на фундучном молоке</span><span class="menu-item-fill"></span><span class="menu-item-price">300 ₽</span></div>
+          </div>
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Допы</h3>
+            <div class="menu-item"><span class="menu-item-name">Альтернативное молоко</span><span class="menu-item-fill"></span><span class="menu-item-price">80 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Сироп</span><span class="menu-item-fill"></span><span class="menu-item-price">50 ₽</span></div>
+          </div>
+        </div>
+
+        <div class="menu-panel" data-panel="tea">
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Чай</h3>
+            <div class="menu-item"><span class="menu-item-name">Ассам / Сенча</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Молочный улун</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Жасминовый чай</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Краснополянский сбор</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Гречишный чай</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Ромашка</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+          </div>
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Матча</h3>
+            <div class="menu-item"><span class="menu-item-name">Матча анчан-кокос</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Матча фундук-малина</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+          </div>
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Какао</h3>
+            <div class="menu-item"><span class="menu-item-name">Какао (с сахаром / без сахара)</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+          </div>
+        </div>
+
+        <div class="menu-panel" data-panel="food">
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Сэндвичи</h3>
+            <div class="menu-item"><span class="menu-item-name">«Зверский аппетит» (говядина)</span><span class="menu-item-fill"></span><span class="menu-item-price">490 / 630 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">«Почти на диете» (тунец)</span><span class="menu-item-fill"></span><span class="menu-item-price">560 / 730 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">«Острый на язык» (чоризо)</span><span class="menu-item-fill"></span><span class="menu-item-price">560 / 730 ₽</span></div>
+          </div>
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Выпечка</h3>
+            <div class="menu-item"><span class="menu-item-name">Круассан классический</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Круассан сырный</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Круассан шоколадный</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Круассан лимонный</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Круассан миндальный</span><span class="menu-item-fill"></span><span class="menu-item-price">360 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Улитка с орехами и изюмом</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+          </div>
+        </div>
+
+        <div class="menu-panel" data-panel="sweets">
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Десерты</h3>
+            <div class="menu-item"><span class="menu-item-name">Чизкейк Сан-Себастьян классика</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Чизкейк Сан-Себастьян фисташковый</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">ШУ классический / солёная карамель / бельгийский шоколад</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Торт «Сникерс» / Фисташковый / Кокос-манго</span><span class="menu-item-fill"></span><span class="menu-item-price">390 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Тарталетка лимон-маракуйя</span><span class="menu-item-fill"></span><span class="menu-item-price">360 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Пирожное «Картошка»</span><span class="menu-item-fill"></span><span class="menu-item-price">230 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Печенье-сэндвич двойной шоколад</span><span class="menu-item-fill"></span><span class="menu-item-price">360 ₽</span></div>
+          </div>
+          <div class="menu-group reveal">
+            <h3 class="menu-col-title">Лимонады и вода</h3>
+            <div class="menu-item"><span class="menu-item-name">Манго-малина</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Гранатовая кола</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Клубника каламанси</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Бона Аква (газ / без газа)</span><span class="menu-item-fill"></span><span class="menu-item-price">160 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Кола</span><span class="menu-item-fill"></span><span class="menu-item-price">200 ₽</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="menu-allergy-note">* Если у вас аллергия, просим сообщить об этом кассиру</p>
+
       <div class="menu-full-cta reveal">
-        <button class="btn btn-fill" id="openMenuModal" type="button">Смотреть полное меню</button>
+        <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill">Заказать доставку</a>
       </div>
     </div>
   </section>
 
-  <!-- MENU MODAL -->
-  <div class="menu-modal" id="menuModal" role="dialog" aria-modal="true" aria-label="Полное меню">
-    <div class="menu-modal-inner">
-      <button class="menu-modal-close" id="closeMenuModal" aria-label="Закрыть">✕</button>
-      <div class="menu-modal-pages">
-        <img src="assets/img/menu-page-1.jpg" alt="Меню «Настроение», страница 1">
-        <img src="assets/img/menu-page-2.jpg" alt="Меню «Настроение», страница 2">
+  <!-- BREAKFAST -->
+  <section class="breakfast" id="breakfast">
+    <div class="wrap">
+      <div class="menu-head reveal">
+        <p class="eyebrow">Добрый завтрак</p>
+        <h2 class="h2">«Для плотного настроения»</h2>
       </div>
-      <div class="menu-modal-actions">
-        <a href="assets/files/nastroenie-menu.pdf" download class="btn btn-fill">Скачать PDF</a>
+
+      <div class="breakfast-grid">
+        <article class="breakfast-card reveal">
+          <div class="breakfast-card-img"><img src="assets/img/syrniki.jpg" alt="Сырники без вопросов" loading="lazy"></div>
+          <div class="breakfast-card-body">
+            <h3>Сырники без вопросов</h3>
+            <p>Со сметаной и ягодным вареньем</p>
+            <div class="breakfast-card-foot"><span>240 г</span><span class="breakfast-card-price">390 ₽</span></div>
+          </div>
+        </article>
+        <article class="breakfast-card reveal">
+          <div class="breakfast-card-img"><img src="assets/img/croissant-adult.jpg" alt="Круассан по-взрослому" loading="lazy"></div>
+          <div class="breakfast-card-body">
+            <h3>Круассан по-взрослому</h3>
+            <p>Мортаделла, авокадо, томаты, салат, творожный сыр с каперсами, устричный соус</p>
+            <div class="breakfast-card-foot"><span>230 г</span><span class="breakfast-card-price">690 ₽</span></div>
+          </div>
+        </article>
+        <article class="breakfast-card reveal">
+          <div class="breakfast-card-img"><img src="assets/img/hashbrown.jpg" alt="Хэшбраун при параде" loading="lazy"></div>
+          <div class="breakfast-card-body">
+            <h3>Хэшбраун при параде</h3>
+            <p>С беконом, соусом айоли, руколой и томатами</p>
+            <div class="breakfast-card-foot"><span>180 г</span><span class="breakfast-card-price">490 ₽</span></div>
+          </div>
+        </article>
       </div>
+      <p class="breakfast-tagline">Накормим и поднимем настроение — совместим приятное с сытным ;)</p>
     </div>
-  </div>
+  </section>
+
+  <!-- DELIVERY PROMO -->
+  <section class="delivery-promo">
+    <div class="wrap delivery-promo-inner reveal">
+      <div>
+        <p class="eyebrow eyebrow-mist">Доставка</p>
+        <h2 class="h2" style="color:var(--cream-on-wine);">Любимый кофе и завтраки — прямо к вам домой или в офис</h2>
+      </div>
+      <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-outline">Заказать на Яндекс Еде</a>
+    </div>
+  </section>
 
   <!-- MERCH -->
   <section class="merch" id="merch">
@@ -765,32 +866,16 @@
     document.getElementById('merchThanks').classList.add('is-active');
   });
 
-  // Diagonal blue-drink scroll parallax
-  var menuSection = document.getElementById('menu');
-  var drinkDeco = document.getElementById('menuDrinkDeco');
-  if (menuSection && drinkDeco && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var onDrinkScroll = function(){
-      var rect = menuSection.getBoundingClientRect();
-      var vh = window.innerHeight;
-      var progress = 1 - Math.min(1, Math.max(0, rect.top / vh));
-      var y = (progress - 0.5) * 120;
-      var rot = -10 + (progress - 0.5) * 14;
-      drinkDeco.style.transform = 'translateY(' + y + 'px) rotate(' + rot + 'deg)';
-    };
-    window.addEventListener('scroll', onDrinkScroll, { passive: true });
-    onDrinkScroll();
-  }
-
-  // Menu modal
-  var menuModal = document.getElementById('menuModal');
-  var openMenuModalBtn = document.getElementById('openMenuModal');
-  var closeMenuModalBtn = document.getElementById('closeMenuModal');
-  function openMenuModal(){ menuModal.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
-  function closeMenuModal(){ menuModal.classList.remove('is-open'); document.body.style.overflow = ''; }
-  openMenuModalBtn.addEventListener('click', openMenuModal);
-  closeMenuModalBtn.addEventListener('click', closeMenuModal);
-  menuModal.addEventListener('click', function(e){ if(e.target === menuModal) closeMenuModal(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMenuModal(); });
+  // Menu tabs
+  var menuTabs = document.querySelectorAll('.menu-tab');
+  var menuPanels = document.querySelectorAll('.menu-panel');
+  menuTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var target = tab.getAttribute('data-tab');
+      menuTabs.forEach(function(t){ t.classList.toggle('is-active', t === tab); });
+      menuPanels.forEach(function(p){ p.classList.toggle('is-active', p.getAttribute('data-panel') === target); });
+    });
+  });
 })();
 </script>
 </body>
