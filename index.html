@@ -19,8 +19,8 @@
     --wine:#520501;
     --wine-deep:#390300;
     --cream-on-wine:#FFEEDF;
-    --accent:#C34F3B;
-    --accent-deep:#9C3A28;
+    --accent:#6B1B12;
+    --accent-deep:#4A0F09;
     --mist:#C9CFDD;
     --mist-deep:#7C88A6;
     --line:rgba(42,14,12,.14);
@@ -34,7 +34,7 @@
       --bg:#1B0807; --surface:#2B0F0C; --surface-raised:#341410;
       --ink:#FBEEE4; --ink-soft:rgba(251,238,228,.66);
       --wine:#7A1108; --wine-deep:#4A0904; --cream-on-wine:#FFEEDF;
-      --accent:#E5715A; --accent-deep:#C34F3B;
+      --accent:#A3341F; --accent-deep:#7A1108;
       --mist:#C9CFDD; --mist-deep:#9AA6C4;
       --line:rgba(251,238,228,.14); --line-on-wine:rgba(255,238,223,.22);
       --shadow: 0 24px 60px -24px rgba(0,0,0,.6);
@@ -44,7 +44,7 @@
     --bg:#1B0807; --surface:#2B0F0C; --surface-raised:#341410;
     --ink:#FBEEE4; --ink-soft:rgba(251,238,228,.66);
     --wine:#7A1108; --wine-deep:#4A0904; --cream-on-wine:#FFEEDF;
-    --accent:#E5715A; --accent-deep:#C34F3B;
+    --accent:#A3341F; --accent-deep:#7A1108;
     --mist:#C9CFDD; --mist-deep:#9AA6C4;
     --line:rgba(251,238,228,.14); --line-on-wine:rgba(255,238,223,.22);
     --shadow: 0 24px 60px -24px rgba(0,0,0,.6);
@@ -237,7 +237,7 @@
   .bento{ display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:170px; gap:20px; }
   .bento-card{ border-radius:22px; padding:26px; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; }
   .bento-card.is-event{ grid-column:span 2; grid-row:span 2; background:var(--wine); color:var(--cream-on-wine); }
-  .bento-card.is-detail{ grid-column:span 2; background:var(--surface); border:1px solid var(--line); }
+  .bento-card.is-detail{ grid-column:span 2; background:var(--surface-raised); border:1px solid var(--line); box-shadow:var(--shadow); }
   .bento-card:nth-of-type(3){ grid-column:span 2; }
   .bento-tag{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; opacity:.72; }
   .bento-card.is-event .bento-tag{ color:var(--mist); opacity:1; }
