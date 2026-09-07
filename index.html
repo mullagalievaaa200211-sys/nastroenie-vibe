@@ -213,20 +213,22 @@
   /* ============ Bite scroller ============ */
   .bite-section{ position:relative; height:260vh; background:var(--bg); }
   .bite-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
-  .bite-grid{ width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
+  .bite-grid{ width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); }
   .bite-copy .h2{ margin-bottom:22px; }
   .bite-copy p{ font-size:1.06rem; color:var(--ink-soft); max-width:44ch; }
   .bite-progress{ display:flex; gap:6px; margin-top:30px; }
   .bite-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
   .bite-progress i.is-active{ background:var(--accent); }
-  .sandwich{ position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1; }
-  .sw-layer{ position:absolute; left:8%; right:8%; border-radius:999px; transition:transform .25s ease, opacity .25s ease; }
-  .sw-top{ top:8%; height:16%; background:var(--accent); }
-  .sw-lettuce{ top:24%; height:10%; background:var(--mist-deep); clip-path:polygon(0% 50%,8% 0%,16% 60%,24% 5%,32% 55%,40% 0%,48% 60%,56% 5%,64% 55%,72% 0%,80% 60%,88% 5%,100% 50%,100% 100%,0% 100%); }
-  .sw-patty{ top:36%; height:16%; background:var(--surface); }
-  .sw-cheese{ top:53%; height:8%; background:var(--mist); clip-path:polygon(0 0,100% 0,96% 100%,4% 100%); }
-  .sw-bottom{ top:63%; height:20%; background:var(--accent-deep); border-radius:999px 999px 40px 40px; }
-  .sw-seed{ position:absolute; width:6%; aspect-ratio:1/1; background:var(--bg); border-radius:50%; top:11%; }
+  .sandwich{ position:relative; width:100%; height:clamp(200px,26vw,300px); overflow:hidden; margin-top:40px; }
+  .sandwich-img{
+    position:absolute; top:50%; width:clamp(200px,20vw,300px); height:auto;
+    transform:translateY(-50%); animation:sandwich-walk 11s linear infinite;
+  }
+  @keyframes sandwich-walk{
+    0%{ left:-32%; }
+    100%{ left:112%; }
+  }
+  @media (prefers-reduced-motion: reduce){ .sandwich-img{ animation:none; left:0; } }
 
   /* ============ Moments (bento) ============ */
   .moments{ padding:120px 0; background:var(--bg); }
@@ -468,16 +470,9 @@
           <div class="bite-progress" aria-hidden="true">
             <i data-step="0" class="is-active"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i>
           </div>
-        </div>
-        <div class="sandwich" aria-hidden="true">
-          <div class="sw-layer sw-top" id="swTop"></div>
-          <div class="sw-layer sw-lettuce" id="swLettuce"></div>
-          <div class="sw-layer sw-patty" id="swPatty"></div>
-          <div class="sw-layer sw-cheese" id="swCheese"></div>
-          <div class="sw-layer sw-bottom" id="swBottom"></div>
-          <div class="sw-seed" style="left:30%;"></div>
-          <div class="sw-seed" style="left:46%;top:9.5%;"></div>
-          <div class="sw-seed" style="left:62%;"></div>
+          <div class="sandwich" aria-hidden="true">
+            <img class="sandwich-img" src="assets/img/sandwich-guy.png" alt="">
+          </div>
         </div>
       </div>
     </div>
@@ -771,24 +766,9 @@
   }, { threshold:.15 });
   els.forEach(function(el){ io.observe(el); });
 
-  // Sandwich bite scroller
+  // Прогресс скролла в секции "О нас"
   var biteSection = document.querySelector('.bite-section');
-  var layers = {
-    top: document.getElementById('swTop'),
-    lettuce: document.getElementById('swLettuce'),
-    patty: document.getElementById('swPatty'),
-    cheese: document.getElementById('swCheese'),
-    bottom: document.getElementById('swBottom')
-  };
   var dots = document.querySelectorAll('.bite-progress i');
-  function applyBite(step){
-    var order = [layers.top, layers.lettuce, layers.cheese, layers.patty];
-    order.forEach(function(layer, i){
-      if(i < step){ layer.style.opacity = '0'; layer.style.transform = 'translateY(-40px)'; }
-      else { layer.style.opacity = '1'; layer.style.transform = 'none'; }
-    });
-    dots.forEach(function(d){ d.classList.toggle('is-active', +d.dataset.step === step); });
-  }
   function onScroll(){
     if(!biteSection) return;
     var rect = biteSection.getBoundingClientRect();
@@ -796,7 +776,7 @@
     var scrolled = -rect.top;
     var progress = Math.min(1, Math.max(0, scrolled / total));
     var step = Math.min(3, Math.floor(progress * 4));
-    applyBite(step);
+    dots.forEach(function(d){ d.classList.toggle('is-active', +d.dataset.step === step); });
   }
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
