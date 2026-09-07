@@ -238,13 +238,12 @@
     border-radius:12px; background:var(--card-bg); border:1px solid var(--card-border); color:var(--ink);
     display:flex; flex-direction:column; position:relative; overflow:hidden;
   }
-  .bento-card.is-event{ grid-column:span 2; grid-row:span 2; min-height:360px; justify-content:flex-end; }
+  .bento-card.is-event{ grid-column:span 2; min-height:240px; justify-content:flex-end; }
   .bento-card.is-detail{ grid-column:span 2; padding:26px; justify-content:space-between; }
   .bento-card.is-detail.has-photo{ padding:0; justify-content:flex-end; min-height:240px; }
   .bento-card:nth-of-type(3){ grid-column:span 2; }
   .bento-tag{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
   .bento-title{ font-family:var(--font-display); font-weight:800; font-size:1.28rem; line-height:1.18; margin:10px 0 6px; text-wrap:balance; }
-  .bento-card.is-event .bento-title{ font-size:1.5rem; }
   .bento-desc{ font-size:.92rem; color:var(--ink-soft); max-width:32ch; }
   .bento-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; z-index:0; }
   .bento-card.has-photo::after{ content:""; position:absolute; inset:0; background:var(--wine); opacity:.5; z-index:1; }
@@ -499,7 +498,7 @@
         <p>От утренних сетов до уютных деталей, которые обычно замечают только постоянные.</p>
       </div>
       <div class="bento">
-        <article class="bento-card is-event reveal">
+        <article class="bento-card is-event has-photo reveal">
           <img class="bento-photo" src="assets/img/morning-disco.jpg" alt="" aria-hidden="true">
           <div class="bento-card-body">
             <span class="bento-tag">Анонс</span>
@@ -507,7 +506,7 @@
             <p class="bento-desc">Главный тренд Сириуса: утренний тусич на рассвете. Заряжаемся громкой музыкой, горячим кофе и свежей выпечкой. Следи за анонсом — дату объявим совсем скоро!</p>
           </div>
         </article>
-        <article class="bento-card is-event reveal">
+        <article class="bento-card is-event has-photo reveal">
           <img class="bento-photo" src="assets/img/dog-coffee-party.jpg" alt="" aria-hidden="true">
           <div class="bento-card-body">
             <span class="bento-tag">Анонс</span>
