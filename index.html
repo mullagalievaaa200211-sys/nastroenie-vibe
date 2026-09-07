@@ -7,7 +7,7 @@
 <meta name="description" content="Настроение — кофейня с авторской выпечкой и спешелти-кофе в Сириусе.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   /* ============ Tokens ============ */
   :root{
@@ -29,7 +29,7 @@
     --card-border:rgba(253,251,247,.2);
     --field-bg:rgba(255,255,255,.06);
     --shadow: 0 10px 24px -14px rgba(30,4,6,.2);
-    --font-display:'J Audio Cassette','Montserrat',-apple-system,sans-serif;
+    --font-display:'Playfair Display',Georgia,serif;
     --font-body:'Libre Franklin',-apple-system,sans-serif;
   }
 
@@ -45,7 +45,7 @@
   button{ font-family:inherit; cursor:pointer; }
   input{ font-family:inherit; }
   h1,h2,h3,p{ margin:0; text-wrap:balance; }
-  h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; }
+  h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.03em; line-height:1.15; }
   .wrap{ max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); }
   .eyebrow{
     font-family:var(--font-body); font-weight:700; font-size:.76rem;
@@ -53,8 +53,8 @@
   }
   .eyebrow-mist{ color:var(--mist); }
   .h2{
-    font-family:var(--font-display); font-weight:800; text-transform:uppercase;
-    font-size:clamp(1.9rem,4vw,3rem); line-height:1.04; letter-spacing:.05em; text-wrap:balance;
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+    font-size:clamp(1.9rem,4vw,3rem); line-height:1.15; letter-spacing:.03em; text-wrap:balance;
   }
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -127,8 +127,8 @@
   .hero-badge-dot{ width:22px; height:22px; border-radius:50%; background:var(--mist); flex-shrink:0; }
   .hero-badge span{ font-size:.76rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
   .hero-title{
-    font-family:var(--font-display); font-weight:900; text-transform:uppercase;
-    font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:.98; letter-spacing:.05em;
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+    font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:1.08; letter-spacing:.02em;
     max-width:15ch; margin-bottom:26px;
   }
   .hero-sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:rgba(253,251,247,.82); max-width:46ch; margin-bottom:38px; }
@@ -229,30 +229,43 @@
   .sw-seed{ position:absolute; width:6%; aspect-ratio:1/1; background:var(--bg); border-radius:50%; top:11%; }
   @media (max-width:900px){ .bite-grid{ grid-template-columns:1fr; } .sandwich{ margin-top:36px; } }
 
-  /* ============ Moments (bento) ============ */
-  .moments{ padding:120px 0; background:var(--bg); }
+  /* ============ Moments ============ */
+  .moments{ padding:120px 0 0; background:var(--bg); }
   .moments-head{ max-width:640px; margin-bottom:52px; }
   .moments-head p{ color:var(--ink-soft); font-size:1.02rem; margin-top:14px; }
-  .bento{ display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:minmax(170px,auto); gap:20px; }
-  .bento-card{
-    border-radius:12px; background:var(--card-bg); border:1px solid var(--card-border); color:var(--ink);
-    display:flex; flex-direction:column; position:relative; overflow:hidden;
+
+  /* -- 50/50 photo split -- */
+  .moments-split{ display:grid; grid-template-columns:1fr 1fr; }
+  .split-panel{ position:relative; height:74vh; min-height:440px; overflow:hidden; display:flex; align-items:flex-end; }
+  .split-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; z-index:0; }
+  .split-copy{
+    position:relative; z-index:1; margin:32px; padding:26px 28px;
+    background:rgba(255,255,255,.04); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border:1px solid var(--card-border); border-radius:12px;
   }
-  .bento-card.is-event{ grid-column:span 2; grid-row:span 2; min-height:360px; justify-content:flex-end; }
-  .bento-card.is-detail{ grid-column:span 2; padding:26px; justify-content:space-between; }
-  .bento-card.is-detail.has-photo{ padding:0; justify-content:flex-end; min-height:240px; }
-  .bento-card:nth-of-type(3){ grid-column:span 2; }
-  .bento-tag{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
-  .bento-title{ font-family:var(--font-display); font-weight:800; font-size:1.28rem; line-height:1.18; margin:10px 0 6px; text-wrap:balance; }
-  .bento-card.is-event .bento-title{ font-size:1.5rem; }
-  .bento-desc{ font-size:.92rem; color:var(--ink-soft); max-width:32ch; }
-  .bento-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; z-index:0; }
-  .bento-card.has-photo::after{ content:""; position:absolute; inset:0; background:var(--wine); opacity:.5; z-index:1; }
-  .bento-card-body{ position:relative; z-index:2; padding:22px 24px 26px; display:flex; flex-direction:column; }
+  .split-tag{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--mist); }
+  .split-title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em; font-size:clamp(1.5rem,2.6vw,2.1rem); line-height:1.15; color:var(--cream-on-wine); margin:10px 0 10px; }
+  .split-desc{ font-size:.94rem; color:rgba(253,251,247,.82); max-width:42ch; }
   @media (max-width:900px){
-    .bento{ grid-template-columns:repeat(2,1fr); grid-auto-rows:auto; }
-    .bento-card.is-event, .bento-card.is-detail, .bento-card:nth-of-type(3){ grid-column:span 2; }
-    .bento-photo{ object-position:center top; }
+    .moments-split{ grid-template-columns:1fr; }
+    .split-panel{ height:62vh; min-height:380px; }
+    .split-photo{ object-position:center top; }
+    .split-copy{ margin:20px; }
+  }
+
+  /* -- detail row: hairline dividers, no boxes -- */
+  .details-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:44px; padding:80px 0 120px; }
+  .detail-card{ position:relative; padding-left:32px; border-left:1px solid var(--card-border); }
+  .detail-card:first-child{ border-left:none; padding-left:0; }
+  .detail-photo-wrap{ border-radius:10px; overflow:hidden; margin-bottom:22px; aspect-ratio:4/3; }
+  .detail-photo{ width:100%; height:100%; object-fit:cover; display:block; }
+  .detail-tag{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+  .detail-title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em; font-size:1.2rem; line-height:1.2; margin:12px 0 8px; }
+  .detail-desc{ font-size:.92rem; color:var(--ink-soft); }
+  @media (max-width:760px){
+    .details-row{ grid-template-columns:1fr; gap:36px; padding:64px 0 90px; }
+    .detail-card{ border-left:none; padding-left:0; border-top:1px solid var(--card-border); padding-top:30px; }
+    .detail-card:first-child{ border-top:none; padding-top:0; }
   }
 
   /* ============ Menu ============ */
@@ -498,43 +511,45 @@
         <h2 class="h2">Из чего складывается вайб</h2>
         <p>От утренних сетов до уютных деталей, которые обычно замечают только постоянные.</p>
       </div>
-      <div class="bento">
-        <article class="bento-card is-event reveal">
-          <img class="bento-photo" src="assets/img/morning-disco.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Анонс</span>
-            <h3 class="bento-title">Утренняя дискотека</h3>
-            <p class="bento-desc">Главный тренд Сириуса: утренний тусич на рассвете. Заряжаемся громкой музыкой, горячим кофе и свежей выпечкой. Следи за анонсом — дату объявим совсем скоро!</p>
-          </div>
+    </div>
+
+    <div class="moments-split">
+      <article class="split-panel reveal">
+        <img class="split-photo" src="assets/img/morning-disco.jpg" alt="">
+        <div class="split-copy">
+          <span class="split-tag">Анонс</span>
+          <h3 class="split-title">Утренняя дискотека</h3>
+          <p class="split-desc">Главный тренд Сириуса: утренний тусич на рассвете. Заряжаемся громкой музыкой, горячим кофе и свежей выпечкой. Следи за анонсом — дату объявим совсем скоро!</p>
+        </div>
+      </article>
+      <article class="split-panel reveal">
+        <img class="split-photo" src="assets/img/dog-coffee-party.jpg" alt="">
+        <div class="split-copy">
+          <span class="split-tag">Анонс</span>
+          <h3 class="split-title">Dog &amp; Coffee Party</h3>
+          <p class="split-desc">Тусовка для пушистых: догпучино, фотозона и спешелти хозяевам.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="wrap">
+      <div class="details-row">
+        <article class="detail-card reveal">
+          <div class="detail-photo-wrap"><img class="detail-photo" src="assets/img/pet-friendly.jpg" alt=""></div>
+          <span class="detail-tag">Деталь</span>
+          <h3 class="detail-title">Pet-friendly вайб</h3>
+          <p class="detail-desc">Свежая вода, внимание бариста и дофамин — для тех, кто пришёл на четырёх лапах.</p>
         </article>
-        <article class="bento-card is-event reveal">
-          <img class="bento-photo" src="assets/img/dog-coffee-party.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Анонс</span>
-            <h3 class="bento-title">Dog &amp; Coffee Party</h3>
-            <p class="bento-desc">Тусовка для пушистых: догпучино, фотозона и спешелти хозяевам.</p>
-          </div>
+        <article class="detail-card reveal">
+          <div class="detail-photo-wrap"><img class="detail-photo" src="assets/img/secret-menu.jpg" alt=""></div>
+          <span class="detail-tag">Деталь</span>
+          <h3 class="detail-title">Secret Menu</h3>
+          <p class="detail-desc">Авторские миксы бариста, которых нет на доске — спроси у стойки.</p>
         </article>
-        <article class="bento-card is-detail has-photo reveal">
-          <img class="bento-photo" src="assets/img/pet-friendly.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Деталь</span>
-            <h3 class="bento-title">Pet-friendly вайб</h3>
-            <p class="bento-desc">Свежая вода, внимание бариста и дофамин — для тех, кто пришёл на четырёх лапах.</p>
-          </div>
-        </article>
-        <article class="bento-card is-detail has-photo reveal">
-          <img class="bento-photo" src="assets/img/secret-menu.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Деталь</span>
-            <h3 class="bento-title">Secret Menu</h3>
-            <p class="bento-desc">Авторские миксы бариста, которых нет на доске — спроси у стойки.</p>
-          </div>
-        </article>
-        <article class="bento-card is-detail reveal">
-          <span class="bento-tag">Деталь</span>
-          <h3 class="bento-title">Плотная керамика</h3>
-          <p class="bento-desc">Никаких бумажных стаканов внутри зала — только если совсем на бегу.</p>
+        <article class="detail-card reveal">
+          <span class="detail-tag">Деталь</span>
+          <h3 class="detail-title">Плотная керамика</h3>
+          <p class="detail-desc">Никаких бумажных стаканов внутри зала — только если совсем на бегу.</p>
         </article>
       </div>
     </div>
