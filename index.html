@@ -86,7 +86,7 @@
   .main-nav{ display:flex; align-items:center; gap:26px; }
   .main-nav a{ font-size:.9rem; font-weight:600; color:var(--ink-soft); text-decoration:none; transition:color .2s; }
   .main-nav a:hover{ color:var(--ink); }
-  .nav-cta{ flex-shrink:0; }
+  .nav-cta{ flex-shrink:0; padding:11px 20px; font-size:.86rem; }
   .burger{
     display:none; background:none; border:none; width:34px; height:30px;
     flex-direction:column; justify-content:space-between; padding:4px 0; flex-shrink:0; cursor:pointer;
@@ -113,7 +113,7 @@
   }
   .hero-video{
     position:absolute; top:0; left:0; width:100%; height:100%;
-    object-fit:cover; z-index:0;
+    object-fit:cover; object-position:center top; z-index:0;
   }
   .hero-video-scrim{
     position:absolute; inset:0; z-index:0;
@@ -146,6 +146,24 @@
   .hero-stamp svg{ animation:spin-slow 22s linear infinite; }
   @keyframes spin-slow{ to{ transform:rotate(360deg); } }
   @media (max-width:900px){ .hero-stamp{ display:none; } }
+
+  @media (max-width:768px){
+    .header-inner{ padding:12px clamp(16px,5vw,56px); gap:14px; }
+    .nav-cta{
+      padding:8px 14px; font-size:.76rem;
+      background:rgba(255,255,255,.06); color:var(--cream-on-wine);
+      border:1px solid rgba(253,251,247,.35); backdrop-filter:blur(8px);
+    }
+    .nav-cta:hover{ filter:none; background:rgba(255,255,255,.12); }
+    .hero{ padding:64px 0 48px; min-height:100vh; display:flex; align-items:center; }
+    .hero-video-scrim{ background:linear-gradient(180deg, rgba(74,10,15,.4) 0%, rgba(74,10,15,.85) 100%); }
+    .hero-title{ font-size:clamp(1.8rem,6vw,2.5rem); line-height:1.12; margin-bottom:14px; }
+    .hero-sub{ margin-bottom:22px; }
+    .hero-badge{ margin-bottom:20px; }
+    .hero-actions{ gap:12px; }
+    .hero-actions .btn-outline{ border-color:rgba(253,251,247,.4); background:transparent; }
+    .hero-spin-link{ margin-top:20px; }
+  }
 
   /* ============ Spinner overlay ============ */
   .spin-overlay{
@@ -381,7 +399,7 @@
       <a href="#merch">Мерч</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill nav-cta" style="padding:11px 20px;font-size:.86rem;">Заказать доставку</a>
+    <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill nav-cta">Заказать доставку</a>
     <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
