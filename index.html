@@ -7,7 +7,7 @@
 <meta name="description" content="Настроение — кофейня с авторской выпечкой и спешелти-кофе в Сириусе.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   /* ============ Tokens ============ */
   :root{
@@ -29,7 +29,7 @@
     --card-border:rgba(253,251,247,.2);
     --field-bg:rgba(255,255,255,.06);
     --shadow: 0 10px 24px -14px rgba(30,4,6,.2);
-    --font-display:'Poppins',-apple-system,sans-serif;
+    --font-display:'J Audio Cassette','Syne','Montserrat',-apple-system,sans-serif;
     --font-body:'Libre Franklin',-apple-system,sans-serif;
   }
 
@@ -45,6 +45,7 @@
   button{ font-family:inherit; cursor:pointer; }
   input{ font-family:inherit; }
   h1,h2,h3,p{ margin:0; text-wrap:balance; }
+  h1,h2,h3{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.05em; }
   .wrap{ max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); }
   .eyebrow{
     font-family:var(--font-body); font-weight:700; font-size:.76rem;
@@ -53,7 +54,7 @@
   .eyebrow-mist{ color:var(--mist); }
   .h2{
     font-family:var(--font-display); font-weight:800; text-transform:uppercase;
-    font-size:clamp(1.9rem,4vw,3rem); line-height:1.04; letter-spacing:-.01em; text-wrap:balance;
+    font-size:clamp(1.9rem,4vw,3rem); line-height:1.04; letter-spacing:.05em; text-wrap:balance;
   }
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -127,7 +128,7 @@
   .hero-badge span{ font-size:.76rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
   .hero-title{
     font-family:var(--font-display); font-weight:900; text-transform:uppercase;
-    font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:.98; letter-spacing:-.015em;
+    font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:.98; letter-spacing:.05em;
     max-width:15ch; margin-bottom:26px;
   }
   .hero-sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:rgba(253,251,247,.82); max-width:46ch; margin-bottom:38px; }
@@ -275,7 +276,7 @@
   .menu-panel.is-active{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(28px,4vw,60px); animation:menuFade .4s ease; }
   @keyframes menuFade{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
   .menu-group{ position:relative; }
-  .menu-col-title{ font-family:var(--font-display); font-weight:800; font-size:1.05rem; text-transform:uppercase; letter-spacing:.03em; margin-bottom:22px; color:var(--accent); position:relative; z-index:1; }
+  .menu-col-title{ font-family:var(--font-display); font-weight:800; font-size:1.05rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:22px; color:var(--accent); position:relative; z-index:1; }
   .menu-item{ display:flex; align-items:baseline; gap:8px; padding:13px 0; border-bottom:1px solid var(--line-on-wine); position:relative; z-index:1; }
   .menu-item:last-child{ border-bottom:none; }
   .menu-item-name{ font-weight:600; }
@@ -408,7 +409,7 @@
         <defs><path id="stampCircle" d="M85,85 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs>
         <circle cx="85" cy="85" r="80" fill="none" stroke="rgba(255,238,223,.5)" stroke-width="1"/>
         <circle cx="85" cy="85" r="6" fill="var(--accent)"/>
-        <text font-family="Poppins" font-size="10.5" font-weight="700" letter-spacing="3" fill="var(--cream-on-wine)">
+        <text font-family="Syne, Montserrat, sans-serif" font-size="10.5" font-weight="700" letter-spacing="3" fill="var(--cream-on-wine)">
           <textPath href="#stampCircle" startOffset="0%">SPECIALTY COFFEE • СИРИУС • НАСТРОЕНИЕ •</textPath>
         </text>
       </svg>
