@@ -155,7 +155,7 @@
       border:1px solid rgba(253,251,247,.35); backdrop-filter:blur(8px);
     }
     .nav-cta:hover{ filter:none; background:rgba(255,255,255,.12); }
-    .hero{ padding:64px 0 48px; min-height:100vh; display:flex; align-items:center; }
+    .hero{ padding:56px 0 40px; min-height:auto; }
     .hero-video-scrim{ background:linear-gradient(180deg, rgba(74,10,15,.4) 0%, rgba(74,10,15,.85) 100%); }
     .hero-title{ font-size:clamp(1.8rem,6vw,2.5rem); line-height:1.12; margin-bottom:14px; }
     .hero-sub{ margin-bottom:22px; }
@@ -383,6 +383,31 @@
   .locate-card a{ margin-top:6px; font-weight:700; font-size:.9rem; color:var(--accent); text-decoration:none; border-bottom:1.5px dashed var(--accent); padding-bottom:2px; }
 
   footer{ padding:36px 0 30px; text-align:center; font-size:.82rem; color:var(--ink-soft); background:var(--bg); }
+
+  /* -- Compact section rhythm on mobile -- */
+  @media (max-width:768px){
+    .moments{ padding:48px 0; }
+    .moments-head{ margin-bottom:28px; }
+    .menu{ padding:48px 0 40px; }
+    .menu-head{ margin-bottom:28px; }
+    .menu-tabs{ margin-bottom:24px; }
+    .menu-card{ padding:24px; }
+    .menu-full-cta{ margin-top:32px; }
+    .menu-allergy-note{ margin-top:16px; }
+    .breakfast{ padding:48px 0; }
+    .breakfast-grid{ margin-top:28px; }
+    .breakfast-tagline{ margin-top:24px; }
+    .delivery-promo{ padding:40px 0; }
+    .merch{ padding:48px 0; }
+    .merch-head p{ margin-top:10px; }
+    .merch-swatches{ margin-top:20px; }
+    .merch-form{ padding:22px; }
+    .contacts{ padding:48px 0 36px; }
+    .contacts-grid{ grid-template-columns:1fr; gap:32px; }
+    .contacts-list{ margin:16px 0 20px; gap:12px; }
+    .locate-card{ padding:28px; min-height:220px; }
+    footer{ padding:22px 0 18px; }
+  }
 </style>
 </head>
 <body>
