@@ -96,6 +96,7 @@
   .burger.is-open span:nth-child(2){ opacity:0; }
   .burger.is-open span:nth-child(3){ transform:translateY(-11px) rotate(-45deg); }
   @media (max-width:760px){
+    .site-header{ position:relative; }
     .main-nav{ display:none; }
     .burger{ display:flex; }
     .site-header.is-open .main-nav{
@@ -120,12 +121,6 @@
     background: rgba(20,6,4,.58);
   }
   .hero-inner{ position:relative; z-index:1; }
-  .hero-badge{
-    display:inline-flex; align-items:center; gap:8px; padding:7px 16px 7px 7px;
-    border:1px solid var(--line-on-wine); border-radius:999px; margin-bottom:28px;
-  }
-  .hero-badge-dot{ width:22px; height:22px; border-radius:50%; background:var(--mist); flex-shrink:0; }
-  .hero-badge span{ font-size:.76rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
   .hero-title{
     font-family:var(--font-display); font-weight:900; text-transform:uppercase;
     font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:.98; letter-spacing:.05em;
@@ -159,7 +154,6 @@
     .hero-video-scrim{ background:linear-gradient(180deg, rgba(74,10,15,.4) 0%, rgba(74,10,15,.85) 100%); }
     .hero-title{ font-size:clamp(1.8rem,6vw,2.5rem); line-height:1.12; margin-bottom:14px; }
     .hero-sub{ margin-bottom:22px; }
-    .hero-badge{ margin-bottom:20px; }
     .hero-actions{ gap:12px; }
     .hero-actions .btn-outline{ border-color:rgba(253,251,247,.4); background:transparent; }
     .hero-spin-link{ margin-top:20px; }
@@ -233,6 +227,7 @@
   .bite-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
   .bite-grid{ width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
   .bite-copy .h2{ margin-bottom:22px; }
+  .bite-guy{ max-width:260px; width:60%; height:auto; margin:0 0 22px; }
   .bite-copy p{ font-size:1.06rem; color:var(--ink-soft); max-width:44ch; }
   .bite-progress{ display:flex; gap:6px; margin-top:30px; }
   .bite-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
@@ -297,6 +292,7 @@
   }
   .menu-panel{ display:none; }
   .menu-panel.is-active{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(28px,4vw,60px); animation:menuFade .4s ease; }
+  .menu-panel-breakfast.is-active{ display:block; }
   @keyframes menuFade{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
   .menu-group{ position:relative; }
   .menu-col-title{ font-family:var(--font-display); font-weight:800; font-size:1.05rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:22px; color:var(--accent); position:relative; z-index:1; }
@@ -313,9 +309,8 @@
     .menu-tab{ padding:10px 16px; font-size:.86rem; }
   }
 
-  /* ============ Breakfast ============ */
-  .breakfast{ padding:120px 0; background:var(--bg); }
-  .breakfast-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(22px,3vw,32px); margin-top:52px; }
+  /* ============ Breakfast (внутри вкладки меню) ============ */
+  .breakfast-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(22px,3vw,32px); margin-top:8px; }
   .breakfast-card{
     background:var(--card-bg); border-radius:12px; overflow:hidden; border:1px solid var(--card-border); color:var(--ink);
     transition:transform .3s ease, box-shadow .3s ease;
@@ -386,6 +381,9 @@
 
   /* -- Compact section rhythm on mobile -- */
   @media (max-width:768px){
+    .wrap{ padding:0 1rem; }
+    .hero, .moments, .menu, .delivery-promo, .merch, .contacts, footer{ margin-bottom:0; margin-top:0; }
+    .bite-guy{ max-width:180px; width:55%; margin:0 auto 20px; display:block; }
     .moments{ padding:48px 0; }
     .moments-head{ margin-bottom:28px; }
     .menu{ padding:48px 0 40px; }
@@ -394,8 +392,7 @@
     .menu-card{ padding:24px; }
     .menu-full-cta{ margin-top:32px; }
     .menu-allergy-note{ margin-top:16px; }
-    .breakfast{ padding:48px 0; }
-    .breakfast-grid{ margin-top:28px; }
+    .breakfast-grid{ grid-template-columns:1fr; margin-top:20px; }
     .breakfast-tagline{ margin-top:24px; }
     .delivery-promo{ padding:40px 0; }
     .merch{ padding:48px 0; }
@@ -419,7 +416,6 @@
     </a>
     <nav class="main-nav">
       <a href="#menu">Меню</a>
-      <a href="#breakfast">Завтраки</a>
       <a href="#moments">Моменты</a>
       <a href="#merch">Мерч</a>
       <a href="#contacts">Контакты</a>
@@ -440,10 +436,6 @@
     </video>
     <div class="hero-video-scrim" aria-hidden="true"></div>
     <div class="wrap hero-inner">
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        <span>Настроение // Сириус</span>
-      </div>
       <h1 class="hero-title">Не всё имеет смысл. И слава богу.</h1>
       <p class="hero-sub">Твой главный спешелти — этот вайб.</p>
       <div class="hero-actions">
@@ -513,6 +505,7 @@
         <div class="bite-copy reveal">
           <p class="eyebrow">О нас</p>
           <h2 class="h2">Всё временно. Даже этот сэндвич.</h2>
+          <img class="bite-guy" src="assets/img/sandwich-guy.png" alt="">
           <p>Ничего не задерживается навсегда — ни очереди, ни список дел, составленный вчерашним оптимистом. Заходи выдохнуть, съесть свежий круассан и пересобрать мысли.</p>
           <div class="bite-progress" aria-hidden="true">
             <i data-step="0" class="is-active"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i>
@@ -591,6 +584,7 @@
         <button class="menu-tab" data-tab="tea" type="button">Чай и матча</button>
         <button class="menu-tab" data-tab="food" type="button">Сэндвичи и выпечка</button>
         <button class="menu-tab" data-tab="sweets" type="button">Десерты и напитки</button>
+        <button class="menu-tab" data-tab="breakfast" type="button">Завтраки</button>
       </div>
 
       <div class="menu-card reveal">
@@ -688,6 +682,36 @@
           </div>
         </div>
 
+        <div class="menu-panel menu-panel-breakfast" data-panel="breakfast">
+          <div class="breakfast-grid">
+            <article class="breakfast-card reveal">
+              <div class="breakfast-card-img"><img src="assets/img/syrniki.jpg" alt="Сырники без вопросов" loading="lazy"></div>
+              <div class="breakfast-card-body">
+                <h3>Сырники без вопросов</h3>
+                <p>Со сметаной и ягодным вареньем</p>
+                <div class="breakfast-card-foot"><span>240 г</span><span class="breakfast-card-price">390 ₽</span></div>
+              </div>
+            </article>
+            <article class="breakfast-card reveal">
+              <div class="breakfast-card-img"><img src="assets/img/croissant-adult.jpg" alt="Круассан по-взрослому" loading="lazy"></div>
+              <div class="breakfast-card-body">
+                <h3>Круассан по-взрослому</h3>
+                <p>Мортаделла, авокадо, томаты, салат, творожный сыр с каперсами, устричный соус</p>
+                <div class="breakfast-card-foot"><span>230 г</span><span class="breakfast-card-price">690 ₽</span></div>
+              </div>
+            </article>
+            <article class="breakfast-card reveal">
+              <div class="breakfast-card-img"><img src="assets/img/hashbrown.jpg" alt="Хэшбраун при параде" loading="lazy"></div>
+              <div class="breakfast-card-body">
+                <h3>Хэшбраун при параде</h3>
+                <p>С беконом, соусом айоли, руколой и томатами</p>
+                <div class="breakfast-card-foot"><span>180 г</span><span class="breakfast-card-price">490 ₽</span></div>
+              </div>
+            </article>
+          </div>
+          <p class="breakfast-tagline">Накормим и поднимем настроение — совместим приятное с сытным ;)</p>
+        </div>
+
       </div>
       </div>
 
@@ -696,44 +720,6 @@
       <div class="menu-full-cta reveal">
         <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill">Заказать доставку</a>
       </div>
-    </div>
-  </section>
-
-  <!-- BREAKFAST -->
-  <section class="breakfast" id="breakfast">
-    <div class="wrap">
-      <div class="menu-head reveal">
-        <p class="eyebrow">Добрый завтрак</p>
-        <h2 class="h2">«Для плотного настроения»</h2>
-      </div>
-
-      <div class="breakfast-grid">
-        <article class="breakfast-card reveal">
-          <div class="breakfast-card-img"><img src="assets/img/syrniki.jpg" alt="Сырники без вопросов" loading="lazy"></div>
-          <div class="breakfast-card-body">
-            <h3>Сырники без вопросов</h3>
-            <p>Со сметаной и ягодным вареньем</p>
-            <div class="breakfast-card-foot"><span>240 г</span><span class="breakfast-card-price">390 ₽</span></div>
-          </div>
-        </article>
-        <article class="breakfast-card reveal">
-          <div class="breakfast-card-img"><img src="assets/img/croissant-adult.jpg" alt="Круассан по-взрослому" loading="lazy"></div>
-          <div class="breakfast-card-body">
-            <h3>Круассан по-взрослому</h3>
-            <p>Мортаделла, авокадо, томаты, салат, творожный сыр с каперсами, устричный соус</p>
-            <div class="breakfast-card-foot"><span>230 г</span><span class="breakfast-card-price">690 ₽</span></div>
-          </div>
-        </article>
-        <article class="breakfast-card reveal">
-          <div class="breakfast-card-img"><img src="assets/img/hashbrown.jpg" alt="Хэшбраун при параде" loading="lazy"></div>
-          <div class="breakfast-card-body">
-            <h3>Хэшбраун при параде</h3>
-            <p>С беконом, соусом айоли, руколой и томатами</p>
-            <div class="breakfast-card-foot"><span>180 г</span><span class="breakfast-card-price">490 ₽</span></div>
-          </div>
-        </article>
-      </div>
-      <p class="breakfast-tagline">Накормим и поднимем настроение — совместим приятное с сытным ;)</p>
     </div>
   </section>
 
