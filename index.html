@@ -370,27 +370,6 @@
 
   .eyebrow-mist{ color:var(--mist); }
 
-  /* ============ Merch ============ */
-  .merch{ padding:120px 0; background:var(--wine); color:var(--cream-on-wine); }
-  .merch-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,80px); align-items:start; }
-  .merch-head p{ color:rgba(253,251,247,.78); font-size:1.02rem; margin-top:14px; max-width:38ch; }
-  .merch-swatches{ display:flex; gap:14px; margin-top:34px; }
-  .merch-swatch{ width:64px; height:64px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
-  .merch-form{
-    background:var(--card-bg); color:var(--ink); border:1px solid var(--card-border); border-radius:12px; padding:clamp(24px,3.4vw,36px);
-  }
-  .merch-form label{ display:block; font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin:0 0 8px; }
-  .merch-form input,.merch-form textarea{
-    width:100%; padding:13px 15px; border-radius:12px; border:1.5px solid var(--line-on-wine); background:var(--field-bg);
-    color:var(--ink); font-size:.95rem; margin-bottom:18px; resize:vertical;
-  }
-  .merch-form input::placeholder,.merch-form textarea::placeholder{ color:var(--ink-soft); }
-  .merch-form input:focus-visible,.merch-form textarea:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
-  .merch-fine{ font-size:.8rem; color:var(--ink-soft); margin-top:16px; }
-  .merch-thanks{ display:none; text-align:center; padding:20px 0; }
-  .merch-thanks.is-active{ display:block; }
-  .merch-thanks-tag{ font-family:var(--font-display); font-weight:800; font-size:1.2rem; margin-bottom:8px; }
-  @media (max-width:860px){ .merch-grid{ grid-template-columns:1fr; } }
 
   /* ============ Contacts ============ */
   .contacts{ padding:110px 0 60px; background:var(--bg); }
@@ -417,7 +396,7 @@
   /* -- Compact section rhythm on mobile -- */
   @media (max-width:768px){
     .wrap{ padding:0 1rem; }
-    .hero, .moments, .menu, .merch, .contacts, footer{ margin-bottom:0; margin-top:0; }
+    .hero, .moments, .menu, .contacts, footer{ margin-bottom:0; margin-top:0; }
     .moments{ padding:48px 0; }
     .moments-head{ margin-bottom:28px; }
     .bento{
@@ -434,10 +413,6 @@
     .menu-allergy-note{ margin-top:16px; }
     .breakfast-grid{ grid-template-columns:1fr; margin-top:20px; }
     .breakfast-tagline{ margin-top:24px; }
-    .merch{ padding:48px 0; }
-    .merch-head p{ margin-top:10px; }
-    .merch-swatches{ margin-top:20px; }
-    .merch-form{ padding:22px; }
     .contacts{ padding:48px 0 36px; }
     .contacts-grid{ grid-template-columns:1fr; gap:32px; }
     .contacts-list{ margin:16px 0 20px; gap:12px; }
@@ -456,7 +431,6 @@
     <nav class="main-nav">
       <a href="#menu">Меню</a>
       <a href="#moments">Моменты</a>
-      <a href="#merch">Мерч</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill nav-cta">Заказать доставку</a>
@@ -807,38 +781,6 @@
     </div>
   </section>
 
-  <!-- MERCH -->
-  <section class="merch" id="merch">
-    <div class="wrap merch-grid">
-      <div class="merch-head reveal">
-        <p class="eyebrow eyebrow-mist">Скоро</p>
-        <h2 class="h2">Носи настроение с собой</h2>
-        <p>Готовим кастомный дроп худи, кепок и шопперов.</p>
-        <div class="merch-swatches" aria-hidden="true">
-          <div class="merch-swatch" style="background:var(--accent);">🧥</div>
-          <div class="merch-swatch" style="background:var(--mist);">🧢</div>
-          <div class="merch-swatch" style="background:rgba(253,251,247,.16);">👜</div>
-        </div>
-      </div>
-
-      <div class="merch-form reveal">
-        <div id="merchFormWrap">
-          <label for="merchPhrase">Предложи фразу или принт</label>
-          <textarea id="merchPhrase" rows="3" placeholder="«Не всё имеет смысл. И слава богу.»" required></textarea>
-          <label for="merchContact">Почта или Telegram для связи</label>
-          <input type="text" id="merchContact" placeholder="@ник или почта" required>
-          <button class="btn btn-fill" id="merchSubmit" type="button" style="width:100%;">Отправить идею</button>
-          <p class="merch-fine">* Автор фразы, которая пойдёт в печать, получит безлимитный кофе на полгода.</p>
-        </div>
-        <div class="merch-thanks" id="merchThanks">
-          <div class="merch-thanks-tag">Приняли ✓</div>
-          <p style="color:var(--ink-soft);">Спасибо! Если выберем твою фразу для дропа — напишем сами.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
   <!-- CONTACTS -->
   <section class="contacts" id="contacts">
     <div class="wrap contacts-grid">
@@ -970,16 +912,6 @@
   if(!already && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     setTimeout(openSpin, 7000);
   }
-
-  // Merch form
-  var merchSubmit = document.getElementById('merchSubmit');
-  merchSubmit.addEventListener('click', function(){
-    var phrase = document.getElementById('merchPhrase').value.trim();
-    var contact = document.getElementById('merchContact').value.trim();
-    if(!phrase || !contact) return;
-    document.getElementById('merchFormWrap').style.display = 'none';
-    document.getElementById('merchThanks').classList.add('is-active');
-  });
 
   // Мобильное меню
   var burger = document.getElementById('burger');
