@@ -159,41 +159,40 @@
     .hero-spin-link{ margin-top:20px; }
   }
 
-  /* ============ Mood picker (glass story cards) ============ */
+  /* ============ Mood picker ============ */
   .mood-picker{ padding:72px 0; background:var(--bg); overflow:hidden; }
   .mood-picker-title{
     font-family:var(--font-body); font-weight:500; font-size:clamp(1.15rem,2vw,1.4rem);
     color:var(--ink); text-align:center; margin:0 0 40px;
   }
   .mood-carousel{
-    display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x proximity;
-    justify-content:center; padding:10px 4px 26px; -webkit-overflow-scrolling:touch;
+    display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x proximity;
+    justify-content:center; padding:6px 4px 20px; -webkit-overflow-scrolling:touch;
   }
   .mood-carousel::-webkit-scrollbar{ display:none; }
   .mood-card{
-    position:relative; flex:0 0 250px; width:250px; height:400px; scroll-snap-align:center;
-    border-radius:24px; overflow:hidden; cursor:pointer; text-align:center;
-    background:rgba(74,10,15,.4); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-    border:1.5px solid rgba(253,251,247,.25);
+    position:relative; flex:0 0 250px; width:250px; height:360px; scroll-snap-align:center;
+    border-radius:12px; overflow:hidden; cursor:pointer; text-align:center;
+    background:var(--card-bg); border:1px solid var(--card-border); color:var(--ink);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:32px 26px; transition:transform .45s cubic-bezier(.2,.8,.2,1), border-color .4s ease, box-shadow .4s ease, background .4s ease;
+    padding:32px 26px; transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease, opacity .3s ease;
   }
-  .mood-card:hover{ transform:translateY(-4px) scale(1.03); border-color:rgba(253,251,247,.5); box-shadow:0 24px 50px -22px rgba(0,0,0,.6), 0 0 28px -8px rgba(253,251,247,.3); }
-  .mood-card.is-open{ transform:translateY(-4px) scale(1.05); border-color:var(--cream-on-wine); background:rgba(74,10,15,.68); box-shadow:0 28px 60px -20px rgba(0,0,0,.65), 0 0 40px -6px rgba(253,251,247,.4); }
-  .mood-carousel:has(.mood-card.is-open) .mood-card:not(.is-open){ opacity:.45; transform:scale(.95); }
-  .mood-card-cover{ display:flex; flex-direction:column; align-items:center; gap:16px; transition:transform .45s ease; }
-  .mood-card.is-open .mood-card-cover{ transform:translateY(-8px); }
-  .mood-card-emoji{ font-size:2.8rem; line-height:1; }
-  .mood-card-title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em; font-size:1.15rem; line-height:1.25; color:var(--ink); margin:0; }
-  .mood-card-reveal{ max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .5s ease, opacity .4s ease .05s, margin-top .5s ease; }
-  .mood-card.is-open .mood-card-reveal{ max-height:240px; opacity:1; margin-top:22px; }
-  .mood-card-reveal .mood-text{ font-size:.92rem; color:var(--ink-soft); margin:0 0 18px; }
+  .mood-card:hover{ transform:translateY(-6px); border-color:var(--accent); }
+  .mood-card.is-open{ transform:translateY(-6px); border-color:var(--accent); box-shadow:var(--shadow); }
+  .mood-carousel:has(.mood-card.is-open) .mood-card:not(.is-open){ opacity:.55; }
+  .mood-card-cover{ display:flex; flex-direction:column; align-items:center; gap:16px; transition:transform .35s ease; }
+  .mood-card.is-open .mood-card-cover{ transform:translateY(-6px); }
+  .mood-card-emoji{ font-size:2.6rem; line-height:1; }
+  .mood-card-title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em; font-size:1.1rem; line-height:1.25; color:var(--ink); margin:0; }
+  .mood-card-reveal{ max-height:0; opacity:0; overflow:hidden; margin-top:0; transition:max-height .45s ease, opacity .35s ease .05s, margin-top .45s ease; }
+  .mood-card.is-open .mood-card-reveal{ max-height:220px; opacity:1; margin-top:20px; }
+  .mood-card-reveal .mood-text{ font-size:.9rem; color:var(--ink-soft); margin:0 0 16px; }
   .mood-card-reveal .btn{ padding:12px 18px; font-size:.82rem; white-space:normal; }
   @media (max-width:768px){
     .mood-picker{ padding:48px 0; }
     .mood-picker-title{ margin-bottom:26px; }
     .mood-carousel{ justify-content:flex-start; scroll-snap-type:x mandatory; margin:0 -1rem; padding-left:1rem; padding-right:1rem; }
-    .mood-card{ flex:0 0 72%; width:auto; height:340px; }
+    .mood-card{ flex:0 0 72%; width:auto; height:320px; }
   }
 
   /* ============ Spinner overlay ============ */
@@ -537,7 +536,7 @@
   <!-- MOOD PICKER -->
   <section class="mood-picker">
     <div class="wrap">
-      <p class="mood-picker-title">Выбирай свой контекст на сегодня ✨</p>
+      <p class="mood-picker-title">Кто ты сегодня? ✨</p>
       <div class="mood-carousel">
         <article class="mood-card" data-mood-card="track">
           <div class="mood-card-cover">
