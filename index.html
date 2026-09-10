@@ -334,10 +334,6 @@
   }
   .menu-layout{ position:relative; z-index:2; }
   .menu-head{ margin-bottom:56px; max-width:600px; }
-  .menu-guy{
-    position:absolute; top:-16px; right:0; width:clamp(90px,11vw,150px); height:auto;
-    pointer-events:none; z-index:1; opacity:.95;
-  }
 
   .menu-tabs{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; position:relative; z-index:1; }
   .menu-tab{
@@ -432,8 +428,7 @@
     }
     .bento-card{ flex:0 0 85% !important; scroll-snap-align:center; min-height:320px; }
     .menu{ padding:48px 0 40px; }
-    .menu-head{ margin-bottom:28px; max-width:64%; }
-    .menu-guy{ top:-6px; width:78px; }
+    .menu-head{ margin-bottom:28px; }
     .menu-tabs{ margin-bottom:24px; }
     .menu-card{ padding:24px; }
     .menu-full-cta{ margin-top:32px; }
@@ -618,8 +613,6 @@
         <p class="eyebrow">Меню</p>
         <h2 class="h2">Из нашей кухни</h2>
       </div>
-      <img class="menu-guy" src="assets/img/sandwich-guy.png" alt="" aria-hidden="true">
-
       <div class="menu-tabs" role="tablist" aria-label="Категории меню">
         <button class="menu-tab is-active" data-tab="coffee" type="button">Кофе</button>
         <button class="menu-tab" data-tab="tea" type="button">Чай и матча</button>
