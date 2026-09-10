@@ -289,12 +289,17 @@
   /* ============ Bite scroller ============ */
   .bite-section{ position:relative; height:260vh; background:var(--bg); }
   .bite-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
-  .bite-grid{ width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
+  .bite-grid{ position:relative; z-index:1; width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
+  .bite-copy{ position:relative; }
   .bite-copy .h2{ margin-bottom:22px; }
   .bite-copy p{ font-size:1.06rem; color:var(--ink-soft); max-width:44ch; }
   .bite-progress{ display:flex; gap:6px; margin-top:30px; }
   .bite-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
   .bite-progress i.is-active{ background:var(--accent); }
+  .bite-guy{
+    position:absolute; z-index:0; top:calc(100% + 18px); right:0; width:clamp(120px,15vw,220px); height:auto;
+    opacity:.9; pointer-events:none;
+  }
   .sandwich{ position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1; }
   .sw-layer{ position:absolute; left:8%; right:8%; border-radius:999px; transition:transform .25s ease, opacity .25s ease; }
   .sw-top{ top:8%; height:16%; background:var(--accent); }
@@ -303,7 +308,11 @@
   .sw-cheese{ top:53%; height:8%; background:var(--mist); clip-path:polygon(0 0,100% 0,96% 100%,4% 100%); }
   .sw-bottom{ top:63%; height:20%; background:var(--accent-deep); border-radius:999px 999px 40px 40px; }
   .sw-seed{ position:absolute; width:6%; aspect-ratio:1/1; background:var(--bg); border-radius:50%; top:11%; }
-  @media (max-width:900px){ .bite-grid{ grid-template-columns:1fr; } .sandwich{ margin-top:36px; } }
+  @media (max-width:900px){
+    .bite-grid{ grid-template-columns:1fr; }
+    .sandwich{ margin-top:36px; }
+    .bite-guy{ display:none; }
+  }
 
   /* ============ Moments (bento) ============ */
   .moments{ padding:120px 0; background:var(--bg); }
@@ -590,6 +599,7 @@
           <div class="bite-progress" aria-hidden="true">
             <i data-step="0" class="is-active"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i>
           </div>
+          <img class="bite-guy" src="assets/img/sandwich-guy.png" alt="" aria-hidden="true">
         </div>
         <div class="sandwich" aria-hidden="true">
           <div class="sw-layer sw-top" id="swTop"></div>
