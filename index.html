@@ -198,8 +198,11 @@
     font-size:clamp(1.25rem,2.2vw,1.55rem); line-height:1.25; color:var(--ink); max-width:34ch; margin:0;
   }
   .quiz-result-invite{
-    font-family:var(--font-body); font-weight:600; font-size:.98rem; color:var(--ink-soft); margin:0;
+    font-family:var(--font-body); font-weight:700; font-size:1.05rem; color:var(--cream-on-wine); margin:0;
+    text-decoration:underline; text-decoration-color:var(--line-on-wine); text-underline-offset:4px;
+    transition:text-decoration-color .25s ease, color .25s ease;
   }
+  .quiz-result-invite:hover{ color:var(--accent); text-decoration-color:var(--accent); }
   .quiz-restart{
     font-family:var(--font-body); font-size:.84rem; color:var(--ink-soft); background:none; border:none;
     text-decoration:underline; cursor:pointer; margin-top:4px;
@@ -560,8 +563,7 @@
           <div class="quiz-result">
             <img class="quiz-result-char" id="quizResultChar" src="" alt="">
             <h3 class="quiz-result-title" id="quizResultTitle"></h3>
-            <p class="quiz-result-invite">В общем, тебе к нам.</p>
-            <a class="btn btn-outline" id="quizResultBtn" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener"></a>
+            <a class="quiz-result-invite" id="quizResultBtn" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">В общем, тебе к нам.</a>
             <button class="quiz-restart" id="quizRestart" type="button">Пройти ещё раз</button>
           </div>
         </div>
@@ -928,18 +930,12 @@
     var restartBtn = document.getElementById('quizRestart');
     var resultChar = document.getElementById('quizResultChar');
     var resultTitle = document.getElementById('quizResultTitle');
-    var resultBtn = document.getElementById('quizResultBtn');
     var state = { mood:null, need:null };
 
     var chars = {
       tired: 'assets/img/mood-tired.png',
       rush: 'assets/img/mood-rush.png',
       aesthetic: 'assets/img/mood-aesthetic.png'
-    };
-    var ctaText = {
-      tired: 'Забегай, тут тихо 🗺️',
-      rush: 'Маршрут для работы 🗺️',
-      aesthetic: 'Идти за сторис 🗺️'
     };
     var results = {
       tired:{
@@ -977,7 +973,6 @@
         if(state.mood && state.need){
           resultChar.src = chars[state.mood];
           resultTitle.textContent = results[state.mood][state.need];
-          resultBtn.textContent = ctaText[state.mood];
         }
         goToStep(3);
       });
