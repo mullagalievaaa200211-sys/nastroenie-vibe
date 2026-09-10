@@ -183,19 +183,22 @@
     font-size:.9rem; color:var(--ink);
   }
 
-  .quiz-options{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+  .quiz-options{ display:flex; justify-content:center; gap:36px; flex-wrap:wrap; }
   .quiz-option{
-    font-family:var(--font-body); font-weight:600; font-size:.95rem; padding:16px 22px; border-radius:10px;
-    border:1.5px solid var(--line-on-wine); background:transparent; color:var(--ink); cursor:pointer;
-    text-align:left; transition:border-color .25s ease, background .25s ease;
+    font-family:var(--font-body); font-weight:700; font-size:1.05rem; padding:8px 2px; border:none;
+    border-bottom:2px solid transparent; background:transparent; color:var(--ink); cursor:pointer;
+    transition:border-color .25s ease, color .25s ease;
   }
-  .quiz-option:hover{ border-color:var(--accent); background:rgba(255,255,255,.06); }
+  .quiz-option:hover{ border-color:var(--accent); color:var(--cream-on-wine); }
 
   .quiz-result{ display:flex; flex-direction:column; align-items:center; gap:18px; }
   .quiz-result-char{ width:150px; height:auto; }
   .quiz-result-title{
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:0;
     font-size:clamp(1.25rem,2.2vw,1.55rem); line-height:1.25; color:var(--ink); max-width:34ch; margin:0;
+  }
+  .quiz-result-invite{
+    font-family:var(--font-body); font-weight:600; font-size:.98rem; color:var(--ink-soft); margin:0;
   }
   .quiz-restart{
     font-family:var(--font-body); font-size:.84rem; color:var(--ink-soft); background:none; border:none;
@@ -209,7 +212,7 @@
     .quiz-char{ padding:8px; flex:0 0 30%; }
     .quiz-char img{ width:100%; max-width:110px; }
     .quiz-char span{ font-size:.76rem; }
-    .quiz-options{ flex-direction:column; align-items:stretch; }
+    .quiz-options{ flex-direction:column; align-items:center; gap:16px; }
     .quiz-option{ text-align:center; }
   }
 
@@ -547,9 +550,9 @@
         <div class="quiz-step" data-quiz-step="2">
           <p class="quiz-question">Чего ты хочешь?</p>
           <div class="quiz-options">
-            <button class="quiz-option" type="button" data-need="calm">🛋️ Дивана и тишины</button>
-            <button class="quiz-option" type="button" data-need="focus">💻 Розетки и фокуса</button>
-            <button class="quiz-option" type="button" data-need="shot">📸 Того самого кадра</button>
+            <button class="quiz-option" type="button" data-need="calm">Дивана и тишины</button>
+            <button class="quiz-option" type="button" data-need="focus">Розетки и фокуса</button>
+            <button class="quiz-option" type="button" data-need="shot">Того самого кадра</button>
           </div>
         </div>
 
@@ -557,6 +560,7 @@
           <div class="quiz-result">
             <img class="quiz-result-char" id="quizResultChar" src="" alt="">
             <h3 class="quiz-result-title" id="quizResultTitle"></h3>
+            <p class="quiz-result-invite">В общем, тебе к нам.</p>
             <a class="btn btn-outline" id="quizResultBtn" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener"></a>
             <button class="quiz-restart" id="quizRestart" type="button">Пройти ещё раз</button>
           </div>
