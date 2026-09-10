@@ -155,7 +155,7 @@
       border:1px solid rgba(253,251,247,.35); backdrop-filter:blur(8px);
     }
     .nav-cta:hover{ filter:none; background:rgba(255,255,255,.12); }
-    .hero{ min-height:100dvh; padding:clamp(20vh,26vh,30vh) 0 40px; }
+    .hero{ min-height:100dvh; padding:clamp(28vh,36vh,40vh) 0 40px; }
     .hero-title{ font-size:clamp(1.75rem,5vw,2.2rem); line-height:1.1; margin-bottom:14px; }
     .hero-actions{ flex-direction:column; align-items:flex-start; gap:12px; }
     .hero-spin-link{ margin-top:20px; }
@@ -215,10 +215,10 @@
     .mood-picker{ padding:28px 0; }
     .quiz-progress{ margin-bottom:26px; }
     .quiz-question{ margin-bottom:24px; }
-    .quiz-characters{ gap:8px; }
-    .quiz-char{ padding:8px; flex:0 0 30%; }
-    .quiz-char img{ width:100%; max-width:110px; }
-    .quiz-char span{ font-size:.76rem; }
+    .quiz-characters{ gap:6px; flex-wrap:nowrap; }
+    .quiz-char{ padding:4px; gap:8px; flex:1 1 0; min-width:0; }
+    .quiz-char img{ width:100%; max-width:78px; }
+    .quiz-char span{ font-size:.66rem; }
     .quiz-options{ flex-direction:column; align-items:center; gap:16px; }
     .quiz-option{ text-align:center; }
   }
@@ -357,6 +357,10 @@
   .menu-item{ display:flex; align-items:baseline; gap:8px; padding:13px 0; border-bottom:1px solid var(--line-on-wine); position:relative; z-index:1; }
   .menu-item:last-child{ border-bottom:none; }
   .menu-item-name{ font-weight:600; }
+  .menu-item-badge{
+    font-family:var(--font-body); font-weight:700; font-size:.65rem; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--accent); border:1px solid var(--accent); border-radius:5px; padding:2px 6px; line-height:1.4;
+  }
   .menu-item-fill{ flex:1; border-bottom:1.5px dotted var(--line-on-wine); transform:translateY(-4px); min-width:12px; }
   .menu-item-price{ font-variant-numeric:tabular-nums; font-weight:700; color:var(--accent); white-space:nowrap; }
   .menu-full-cta{ display:flex; justify-content:center; margin-top:48px; }
@@ -601,43 +605,6 @@
     </div>
   </section>
 
-  <!-- MOMENTS -->
-  <section class="moments" id="moments">
-    <div class="wrap">
-      <div class="moments-head reveal">
-        <p class="eyebrow">Не случайные моменты</p>
-        <h2 class="h2">Из чего складывается вайб</h2>
-        <p>От утренних сетов до уютных деталей, которые обычно замечают только постоянные.</p>
-      </div>
-      <div class="bento">
-        <article class="bento-card is-event has-photo reveal">
-          <img class="bento-photo" src="assets/img/morning-disco.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Анонс</span>
-            <h3 class="bento-title">Утренняя дискотека</h3>
-            <p class="bento-desc">Главный тренд Сириуса: утренний тусич на рассвете. Заряжаемся громкой музыкой, горячим кофе и свежей выпечкой. Следи за анонсом — дату объявим совсем скоро!</p>
-          </div>
-        </article>
-        <article class="bento-card is-event has-photo reveal">
-          <img class="bento-photo" src="assets/img/dog-coffee-party.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Анонс</span>
-            <h3 class="bento-title">Dog &amp; Coffee Party</h3>
-            <p class="bento-desc">Тусовка для пушистых: догпучино, фотозона и спешелти хозяевам.</p>
-          </div>
-        </article>
-        <article class="bento-card is-detail has-photo reveal">
-          <img class="bento-photo" src="assets/img/pet-friendly.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Деталь</span>
-            <h3 class="bento-title">Pet-friendly вайб</h3>
-            <p class="bento-desc">Свежая вода, внимание бариста и дофамин — для тех, кто пришёл на четырёх лапах.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <!-- MENU -->
   <section class="menu" id="menu">
     <div class="menu-bg-photo" aria-hidden="true"></div>
@@ -666,7 +633,7 @@
             <div class="menu-item"><span class="menu-item-name">Капучино</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">Протеиновый капучино</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">Латте</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
-            <div class="menu-item"><span class="menu-item-name">Раф кофе</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Раф кофе</span><span class="menu-item-badge">топ</span><span class="menu-item-fill"></span><span class="menu-item-price">290 ₽</span></div>
           </div>
           <div class="menu-group reveal">
             <h3 class="menu-col-title">Айс кофе</h3>
@@ -680,13 +647,8 @@
             <h3 class="menu-col-title">Авторский кофе</h3>
             <div class="menu-item"><span class="menu-item-name">Раф лесной орех</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">Капучино солёный попкорн</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
-            <div class="menu-item"><span class="menu-item-name">Латте фисташка-малина</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Латте фисташка-малина</span><span class="menu-item-badge">топ</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">Айс какао на фундучном молоке</span><span class="menu-item-fill"></span><span class="menu-item-price">300 ₽</span></div>
-          </div>
-          <div class="menu-group reveal">
-            <h3 class="menu-col-title">Допы</h3>
-            <div class="menu-item"><span class="menu-item-name">Альтернативное молоко</span><span class="menu-item-fill"></span><span class="menu-item-price">80 ₽</span></div>
-            <div class="menu-item"><span class="menu-item-name">Сироп</span><span class="menu-item-fill"></span><span class="menu-item-price">50 ₽</span></div>
           </div>
         </div>
 
@@ -714,7 +676,7 @@
         <div class="menu-panel" data-panel="food">
           <div class="menu-group reveal">
             <h3 class="menu-col-title">Сэндвичи</h3>
-            <div class="menu-item"><span class="menu-item-name">«Зверский аппетит» (говядина)</span><span class="menu-item-fill"></span><span class="menu-item-price">490 / 630 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">«Зверский аппетит» (говядина)</span><span class="menu-item-badge">топ</span><span class="menu-item-fill"></span><span class="menu-item-price">490 / 630 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">«Почти на диете» (тунец)</span><span class="menu-item-fill"></span><span class="menu-item-price">560 / 730 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">«Острый на язык» (чоризо)</span><span class="menu-item-fill"></span><span class="menu-item-price">560 / 730 ₽</span></div>
           </div>
@@ -732,7 +694,7 @@
         <div class="menu-panel" data-panel="sweets">
           <div class="menu-group reveal">
             <h3 class="menu-col-title">Десерты</h3>
-            <div class="menu-item"><span class="menu-item-name">Чизкейк Сан-Себастьян классика</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
+            <div class="menu-item"><span class="menu-item-name">Чизкейк Сан-Себастьян классика</span><span class="menu-item-badge">топ</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">Чизкейк Сан-Себастьян фисташковый</span><span class="menu-item-fill"></span><span class="menu-item-price">330 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">ШУ классический / солёная карамель / бельгийский шоколад</span><span class="menu-item-fill"></span><span class="menu-item-price">260 ₽</span></div>
             <div class="menu-item"><span class="menu-item-name">Торт «Сникерс» / Фисташковый / Кокос-манго</span><span class="menu-item-fill"></span><span class="menu-item-price">390 ₽</span></div>
@@ -787,6 +749,43 @@
 
       <div class="menu-full-cta reveal">
         <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill">Заказать доставку</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOMENTS -->
+  <section class="moments" id="moments">
+    <div class="wrap">
+      <div class="moments-head reveal">
+        <p class="eyebrow">Не случайные моменты</p>
+        <h2 class="h2">Из чего складывается вайб</h2>
+        <p>От утренних сетов до уютных деталей, которые обычно замечают только постоянные.</p>
+      </div>
+      <div class="bento">
+        <article class="bento-card is-event has-photo reveal">
+          <img class="bento-photo" src="assets/img/morning-disco.jpg" alt="" aria-hidden="true">
+          <div class="bento-card-body">
+            <span class="bento-tag">Анонс</span>
+            <h3 class="bento-title">Утренняя дискотека</h3>
+            <p class="bento-desc">Главный тренд Сириуса: утренний тусич на рассвете. Заряжаемся громкой музыкой, горячим кофе и свежей выпечкой. Следи за анонсом — дату объявим совсем скоро!</p>
+          </div>
+        </article>
+        <article class="bento-card is-event has-photo reveal">
+          <img class="bento-photo" src="assets/img/dog-coffee-party.jpg" alt="" aria-hidden="true">
+          <div class="bento-card-body">
+            <span class="bento-tag">Анонс</span>
+            <h3 class="bento-title">Dog &amp; Coffee Party</h3>
+            <p class="bento-desc">Тусовка для пушистых: догпучино, фотозона и спешелти хозяевам.</p>
+          </div>
+        </article>
+        <article class="bento-card is-detail has-photo reveal">
+          <img class="bento-photo" src="assets/img/pet-friendly.jpg" alt="" aria-hidden="true">
+          <div class="bento-card-body">
+            <span class="bento-tag">Деталь</span>
+            <h3 class="bento-title">Pet-friendly вайб</h3>
+            <p class="bento-desc">Свежая вода, внимание бариста и дофамин — для тех, кто пришёл на четырёх лапах.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
