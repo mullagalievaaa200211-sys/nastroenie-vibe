@@ -110,7 +110,7 @@
   /* ============ Hero ============ */
   .hero{
     position:relative; background:var(--wine); color:var(--cream-on-wine);
-    padding:96px 0 84px; overflow:hidden;
+    min-height:100vh; padding:clamp(22vh,28vh,34vh) 0 70px; overflow:hidden;
   }
   .hero-video{
     position:absolute; top:0; left:0; width:100%; height:100%;
@@ -118,7 +118,7 @@
   }
   .hero-video-scrim{
     position:absolute; inset:0; z-index:0;
-    background: rgba(20,6,4,.58);
+    background:linear-gradient(180deg, rgba(20,5,8,.3) 0%, rgba(20,5,8,.75) 100%);
   }
   .hero-inner{ position:relative; z-index:1; }
   .hero-title{
@@ -127,6 +127,12 @@
     max-width:15ch; margin-bottom:26px;
   }
   .hero-actions{ display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+  .hero-actions .btn-fill{ padding:.75rem 1.5rem; font-size:.95rem; }
+  .hero-actions .btn-outline{
+    padding:.65rem 1.25rem; font-size:.85rem;
+    background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); backdrop-filter:blur(8px);
+  }
+  .hero-actions .btn-outline:hover{ background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.5); }
   .hero-spin-link{
     display:inline-flex; align-items:center; gap:8px; margin-top:30px; font-weight:700; font-size:.92rem;
     color:var(--cream-on-wine); text-decoration:none; border-bottom:1.5px dashed var(--line-on-wine); padding-bottom:3px;
@@ -149,11 +155,9 @@
       border:1px solid rgba(253,251,247,.35); backdrop-filter:blur(8px);
     }
     .nav-cta:hover{ filter:none; background:rgba(255,255,255,.12); }
-    .hero{ padding:56px 0 40px; min-height:auto; }
-    .hero-video-scrim{ background:linear-gradient(180deg, rgba(74,10,15,.4) 0%, rgba(74,10,15,.85) 100%); }
-    .hero-title{ font-size:clamp(1.8rem,6vw,2.5rem); line-height:1.12; margin-bottom:14px; }
-    .hero-actions{ gap:12px; }
-    .hero-actions .btn-outline{ border-color:rgba(253,251,247,.4); background:transparent; }
+    .hero{ min-height:100dvh; padding:clamp(20vh,26vh,30vh) 0 40px; }
+    .hero-title{ font-size:clamp(1.75rem,5vw,2.2rem); line-height:1.1; margin-bottom:14px; }
+    .hero-actions{ flex-direction:column; align-items:flex-start; gap:12px; }
     .hero-spin-link{ margin-top:20px; }
   }
 
