@@ -159,50 +159,60 @@
     .hero-spin-link{ margin-top:20px; }
   }
 
-  /* ============ Mood picker ============ */
+  /* ============ Mood quiz ============ */
   .mood-picker{ padding:32px 0; margin-top:0; background:var(--bg); }
-  .mood-picker-title{
+  .quiz{ max-width:760px; margin:0 auto; text-align:center; }
+  .quiz-progress{ display:flex; justify-content:center; gap:6px; margin-bottom:34px; }
+  .quiz-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
+  .quiz-progress i.is-active{ background:var(--accent); }
+  .quiz-step{ display:none; }
+  .quiz-step.is-active{ display:block; animation:quizFade .4s ease; }
+  @keyframes quizFade{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+
+  .quiz-question{
     font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em;
-    font-size:clamp(1.4rem,2.6vw,2rem); line-height:1.2;
-    color:var(--ink); text-align:center; margin:0 0 32px;
+    font-size:clamp(1.3rem,2.4vw,1.7rem); line-height:1.25; color:var(--ink); margin:0 0 30px;
   }
-  .mood-carousel{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-  .mood-card{
-    position:relative; border-radius:16px; overflow:hidden; text-decoration:none;
-    background:var(--wine); border:1px solid var(--card-border);
-    display:flex; flex-direction:column;
-    transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease;
+  .quiz-characters{ display:flex; justify-content:center; align-items:flex-end; gap:20px; flex-wrap:wrap; }
+  .quiz-char{
+    background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:14px;
+    padding:12px; border-radius:16px; transition:transform .3s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
   }
-  .mood-card:hover{ transform:translateY(-5px); border-color:var(--accent); box-shadow:var(--shadow); }
-  .mood-card-media{
-    position:relative; height:180px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    background-color:var(--wine-deep);
-    background-image:
-      linear-gradient(rgba(74,10,15,.8), rgba(74,10,15,.8)),
-      url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC45IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCUyM24pIi8+PC9zdmc+");
-    background-size:auto, 160px 160px;
+  .quiz-char:hover{ transform:translateY(-6px); }
+  .quiz-char img{ width:150px; height:auto; }
+  .quiz-char span{
+    font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em;
+    font-size:.9rem; color:var(--ink);
   }
-  .mood-card-icon{ width:52px; height:52px; color:var(--cream-on-wine); opacity:.85; }
-  .mood-card-body{ padding:22px 22px 26px; }
-  .mood-card-title{
+
+  .quiz-options{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+  .quiz-option{
+    font-family:var(--font-body); font-weight:600; font-size:.95rem; padding:14px 24px; border-radius:999px;
+    border:1.5px solid var(--line-on-wine); background:transparent; color:var(--ink); cursor:pointer;
+    transition:border-color .25s ease, background .25s ease;
+  }
+  .quiz-option:hover{ border-color:var(--accent); background:rgba(255,255,255,.06); }
+
+  .quiz-result{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .quiz-result-char{ width:150px; height:auto; }
+  .quiz-result-title{
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:0;
-    font-size:1.22rem; line-height:1.12; color:var(--cream-on-wine); margin:0 0 10px;
+    font-size:clamp(1.25rem,2.2vw,1.55rem); line-height:1.25; color:var(--ink); max-width:34ch; margin:0;
   }
-  .mood-card-subtitle{ font-size:.88rem; color:rgba(253,251,247,.72); margin:0 0 18px; }
-  .mood-card-link{
-    display:inline-flex; align-items:center; gap:6px; font-weight:700; font-size:.82rem;
-    color:var(--cream-on-wine); text-decoration:none; border-bottom:1.5px dashed var(--line-on-wine); padding-bottom:2px;
+  .quiz-restart{
+    font-family:var(--font-body); font-size:.84rem; color:var(--ink-soft); background:none; border:none;
+    text-decoration:underline; cursor:pointer; margin-top:4px;
   }
-  .mood-card-link:hover{ color:var(--accent); border-color:var(--accent); }
   @media (max-width:768px){
     .mood-picker{ padding:28px 0; }
-    .mood-picker-title{ margin-bottom:22px; }
-    .mood-carousel{
-      display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
-      gap:16px; margin:0 -1rem; padding:4px 1rem 8px;
-    }
-    .mood-carousel::-webkit-scrollbar{ display:none; }
-    .mood-card{ flex:0 0 80%; scroll-snap-align:center; }
+    .quiz-progress{ margin-bottom:26px; }
+    .quiz-question{ margin-bottom:24px; }
+    .quiz-characters{ gap:8px; }
+    .quiz-char{ padding:8px; flex:0 0 30%; }
+    .quiz-char img{ width:100%; max-width:110px; }
+    .quiz-char span{ font-size:.76rem; }
+    .quiz-options{ flex-direction:column; align-items:stretch; }
+    .quiz-option{ text-align:center; }
   }
 
   /* ============ Spinner overlay ============ */
@@ -511,56 +521,49 @@
     </div>
   </div>
 
-  <!-- MOOD PICKER -->
+  <!-- MOOD QUIZ -->
   <section class="mood-picker">
     <div class="wrap">
-      <p class="mood-picker-title">Ты кто сегодня по жизни?</p>
-      <div class="mood-carousel">
-        <a class="mood-card" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">
-          <div class="mood-card-media">
-            <svg class="mood-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 18h20l-1.6 20.5a3 3 0 0 1-3 2.5H18.6a3 3 0 0 1-3-2.5L14 18Z"/>
-              <path d="M12 18h24"/>
-              <path d="M18 9c-1.5 1.5-1.5 3 0 4.5"/>
-              <path d="M24 8c-1.5 1.5-1.5 3 0 4.5"/>
-              <path d="M30 9c-1.5 1.5-1.5 3 0 4.5"/>
-            </svg>
+      <div class="quiz" id="moodQuiz">
+        <div class="quiz-progress" aria-hidden="true">
+          <i data-quiz-step="1" class="is-active"></i><i data-quiz-step="2"></i><i data-quiz-step="3"></i>
+        </div>
+
+        <div class="quiz-step is-active" data-quiz-step="1">
+          <p class="quiz-question">Сегодня ты какой вайб?</p>
+          <div class="quiz-characters">
+            <button class="quiz-char" type="button" data-mood="tired">
+              <img src="assets/img/mood-tired.png" alt="">
+              <span>На нуле</span>
+            </button>
+            <button class="quiz-char" type="button" data-mood="rush">
+              <img src="assets/img/mood-rush.png" alt="">
+              <span>Разогнался(лась)</span>
+            </button>
+            <button class="quiz-char" type="button" data-mood="aesthetic">
+              <img src="assets/img/mood-aesthetic.png" alt="">
+              <span>Хочу красиво</span>
+            </button>
           </div>
-          <div class="mood-card-body">
-            <h3 class="mood-card-title">Горит дедлайн</h3>
-            <p class="mood-card-subtitle">Двойной эспрессо и угловой стол, чтобы спасти проект.</p>
-            <span class="mood-card-link">Маршрут для работы 🗺️</span>
+        </div>
+
+        <div class="quiz-step" data-quiz-step="2">
+          <p class="quiz-question">Чего не хватает?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-need="calm">🛋️ Дивана и тишины</button>
+            <button class="quiz-option" type="button" data-need="focus">💻 Розетки и фокуса</button>
+            <button class="quiz-option" type="button" data-need="shot">📸 Того самого кадра</button>
           </div>
-        </a>
-        <a class="mood-card" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">
-          <div class="mood-card-media">
-            <svg class="mood-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 26v-6a4 4 0 0 1 4-4a4 4 0 0 1 4 4v3h14v-3a4 4 0 0 1 4-4a4 4 0 0 1 4 4v6"/>
-              <path d="M9 26h30v6a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2v-6Z"/>
-              <path d="M12 34v3M36 34v3"/>
-            </svg>
+        </div>
+
+        <div class="quiz-step" data-quiz-step="3">
+          <div class="quiz-result">
+            <img class="quiz-result-char" id="quizResultChar" src="" alt="">
+            <h3 class="quiz-result-title" id="quizResultTitle"></h3>
+            <a class="btn btn-outline" id="quizResultBtn" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener"></a>
+            <button class="quiz-restart" id="quizRestart" type="button">Пройти ещё раз</button>
           </div>
-          <div class="mood-card-body">
-            <h3 class="mood-card-title">Отваливаются ноги</h3>
-            <p class="mood-card-subtitle">Плотный фильтр, уютный диван и 20 минут без звонков.</p>
-            <span class="mood-card-link">Забегай! Маршрут в Яндекс.Картах 🗺️</span>
-          </div>
-        </a>
-        <a class="mood-card" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">
-          <div class="mood-card-media">
-            <svg class="mood-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="7" y="15" width="34" height="24" rx="4"/>
-              <path d="M17 15l2.8-4h8.4l2.8 4"/>
-              <circle cx="24" cy="27" r="7"/>
-              <circle cx="34" cy="20" r="1.2" fill="currentColor" stroke="none"/>
-            </svg>
-          </div>
-          <div class="mood-card-body">
-            <h3 class="mood-card-title">Шла за сторис</h3>
-            <p class="mood-card-subtitle">Авторский спешелти в эстетичном стекле и свежий круассан.</p>
-            <span class="mood-card-link">Идти за сторис 🗺️</span>
-          </div>
-        </a>
+        </div>
       </div>
     </div>
   </section>
@@ -912,6 +915,80 @@
   if(!already && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     setTimeout(openSpin, 7000);
   }
+
+  // Mood quiz
+  (function(){
+    var quiz = document.getElementById('moodQuiz');
+    if(!quiz) return;
+    var steps = quiz.querySelectorAll('.quiz-step');
+    var dots = quiz.querySelectorAll('.quiz-progress i');
+    var charBtns = quiz.querySelectorAll('.quiz-char');
+    var optionBtns = quiz.querySelectorAll('.quiz-option');
+    var restartBtn = document.getElementById('quizRestart');
+    var resultChar = document.getElementById('quizResultChar');
+    var resultTitle = document.getElementById('quizResultTitle');
+    var resultBtn = document.getElementById('quizResultBtn');
+    var state = { mood:null, need:null };
+
+    var chars = {
+      tired: 'assets/img/mood-tired.png',
+      rush: 'assets/img/mood-rush.png',
+      aesthetic: 'assets/img/mood-aesthetic.png'
+    };
+    var ctaText = {
+      tired: 'Забегай, тут тихо 🗺️',
+      rush: 'Маршрут для работы 🗺️',
+      aesthetic: 'Идти за сторис 🗺️'
+    };
+    var results = {
+      tired:{
+        calm:'Плотный фильтр, диван в углу — и тишина.',
+        focus:'Раф с орехом, розетка рядом — заряжайся сам.',
+        shot:'Какао и мягкий свет — устал, но мило.'
+      },
+      rush:{
+        calm:'Эспрессо на бегу, пауза на пять минут.',
+        focus:'Двойной эспрессо, угловой стол — добивай дедлайн.',
+        shot:'Айс-латте, свет из окна — кадр за минуту.'
+      },
+      aesthetic:{
+        calm:'Матча-эссенс у растений — красиво и тихо.',
+        focus:'Раф фисташка-малина — работай под шум кофемашины.',
+        shot:'Спешелти в стекле, свет что надо — снимай.'
+      }
+    };
+
+    function goToStep(n){
+      steps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
+      dots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
+    }
+
+    charBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        state.mood = btn.getAttribute('data-mood');
+        goToStep(2);
+      });
+    });
+
+    optionBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        state.need = btn.getAttribute('data-need');
+        if(state.mood && state.need){
+          resultChar.src = chars[state.mood];
+          resultTitle.textContent = results[state.mood][state.need];
+          resultBtn.textContent = ctaText[state.mood];
+        }
+        goToStep(3);
+      });
+    });
+
+    if(restartBtn){
+      restartBtn.addEventListener('click', function(){
+        state = { mood:null, need:null };
+        goToStep(1);
+      });
+    }
+  })();
 
   // Мобильное меню
   var burger = document.getElementById('burger');
