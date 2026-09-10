@@ -126,7 +126,6 @@
     font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:.98; letter-spacing:.05em;
     max-width:15ch; margin-bottom:26px;
   }
-  .hero-sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:rgba(253,251,247,.82); max-width:46ch; margin-bottom:38px; }
   .hero-actions{ display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
   .hero-spin-link{
     display:inline-flex; align-items:center; gap:8px; margin-top:30px; font-weight:700; font-size:.92rem;
@@ -153,7 +152,6 @@
     .hero{ padding:56px 0 40px; min-height:auto; }
     .hero-video-scrim{ background:linear-gradient(180deg, rgba(74,10,15,.4) 0%, rgba(74,10,15,.85) 100%); }
     .hero-title{ font-size:clamp(1.8rem,6vw,2.5rem); line-height:1.12; margin-bottom:14px; }
-    .hero-sub{ margin-bottom:22px; }
     .hero-actions{ gap:12px; }
     .hero-actions .btn-outline{ border-color:rgba(253,251,247,.4); background:transparent; }
     .hero-spin-link{ margin-top:20px; }
@@ -187,9 +185,9 @@
 
   .quiz-options{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
   .quiz-option{
-    font-family:var(--font-body); font-weight:600; font-size:.95rem; padding:14px 24px; border-radius:999px;
+    font-family:var(--font-body); font-weight:600; font-size:.95rem; padding:16px 22px; border-radius:10px;
     border:1.5px solid var(--line-on-wine); background:transparent; color:var(--ink); cursor:pointer;
-    transition:border-color .25s ease, background .25s ease;
+    text-align:left; transition:border-color .25s ease, background .25s ease;
   }
   .quiz-option:hover{ border-color:var(--accent); background:rgba(255,255,255,.06); }
 
@@ -460,7 +458,6 @@
     <div class="hero-video-scrim" aria-hidden="true"></div>
     <div class="wrap hero-inner">
       <h1 class="hero-title">Не всё имеет смысл. И слава богу.</h1>
-      <p class="hero-sub">Твой главный спешелти — этот вайб.</p>
       <div class="hero-actions">
         <a href="#menu" class="btn btn-fill">Заглянуть в меню</a>
         <a href="#contacts" class="btn btn-outline">Проложить маршрут</a>
@@ -548,7 +545,7 @@
         </div>
 
         <div class="quiz-step" data-quiz-step="2">
-          <p class="quiz-question">Чего не хватает?</p>
+          <p class="quiz-question">Чего ты хочешь?</p>
           <div class="quiz-options">
             <button class="quiz-option" type="button" data-need="calm">🛋️ Дивана и тишины</button>
             <button class="quiz-option" type="button" data-need="focus">💻 Розетки и фокуса</button>
