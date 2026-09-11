@@ -106,47 +106,6 @@
     }
     .site-header.is-open .main-nav a{ color:var(--ink); font-size:1rem; }
   }
-
-  /* ============ Hero ============ */
-  .hero{
-    position:relative; background:var(--wine); color:var(--cream-on-wine);
-    min-height:100vh; padding:clamp(22vh,28vh,34vh) 0 70px; overflow:hidden;
-  }
-  .hero-video{
-    position:absolute; top:0; left:0; width:100%; height:100%;
-    object-fit:cover; object-position:center top; z-index:0;
-  }
-  .hero-video-scrim{
-    position:absolute; inset:0; z-index:0;
-    background:linear-gradient(180deg, rgba(20,5,8,.3) 0%, rgba(20,5,8,.75) 100%);
-  }
-  .hero-inner{ position:relative; z-index:1; }
-  .hero-title{
-    font-family:var(--font-display); font-weight:900; text-transform:uppercase;
-    font-size:clamp(2.5rem,7.4vw,5.6rem); line-height:.98; letter-spacing:.05em;
-    max-width:15ch; margin-bottom:26px;
-  }
-  .hero-actions{ display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
-  .hero-actions .btn-fill{ padding:.75rem 1.5rem; font-size:.95rem; }
-  .hero-actions .btn-outline{
-    padding:.65rem 1.25rem; font-size:.85rem;
-    background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); backdrop-filter:blur(8px);
-  }
-  .hero-actions .btn-outline:hover{ background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.5); }
-  .hero-spin-link{
-    display:inline-flex; align-items:center; gap:8px; margin-top:30px; font-weight:700; font-size:.92rem;
-    color:var(--cream-on-wine); text-decoration:none; border-bottom:1.5px dashed var(--line-on-wine); padding-bottom:3px;
-    background:none; border-left:none; border-right:none; border-top:none; padding-left:0; padding-right:0;
-  }
-  .hero-spin-link:hover{ color:var(--mist); border-color:var(--mist); }
-  .hero-stamp{
-    position:absolute; right:clamp(-40px,-2vw,20px); top:70px; width:170px; height:170px;
-    display:flex; align-items:center; justify-content:center; opacity:.9;
-  }
-  .hero-stamp svg{ animation:spin-slow 22s linear infinite; }
-  @keyframes spin-slow{ to{ transform:rotate(360deg); } }
-  @media (max-width:900px){ .hero-stamp{ display:none; } }
-
   @media (max-width:768px){
     .header-inner{ padding:12px clamp(16px,5vw,56px); gap:14px; }
     .nav-cta{
@@ -155,22 +114,43 @@
       border:1px solid rgba(253,251,247,.35); backdrop-filter:blur(8px);
     }
     .nav-cta:hover{ filter:none; background:rgba(255,255,255,.12); }
-    .hero{ min-height:100dvh; padding:clamp(28vh,36vh,40vh) 0 40px; }
-    .hero-title{ font-size:clamp(1.75rem,5vw,2.2rem); line-height:1.1; margin-bottom:14px; }
-    .hero-actions{ flex-direction:column; align-items:flex-start; gap:12px; }
-    .hero-spin-link{ margin-top:20px; }
   }
 
-  /* ============ Mood quiz ============ */
-  .mood-picker{ padding:32px 0; margin-top:0; background:var(--bg); }
-  .quiz{ max-width:760px; margin:0 auto; text-align:center; }
-  .quiz-progress{ display:flex; justify-content:center; gap:6px; margin-bottom:34px; }
-  .quiz-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
-  .quiz-progress i.is-active{ background:var(--accent); }
-  .quiz-step{ display:none; }
-  .quiz-step.is-active{ display:block; animation:quizFade .4s ease; }
-  @keyframes quizFade{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+  /* ============ Stories ============ */
+  .stories{ position:relative; height:100vh; overflow:hidden; background:var(--wine); }
+  .story-slide{ position:absolute; inset:0; opacity:0; visibility:hidden; transition:opacity .3s ease; }
+  .story-slide.is-active{ opacity:1; visibility:visible; }
+  .story-bg{ position:absolute; inset:0; z-index:0; }
+  .story-bg-1{ background:linear-gradient(160deg, var(--wine) 0%, var(--accent-deep) 170%); }
+  .story-bg-2{ background:linear-gradient(160deg, var(--wine-deep) 0%, var(--wine) 100%); }
+  .story-bg-3{ background:linear-gradient(160deg, var(--wine) 0%, #6a1620 170%); }
+  .story-scrim{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(20,5,8,.25) 0%, rgba(20,5,8,.6) 100%); }
+  .story-tapzone{ position:absolute; top:0; bottom:0; z-index:2; background:transparent; border:none; padding:0; margin:0; cursor:pointer; }
+  .story-tapzone-left{ left:0; width:32%; }
+  .story-tapzone-right{ right:0; width:68%; }
+  .story-content{
+    position:relative; z-index:3; height:100%; width:100%; max-width:640px; margin:0 auto;
+    padding:96px clamp(20px,6vw,56px) 60px; display:flex; flex-direction:column; align-items:center;
+    justify-content:center; text-align:center; pointer-events:none;
+  }
+  .story-content .h2{ margin:0; }
+  .story-content .quiz-char{ pointer-events:auto; }
+  .story-final{ display:none; }
+  .h2.story-final{ margin-top:28px; }
+  #storyQuiz.is-picked .story-final{ display:block; animation:quizFade .4s ease; }
 
+  .stories-progress{ position:absolute; top:0; left:0; right:0; z-index:5; display:flex; gap:6px; padding:18px clamp(16px,4vw,40px) 0; }
+  .story-bar{ flex:1; height:3px; border-radius:2px; background:rgba(253,251,247,.3); overflow:hidden; }
+  .story-bar i{ display:block; height:100%; width:0%; background:var(--cream-on-wine); transition:width .25s ease; }
+  .story-bar.is-done i, .story-bar.is-active i{ width:100%; }
+
+  @media (max-width:768px){
+    .stories{ height:100dvh; }
+    .story-content{ padding:80px clamp(20px,6vw,32px) 48px; }
+  }
+
+  /* ============ Mood quiz (stories slide 1) ============ */
+  .quiz{ max-width:760px; margin:0 auto; text-align:center; }
   .quiz-question{
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.02em;
     font-size:clamp(1.9rem,4vw,3rem); line-height:1.25; color:var(--ink); margin:0 0 30px;
@@ -180,48 +160,19 @@
     background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:14px;
     padding:12px; border-radius:16px; transition:transform .3s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
   }
-  .quiz-char:hover{ transform:translateY(-6px); }
+  .quiz-char:hover, .quiz-char.is-selected{ transform:translateY(-6px); }
   .quiz-char img{ width:150px; height:auto; }
   .quiz-char span{
     font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em;
     font-size:.9rem; color:var(--ink);
   }
-
-  .quiz-options{ display:flex; justify-content:center; gap:36px; flex-wrap:wrap; }
-  .quiz-option{
-    font-family:var(--font-body); font-weight:700; font-size:1.05rem; padding:8px 2px; border:none;
-    border-bottom:2px solid transparent; background:transparent; color:var(--ink); cursor:pointer;
-    text-transform:uppercase; letter-spacing:.02em;
-    transition:border-color .25s ease, color .25s ease;
-  }
-  .quiz-option:hover{ border-color:var(--accent); color:var(--cream-on-wine); }
-
-  .quiz-result{ display:flex; flex-direction:column; align-items:center; gap:18px; }
-  .quiz-result-char{ width:150px; height:auto; }
-  .quiz-result-title{
-    font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:0;
-    font-size:clamp(1.25rem,2.2vw,1.55rem); line-height:1.25; color:var(--ink); max-width:34ch; margin:0;
-  }
-  .quiz-result-invite{
-    font-family:var(--font-body); font-weight:700; font-size:1.05rem; color:var(--cream-on-wine); margin:0;
-    text-decoration:underline; text-decoration-color:var(--line-on-wine); text-underline-offset:4px;
-    transition:text-decoration-color .25s ease, color .25s ease;
-  }
-  .quiz-result-invite:hover{ color:var(--accent); text-decoration-color:var(--accent); }
-  .quiz-restart{
-    font-family:var(--font-body); font-size:.84rem; color:var(--ink-soft); background:none; border:none;
-    text-decoration:underline; cursor:pointer; margin-top:4px;
-  }
+  @keyframes quizFade{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
   @media (max-width:768px){
-    .mood-picker{ padding:28px 0; }
-    .quiz-progress{ margin-bottom:26px; }
     .quiz-question{ margin-bottom:24px; }
     .quiz-characters{ gap:6px; flex-wrap:nowrap; }
     .quiz-char{ padding:4px; gap:8px; flex:1 1 0; min-width:0; }
     .quiz-char img{ width:100%; max-width:78px; }
     .quiz-char span{ font-size:.66rem; }
-    .quiz-options{ flex-direction:column; align-items:center; gap:16px; }
-    .quiz-option{ text-align:center; }
   }
 
   /* ============ Spinner overlay ============ */
@@ -428,7 +379,7 @@
   /* -- Compact section rhythm on mobile -- */
   @media (max-width:768px){
     .wrap{ padding:0 1rem; }
-    .hero, .moments, .menu, .contacts, footer{ margin-bottom:0; margin-top:0; }
+    .stories, .moments, .menu, .contacts, footer{ margin-bottom:0; margin-top:0; }
     .moments{ padding:48px 0; }
     .moments-head{ margin-bottom:28px; }
     .bento{
@@ -474,29 +425,59 @@
 
 <main id="top">
 
-  <!-- HERO -->
-  <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline aria-hidden="true">
-      <source src="assets/img/hero-bg-video.mp4" type="video/mp4">
-    </video>
-    <div class="hero-video-scrim" aria-hidden="true"></div>
-    <div class="wrap hero-inner">
-      <h1 class="hero-title">Не всё имеет смысл. И слава богу.</h1>
-      <div class="hero-actions">
-        <a href="#menu" class="btn btn-fill">Заглянуть в меню</a>
-        <a href="#contacts" class="btn btn-outline">Проложить маршрут</a>
-      </div>
-      <button class="hero-spin-link" id="openSpinBtn" type="button">☕ Крутани колесо настроения →</button>
+  <!-- STORIES -->
+  <section class="stories" id="stories">
+    <div class="stories-progress" aria-hidden="true">
+      <span class="story-bar" data-story="0"><i></i></span>
+      <span class="story-bar" data-story="1"><i></i></span>
+      <span class="story-bar" data-story="2"><i></i></span>
     </div>
-    <div class="hero-stamp" aria-hidden="true">
-      <svg viewBox="0 0 170 170" width="170" height="170">
-        <defs><path id="stampCircle" d="M85,85 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs>
-        <circle cx="85" cy="85" r="80" fill="none" stroke="rgba(255,238,223,.5)" stroke-width="1"/>
-        <circle cx="85" cy="85" r="6" fill="var(--accent)"/>
-        <text font-family="Montserrat, sans-serif" font-size="10.5" font-weight="700" letter-spacing="3" fill="var(--cream-on-wine)">
-          <textPath href="#stampCircle" startOffset="0%">SPECIALTY COFFEE • СИРИУС • НАСТРОЕНИЕ •</textPath>
-        </text>
-      </svg>
+
+    <div class="story-slide is-active" data-story="0">
+      <div class="story-bg story-bg-1" aria-hidden="true"></div>
+      <div class="story-scrim" aria-hidden="true"></div>
+      <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
+      <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
+      <div class="story-content">
+        <div class="quiz" id="storyQuiz">
+          <p class="quiz-question">Какой сегодня вайб?</p>
+          <div class="quiz-characters">
+            <button class="quiz-char" type="button" data-mood="tired">
+              <img src="assets/img/mood-tired.png" alt="">
+              <span>На нуле</span>
+            </button>
+            <button class="quiz-char" type="button" data-mood="rush">
+              <img src="assets/img/mood-rush.png" alt="">
+              <span>В тонусе</span>
+            </button>
+            <button class="quiz-char" type="button" data-mood="aesthetic">
+              <img src="assets/img/mood-aesthetic.png" alt="">
+              <span>Хочу красиво</span>
+            </button>
+          </div>
+          <p class="h2 story-final">Тогда тебе к нам</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-slide" data-story="1">
+      <div class="story-bg story-bg-2" aria-hidden="true"></div>
+      <div class="story-scrim" aria-hidden="true"></div>
+      <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
+      <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
+      <div class="story-content">
+        <p class="h2">Мы тоже иногда не в ресурсе. Спасаемся кофе.</p>
+      </div>
+    </div>
+
+    <div class="story-slide" data-story="2">
+      <div class="story-bg story-bg-3" aria-hidden="true"></div>
+      <div class="story-scrim" aria-hidden="true"></div>
+      <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
+      <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
+      <div class="story-content">
+        <p class="h2">Там, где ждут в любом настроении.</p>
+      </div>
     </div>
   </section>
 
@@ -542,52 +523,6 @@
     </div>
   </div>
 
-  <!-- MOOD QUIZ -->
-  <section class="mood-picker">
-    <div class="wrap">
-      <div class="quiz" id="moodQuiz">
-        <div class="quiz-progress" aria-hidden="true">
-          <i data-quiz-step="1" class="is-active"></i><i data-quiz-step="2"></i><i data-quiz-step="3"></i>
-        </div>
-
-        <div class="quiz-step is-active" data-quiz-step="1">
-          <p class="quiz-question">Какой сегодня вайб?</p>
-          <div class="quiz-characters">
-            <button class="quiz-char" type="button" data-mood="tired">
-              <img src="assets/img/mood-tired.png" alt="">
-              <span>На нуле</span>
-            </button>
-            <button class="quiz-char" type="button" data-mood="rush">
-              <img src="assets/img/mood-rush.png" alt="">
-              <span>В тонусе</span>
-            </button>
-            <button class="quiz-char" type="button" data-mood="aesthetic">
-              <img src="assets/img/mood-aesthetic.png" alt="">
-              <span>Хочу красиво</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="quiz-step" data-quiz-step="2">
-          <p class="quiz-question">Чего ты хочешь?</p>
-          <div class="quiz-options">
-            <button class="quiz-option" type="button" data-need="calm">Дивана и тишины</button>
-            <button class="quiz-option" type="button" data-need="focus">Розетки и фокуса</button>
-            <button class="quiz-option" type="button" data-need="shot">Того самого кадра</button>
-          </div>
-        </div>
-
-        <div class="quiz-step" data-quiz-step="3">
-          <div class="quiz-result">
-            <img class="quiz-result-char" id="quizResultChar" src="" alt="">
-            <h3 class="quiz-result-title" id="quizResultTitle"></h3>
-            <a class="quiz-result-invite" id="quizResultBtn" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">В общем, тебе к нам.</a>
-            <button class="quiz-restart" id="quizRestart" type="button">Пройти ещё раз</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- BITE SCROLLER -->
   <section class="bite-section">
@@ -896,7 +831,7 @@
   function openSpin(){ overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
   function closeSpin(){ overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
 
-  openBtn.addEventListener('click', openSpin);
+  if(openBtn){ openBtn.addEventListener('click', openSpin); }
   closeBtn.addEventListener('click', closeSpin);
   overlay.addEventListener('click', function(e){ if(e.target === overlay) closeSpin(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSpin(); });
@@ -926,75 +861,49 @@
   spinForm.addEventListener('submit', function(e){ e.preventDefault(); revealMail(); });
   spinSkip.addEventListener('click', revealMail);
 
-  var already = false;
-  try{ already = !!localStorage.getItem('nastroenie_spin_prize'); }catch(e){}
-  if(!already && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    setTimeout(openSpin, 7000);
-  }
 
-  // Mood quiz
+  // Stories
   (function(){
-    var quiz = document.getElementById('moodQuiz');
-    if(!quiz) return;
-    var steps = quiz.querySelectorAll('.quiz-step');
-    var dots = quiz.querySelectorAll('.quiz-progress i');
-    var charBtns = quiz.querySelectorAll('.quiz-char');
-    var optionBtns = quiz.querySelectorAll('.quiz-option');
-    var restartBtn = document.getElementById('quizRestart');
-    var resultChar = document.getElementById('quizResultChar');
-    var resultTitle = document.getElementById('quizResultTitle');
-    var state = { mood:null, need:null };
+    var stories = document.getElementById('stories');
+    if(!stories) return;
+    var slides = stories.querySelectorAll('.story-slide');
+    var bars = stories.querySelectorAll('.story-bar');
+    var total = slides.length;
+    var current = 0;
 
-    var chars = {
-      tired: 'assets/img/mood-tired.png',
-      rush: 'assets/img/mood-rush.png',
-      aesthetic: 'assets/img/mood-aesthetic.png'
-    };
-    var results = {
-      tired:{
-        calm:'Плотный фильтр, диван в углу — и тишина.',
-        focus:'Раф с орехом, розетка рядом — заряжайся сам.',
-        shot:'Какао и мягкий свет — устал, но мило.'
-      },
-      rush:{
-        calm:'Эспрессо на бегу, пауза на пять минут.',
-        focus:'Двойной эспрессо, угловой стол — добивай дедлайн.',
-        shot:'Айс-латте, свет из окна — кадр за минуту.'
-      },
-      aesthetic:{
-        calm:'Матча-эссенс у растений — красиво и тихо.',
-        focus:'Раф фисташка-малина — работай под шум кофемашины.',
-        shot:'Спешелти в стекле, свет что надо — снимай.'
-      }
-    };
-
-    function goToStep(n){
-      steps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
-      dots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
+    function render(){
+      slides.forEach(function(s, i){ s.classList.toggle('is-active', i === current); });
+      bars.forEach(function(b, i){
+        b.classList.toggle('is-done', i < current);
+        b.classList.toggle('is-active', i === current);
+      });
     }
 
-    charBtns.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        state.mood = btn.getAttribute('data-mood');
-        goToStep(2);
-      });
+    function goTo(n){
+      if(n < 0 || n >= total) return;
+      current = n;
+      render();
+    }
+
+    stories.querySelectorAll('.story-tapzone-left').forEach(function(btn){
+      btn.addEventListener('click', function(){ goTo(current - 1); });
+    });
+    stories.querySelectorAll('.story-tapzone-right').forEach(function(btn){
+      btn.addEventListener('click', function(){ goTo(current + 1); });
     });
 
-    optionBtns.forEach(function(btn){
-      btn.addEventListener('click', function(){
-        state.need = btn.getAttribute('data-need');
-        if(state.mood && state.need){
-          resultChar.src = chars[state.mood];
-          resultTitle.textContent = results[state.mood][state.need];
-        }
-        goToStep(3);
-      });
-    });
+    render();
 
-    if(restartBtn){
-      restartBtn.addEventListener('click', function(){
-        state = { mood:null, need:null };
-        goToStep(1);
+    // Slide 1: mood pick
+    var storyQuiz = document.getElementById('storyQuiz');
+    if(storyQuiz){
+      var charBtns = storyQuiz.querySelectorAll('.quiz-char');
+      charBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          charBtns.forEach(function(b){ b.classList.remove('is-selected'); });
+          btn.classList.add('is-selected');
+          storyQuiz.classList.add('is-picked');
+        });
       });
     }
   })();
