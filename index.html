@@ -168,9 +168,14 @@
   .story-slide.is-active{ opacity:1; visibility:visible; }
   .story-bg{ position:absolute; inset:0; z-index:0; }
   .story-bg-1{ background:linear-gradient(160deg, var(--wine) 0%, var(--accent-deep) 170%); }
-  .story-bg-2{ background:linear-gradient(160deg, var(--wine-deep) 0%, var(--wine) 100%); }
-  .story-bg-3{ background:linear-gradient(160deg, var(--wine) 0%, #6a1620 170%); }
+  .story-bg-2{
+    background-color:var(--wine);
+    background-image:url('assets/img/story-slide2.jpg');
+    background-size:cover; background-position:center;
+  }
+  video.story-bg-3{ width:100%; height:100%; object-fit:cover; background-color:var(--wine); }
   .story-scrim{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(20,5,8,.25) 0%, rgba(20,5,8,.6) 100%); }
+  .story-scrim--flat{ background:rgba(20,5,8,.5); }
   .story-tapzone{ position:absolute; top:0; bottom:0; z-index:2; background:transparent; border:none; padding:0; margin:0; cursor:pointer; }
   .story-tapzone-left{ left:0; width:32%; }
   .story-tapzone-right{ right:0; width:68%; }
@@ -180,6 +185,24 @@
     justify-content:center; text-align:center; pointer-events:none;
   }
   .story-content .h2{ margin:0; }
+  .story-content--offset{ align-items:flex-start; justify-content:flex-start; text-align:left; padding-top:28vh; }
+  .story-content--bottom{ align-items:flex-start; justify-content:flex-end; text-align:left; }
+  .story-lead{
+    font-family:var(--font-display); font-weight:500; font-size:30px; line-height:1.15;
+    color:var(--cream-on-wine); margin:0 0 10px;
+  }
+  .story-sub{
+    font-family:var(--font-body); font-weight:400; font-size:17px; line-height:1.4;
+    color:rgba(253,251,247,.7); margin:0;
+  }
+  .story-eyebrow{
+    font-family:var(--font-body); font-weight:400; font-size:14px; letter-spacing:.08em;
+    color:rgba(253,251,247,.7); margin:0 0 8px;
+  }
+  .story-lead-lg{
+    font-family:var(--font-display); font-weight:500; font-size:32px; line-height:1.15;
+    color:var(--cream-on-wine); margin:0;
+  }
   .story-content .quiz-char,
   .story-content .quiz-option,
   .story-content .quiz-result-invite,
@@ -203,6 +226,7 @@
   @media (max-width:768px){
     .stories{ height:100dvh; }
     .story-content{ padding:80px clamp(20px,6vw,32px) 48px; }
+    .story-content--offset{ padding-top:22vh; }
   }
 
   /* ---- Menu stories: photo teaser, bottom-anchored ---- */
@@ -552,21 +576,25 @@
 
     <div class="story-slide" data-story="1">
       <div class="story-bg story-bg-2" aria-hidden="true"></div>
-      <div class="story-scrim" aria-hidden="true"></div>
+      <div class="story-scrim story-scrim--flat" aria-hidden="true"></div>
       <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
       <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
-      <div class="story-content">
-        <p class="h2">Мы тоже иногда не в ресурсе. Спасаемся кофе.</p>
+      <div class="story-content story-content--offset">
+        <p class="story-lead">Мы тоже иногда не в ресурсе.</p>
+        <p class="story-sub">Спасаемся кофе.</p>
       </div>
     </div>
 
     <div class="story-slide" data-story="2">
-      <div class="story-bg story-bg-3" aria-hidden="true"></div>
-      <div class="story-scrim" aria-hidden="true"></div>
+      <video class="story-bg story-bg-3" autoplay muted loop playsinline aria-hidden="true">
+        <source src="assets/img/story-slide3.mp4" type="video/mp4">
+      </video>
+      <div class="story-scrim story-scrim--flat" aria-hidden="true"></div>
       <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
       <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
-      <div class="story-content">
-        <p class="h2">Там, где ждут в любом настроении.</p>
+      <div class="story-content story-content--bottom">
+        <p class="story-eyebrow">там, где ждут</p>
+        <p class="story-lead-lg">в любом настроении.</p>
       </div>
     </div>
   </section>
