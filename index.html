@@ -180,10 +180,10 @@
     justify-content:center; text-align:center; pointer-events:none;
   }
   .story-content .h2{ margin:0; }
-  .story-content .quiz-char{ pointer-events:auto; }
-  .story-final{ display:none; }
-  .h2.story-final{ margin-top:28px; }
-  #storyQuiz.is-picked .story-final{ display:block; animation:quizFade .4s ease; }
+  .story-content .quiz-char,
+  .story-content .quiz-option,
+  .story-content .quiz-result-invite,
+  .story-content .quiz-restart{ pointer-events:auto; }
 
   .stories-progress{ position:absolute; top:0; left:0; right:0; z-index:5; display:flex; gap:6px; padding:18px clamp(16px,4vw,40px) 0; }
   .story-bar{ flex:1; height:3px; border-radius:2px; background:rgba(253,251,247,.3); overflow:hidden; }
@@ -197,6 +197,13 @@
 
   /* ============ Mood quiz (stories slide 1) ============ */
   .quiz{ max-width:760px; margin:0 auto; text-align:center; }
+  .quiz-progress{ display:flex; justify-content:center; gap:6px; margin-bottom:34px; }
+  .quiz-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
+  .quiz-progress i.is-active{ background:var(--accent); }
+  .quiz-step{ display:none; }
+  .quiz-step.is-active{ display:block; animation:quizFade .4s ease; }
+  @keyframes quizFade{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+
   .quiz-question{
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.02em;
     font-size:clamp(1.9rem,4vw,3rem); line-height:1.25; color:var(--ink); margin:0 0 30px;
@@ -213,9 +220,36 @@
     font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em;
     font-size:clamp(.64rem,1.8vw,.9rem); color:var(--ink);
   }
-  @keyframes quizFade{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+
+  .quiz-options{ display:flex; justify-content:center; gap:clamp(16px,4vw,36px); flex-wrap:wrap; }
+  .quiz-option{
+    font-family:var(--font-body); font-weight:700; font-size:clamp(.78rem,2vw,1.05rem); padding:8px 2px; border:none;
+    border-bottom:2px solid transparent; background:transparent; color:var(--ink); cursor:pointer;
+    text-transform:uppercase; letter-spacing:.02em;
+    transition:border-color .25s ease, color .25s ease;
+  }
+  .quiz-option:hover{ border-color:var(--accent); color:var(--cream-on-wine); }
+
+  .quiz-result{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .quiz-result-char{ width:150px; height:auto; }
+  .quiz-result-title{
+    font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:0;
+    font-size:clamp(1.25rem,2.2vw,1.55rem); line-height:1.25; color:var(--ink); max-width:34ch; margin:0;
+  }
+  .quiz-result-invite{
+    font-family:var(--font-body); font-weight:700; font-size:1.05rem; color:var(--cream-on-wine); margin:0;
+    text-decoration:underline; text-decoration-color:var(--line-on-wine); text-underline-offset:4px;
+    transition:text-decoration-color .25s ease, color .25s ease;
+  }
+  .quiz-result-invite:hover{ color:var(--accent); text-decoration-color:var(--accent); }
+  .quiz-restart{
+    font-family:var(--font-body); font-size:.84rem; color:var(--ink-soft); background:none; border:none;
+    text-decoration:underline; cursor:pointer; margin-top:4px;
+  }
   @media (max-width:768px){
+    .quiz-progress{ margin-bottom:26px; }
     .quiz-question{ margin-bottom:24px; }
+    .quiz-options{ flex-direction:column; align-items:center; gap:16px; }
   }
 
   /* ============ Spinner overlay ============ */
@@ -509,22 +543,45 @@
       <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
       <div class="story-content">
         <div class="quiz" id="storyQuiz">
-          <p class="quiz-question">Какой сегодня вайб?</p>
-          <div class="quiz-characters">
-            <button class="quiz-char" type="button" data-mood="tired">
-              <img src="assets/img/mood-tired.png" alt="">
-              <span>На нуле</span>
-            </button>
-            <button class="quiz-char" type="button" data-mood="rush">
-              <img src="assets/img/mood-rush.png" alt="">
-              <span>В тонусе</span>
-            </button>
-            <button class="quiz-char" type="button" data-mood="aesthetic">
-              <img src="assets/img/mood-aesthetic.png" alt="">
-              <span>Хочу красиво</span>
-            </button>
+          <div class="quiz-progress" aria-hidden="true">
+            <i data-quiz-step="1" class="is-active"></i><i data-quiz-step="2"></i><i data-quiz-step="3"></i>
           </div>
-          <p class="h2 story-final">Тогда тебе к нам</p>
+
+          <div class="quiz-step is-active" data-quiz-step="1">
+            <p class="quiz-question">Какой сегодня вайб?</p>
+            <div class="quiz-characters">
+              <button class="quiz-char" type="button" data-mood="tired">
+                <img src="assets/img/mood-tired.png" alt="">
+                <span>На нуле</span>
+              </button>
+              <button class="quiz-char" type="button" data-mood="rush">
+                <img src="assets/img/mood-rush.png" alt="">
+                <span>В тонусе</span>
+              </button>
+              <button class="quiz-char" type="button" data-mood="aesthetic">
+                <img src="assets/img/mood-aesthetic.png" alt="">
+                <span>Хочу красиво</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="quiz-step" data-quiz-step="2">
+            <p class="quiz-question">Чего ты хочешь?</p>
+            <div class="quiz-options">
+              <button class="quiz-option" type="button" data-need="calm">Дивана и тишины</button>
+              <button class="quiz-option" type="button" data-need="focus">Розетки и фокуса</button>
+              <button class="quiz-option" type="button" data-need="shot">Того самого кадра</button>
+            </div>
+          </div>
+
+          <div class="quiz-step" data-quiz-step="3">
+            <div class="quiz-result">
+              <img class="quiz-result-char" id="quizResultChar" src="" alt="">
+              <h3 class="quiz-result-title" id="quizResultTitle"></h3>
+              <a class="quiz-result-invite" id="quizResultBtn" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">В общем, тебе к нам.</a>
+              <button class="quiz-restart" id="quizRestart" type="button">Пройти ещё раз</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -968,17 +1025,70 @@
 
     render();
 
-    // Slide 1: mood pick
+    // Slide 1: mood quiz
     var storyQuiz = document.getElementById('storyQuiz');
     if(storyQuiz){
+      var quizSteps = storyQuiz.querySelectorAll('.quiz-step');
+      var quizDots = storyQuiz.querySelectorAll('.quiz-progress i');
       var charBtns = storyQuiz.querySelectorAll('.quiz-char');
+      var optionBtns = storyQuiz.querySelectorAll('.quiz-option');
+      var restartBtn = document.getElementById('quizRestart');
+      var resultChar = document.getElementById('quizResultChar');
+      var resultTitle = document.getElementById('quizResultTitle');
+      var quizState = { mood:null, need:null };
+
+      var chars = {
+        tired: 'assets/img/mood-tired.png',
+        rush: 'assets/img/mood-rush.png',
+        aesthetic: 'assets/img/mood-aesthetic.png'
+      };
+      var results = {
+        tired:{
+          calm:'Плотный фильтр, диван в углу — и тишина.',
+          focus:'Раф с орехом, розетка рядом — заряжайся сам.',
+          shot:'Какао и мягкий свет — устал, но мило.'
+        },
+        rush:{
+          calm:'Эспрессо на бегу, пауза на пять минут.',
+          focus:'Двойной эспрессо, угловой стол — добивай дедлайн.',
+          shot:'Айс-латте, свет из окна — кадр за минуту.'
+        },
+        aesthetic:{
+          calm:'Матча-эссенс у растений — красиво и тихо.',
+          focus:'Раф фисташка-малина — работай под шум кофемашины.',
+          shot:'Спешелти в стекле, свет что надо — снимай.'
+        }
+      };
+
+      function goToQuizStep(n){
+        quizSteps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
+        quizDots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
+      }
+
       charBtns.forEach(function(btn){
         btn.addEventListener('click', function(){
-          charBtns.forEach(function(b){ b.classList.remove('is-selected'); });
-          btn.classList.add('is-selected');
-          storyQuiz.classList.add('is-picked');
+          quizState.mood = btn.getAttribute('data-mood');
+          goToQuizStep(2);
         });
       });
+
+      optionBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          quizState.need = btn.getAttribute('data-need');
+          if(quizState.mood && quizState.need){
+            resultChar.src = chars[quizState.mood];
+            resultTitle.textContent = results[quizState.mood][quizState.need];
+          }
+          goToQuizStep(3);
+        });
+      });
+
+      if(restartBtn){
+        restartBtn.addEventListener('click', function(){
+          quizState = { mood:null, need:null };
+          goToQuizStep(1);
+        });
+      }
     }
   })();
 
