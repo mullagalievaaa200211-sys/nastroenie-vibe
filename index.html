@@ -163,7 +163,7 @@
   }
 
   /* ============ Stories ============ */
-  .stories{ position:relative; height:100vh; overflow:hidden; background:var(--wine); }
+  .stories{ position:relative; z-index:1; height:100vh; overflow:hidden; background:var(--wine); }
   .story-slide{ position:absolute; inset:0; opacity:0; visibility:hidden; transition:opacity .3s ease; }
   .story-slide.is-active{ opacity:1; visibility:visible; }
   .story-bg{ position:absolute; inset:0; z-index:0; }
@@ -183,7 +183,8 @@
   .story-content .quiz-char,
   .story-content .quiz-option,
   .story-content .quiz-result-invite,
-  .story-content .quiz-restart{ pointer-events:auto; }
+  .story-content .quiz-restart,
+  .story-content .btn{ pointer-events:auto; }
 
   .stories-progress{ position:absolute; top:0; left:0; right:0; z-index:5; display:flex; gap:6px; padding:18px clamp(16px,4vw,40px) 0; }
   .story-bar{ flex:1; height:3px; border-radius:2px; background:rgba(253,251,247,.3); overflow:hidden; }
@@ -193,6 +194,28 @@
   @media (max-width:768px){
     .stories{ height:100dvh; }
     .story-content{ padding:80px clamp(20px,6vw,32px) 48px; }
+  }
+
+  /* ---- Menu stories: photo teaser, bottom-anchored ---- */
+  .stories--menu .story-content{ align-items:flex-start; justify-content:flex-end; text-align:left; }
+  .stories--menu .story-scrim{ background:linear-gradient(180deg, rgba(20,5,8,0) 0%, rgba(20,5,8,.7) 62%, rgba(20,5,8,.95) 100%); }
+  .story-bg-menu-1{ background:linear-gradient(160deg, var(--wine) 0%, var(--accent-deep) 170%); }
+  .story-bg-menu-2{ background:linear-gradient(160deg, var(--wine-deep) 0%, var(--wine) 100%); }
+  .story-bg-menu-3{ background:linear-gradient(160deg, var(--wine) 0%, #6a1620 170%); }
+  .story-menu-list{ width:100%; }
+  .story-menu-item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    padding:20px 0; border-bottom:1px solid var(--line-on-wine);
+  }
+  .story-menu-item:last-child{ border-bottom:none; }
+  .story-menu-name{ font-family:var(--font-body); font-weight:600; font-size:1.05rem; }
+  .story-menu-price{
+    font-family:var(--font-body); font-weight:700; font-variant-numeric:tabular-nums;
+    font-size:1.05rem; color:var(--accent); white-space:nowrap;
+  }
+  .story-menu-cta{ margin-top:32px; }
+  @media (max-width:768px){
+    .story-menu-item{ padding:16px 0; }
   }
 
   /* ============ Mood quiz (stories slide 1) ============ */
@@ -364,13 +387,13 @@
   }
 
   /* ============ Menu ============ */
-  .menu{ position:relative; padding:150px 0 130px; background:var(--bg); overflow:hidden; }
+  .menu{ position:relative; background:var(--bg); overflow:hidden; }
   .menu-bg-photo{
     position:absolute; inset:0; z-index:0;
     background-image: linear-gradient(rgba(74,10,15,.86), rgba(74,10,15,.86)), url('assets/img/menu-bg-croissants.jpg');
     background-repeat: repeat; background-size: auto, 480px auto;
   }
-  .menu-layout{ position:relative; z-index:2; }
+  .menu-layout{ position:relative; z-index:2; padding-top:150px; padding-bottom:130px; }
   .menu-head{ margin-bottom:56px; max-width:600px; }
 
   .menu-tabs{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; position:relative; z-index:1; }
@@ -465,7 +488,7 @@
       gap:1rem; padding-bottom:1rem; margin:0 -1rem; padding-left:1rem; padding-right:1rem;
     }
     .bento-card{ flex:0 0 85% !important; scroll-snap-align:center; min-height:320px; }
-    .menu{ padding:48px 0 40px; }
+    .menu-layout{ padding-top:48px; padding-bottom:40px; }
     .menu-head{ margin-bottom:28px; }
     .menu-tabs{ margin-bottom:24px; }
     .menu-card{ padding:24px; }
@@ -679,6 +702,63 @@
 
   <!-- MENU -->
   <section class="menu" id="menu">
+
+    <!-- MENU STORIES -->
+    <div class="stories stories--menu" id="menuStories">
+      <div class="stories-progress" aria-hidden="true">
+        <span class="story-bar" data-story="0"><i></i></span>
+        <span class="story-bar" data-story="1"><i></i></span>
+        <span class="story-bar" data-story="2"><i></i></span>
+      </div>
+
+      <div class="story-slide is-active" data-story="0">
+        <div class="story-bg story-bg-menu-1" aria-hidden="true"></div>
+        <div class="story-scrim" aria-hidden="true"></div>
+        <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
+        <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
+        <div class="story-content">
+          <p class="h2">Сэндвичи</p>
+          <div class="story-menu-list">
+            <div class="story-menu-item"><span class="story-menu-name">«Зверский аппетит»</span><span class="story-menu-price">560/760 ₽</span></div>
+            <div class="story-menu-item"><span class="story-menu-name">«Почти на диете»</span><span class="story-menu-price">560/760 ₽</span></div>
+            <div class="story-menu-item"><span class="story-menu-name">«Острый на язык»</span><span class="story-menu-price">560/760 ₽</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-slide" data-story="1">
+        <div class="story-bg story-bg-menu-2" aria-hidden="true"></div>
+        <div class="story-scrim" aria-hidden="true"></div>
+        <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
+        <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
+        <div class="story-content">
+          <p class="h2">Выпечка</p>
+          <div class="story-menu-list">
+            <div class="story-menu-item"><span class="story-menu-name">Круассан классический</span><span class="story-menu-price">260 ₽</span></div>
+            <div class="story-menu-item"><span class="story-menu-name">Круассан с начинкой</span><span class="story-menu-price">290 ₽</span></div>
+            <div class="story-menu-item"><span class="story-menu-name">Круассан миндальный</span><span class="story-menu-price">360 ₽</span></div>
+            <div class="story-menu-item"><span class="story-menu-name">Улитка с орехами и изюмом</span><span class="story-menu-price">300 ₽</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-slide" data-story="2">
+        <div class="story-bg story-bg-menu-3" aria-hidden="true"></div>
+        <div class="story-scrim" aria-hidden="true"></div>
+        <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
+        <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
+        <div class="story-content">
+          <p class="h2">Хитовые напитки</p>
+          <div class="story-menu-list">
+            <div class="story-menu-item"><span class="story-menu-name">Раф лесной орех</span><span class="story-menu-price">330/390 ₽</span></div>
+            <div class="story-menu-item"><span class="story-menu-name">Капучино солёный попкорн</span><span class="story-menu-price">330/360 ₽</span></div>
+            <div class="story-menu-item"><span class="story-menu-name">Латте фисташка-малина</span><span class="story-menu-price">330/390 ₽</span></div>
+          </div>
+          <a class="btn btn-fill story-menu-cta" href="assets/docs/menu-full.pdf" target="_blank" rel="noopener">Смотреть полное меню</a>
+        </div>
+      </div>
+    </div>
+
     <div class="menu-bg-photo" aria-hidden="true"></div>
     <div class="wrap menu-layout">
       <div class="menu-head reveal">
@@ -994,9 +1074,7 @@
   }
 
   // Stories
-  (function(){
-    var stories = document.getElementById('stories');
-    if(!stories) return;
+  document.querySelectorAll('.stories').forEach(function(stories){
     var slides = stories.querySelectorAll('.story-slide');
     var bars = stories.querySelectorAll('.story-bar');
     var total = slides.length;
@@ -1024,8 +1102,10 @@
     });
 
     render();
+  });
 
-    // Slide 1: mood quiz
+  // Slide 1 of hero stories: mood quiz
+  (function(){
     var storyQuiz = document.getElementById('storyQuiz');
     if(storyQuiz){
       var quizSteps = storyQuiz.querySelectorAll('.quiz-step');
