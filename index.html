@@ -232,9 +232,18 @@
   /* ---- Menu stories: photo teaser, bottom-anchored ---- */
   .stories--menu .story-content{ align-items:flex-start; justify-content:flex-end; text-align:left; }
   .stories--menu .story-scrim{ background:linear-gradient(180deg, rgba(20,5,8,0) 0%, rgba(20,5,8,.7) 62%, rgba(20,5,8,.95) 100%); }
-  .story-bg-menu-1{ background:linear-gradient(160deg, var(--wine) 0%, var(--accent-deep) 170%); }
-  .story-bg-menu-2{ background:linear-gradient(160deg, var(--wine-deep) 0%, var(--wine) 100%); }
-  .story-bg-menu-3{ background:linear-gradient(160deg, var(--wine) 0%, #6a1620 170%); }
+  .story-bg-menu-1{
+    background-color:var(--wine); background-image:url('assets/img/menu-slide1.jpg');
+    background-size:cover; background-position:center;
+  }
+  .story-bg-menu-2{
+    background-color:var(--wine); background-image:url('assets/img/menu-slide2.jpg');
+    background-size:cover; background-position:center;
+  }
+  .story-bg-menu-3{
+    background-color:var(--wine); background-image:url('assets/img/menu-slide3.jpg');
+    background-size:cover; background-position:center;
+  }
   .story-menu-list{ width:100%; }
   .story-menu-item{
     display:flex; justify-content:space-between; align-items:baseline; gap:16px;
