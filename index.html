@@ -38,7 +38,7 @@
   body{
     margin:0; background:var(--bg); color:var(--ink);
     font-family:var(--font-body); font-size:16px; line-height:1.55;
-    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased; overflow-x:clip;
   }
   img,svg{ max-width:100%; display:block; }
   a{ color:inherit; }
@@ -191,6 +191,15 @@
   .story-bar i{ display:block; height:100%; width:0%; background:var(--cream-on-wine); transition:width .25s ease; }
   .story-bar.is-done i, .story-bar.is-active i{ width:100%; }
 
+  .story-hint{
+    position:absolute; top:50%; right:clamp(16px,5vw,40px); transform:translateY(-50%);
+    z-index:6; display:flex; align-items:center; gap:8px; pointer-events:none;
+    font-family:var(--font-body); font-weight:700; font-size:.95rem; color:var(--cream-on-wine);
+    opacity:0; transition:opacity .4s ease;
+  }
+  .story-hint.is-visible{ opacity:1; animation:storyHintNudge 1.2s ease-in-out infinite; }
+  @keyframes storyHintNudge{ 0%,100%{ transform:translateY(-50%) translateX(0); } 50%{ transform:translateY(-50%) translateX(6px); } }
+
   @media (max-width:768px){
     .stories{ height:100dvh; }
     .story-content{ padding:80px clamp(20px,6vw,32px) 48px; }
@@ -238,6 +247,10 @@
     transition:transform .3s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
   }
   .quiz-char:hover, .quiz-char.is-selected{ transform:translateY(-6px); }
+  .quiz-char{ animation:quizCharPulse 1.4s ease-in-out 3; }
+  .quiz-char:nth-child(2){ animation-delay:.15s; }
+  .quiz-char:nth-child(3){ animation-delay:.3s; }
+  @keyframes quizCharPulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.05); } }
   .quiz-char img{ width:100%; max-width:clamp(72px,16vw,150px); height:auto; }
   .quiz-char span{
     font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em;
@@ -348,10 +361,6 @@
   .bite-progress{ display:flex; gap:6px; margin-top:30px; }
   .bite-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
   .bite-progress i.is-active{ background:var(--accent); }
-  .bite-guy{
-    position:absolute; z-index:0; top:calc(100% + 18px); right:0; width:clamp(120px,15vw,220px); height:auto;
-    opacity:.9; pointer-events:none;
-  }
   .sandwich{ position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1; }
   .sw-layer{ position:absolute; left:8%; right:8%; border-radius:999px; transition:transform .25s ease, opacity .25s ease; }
   .sw-top{ top:8%; height:16%; background:var(--accent); }
@@ -363,7 +372,6 @@
   @media (max-width:900px){
     .bite-grid{ grid-template-columns:1fr; }
     .sandwich{ margin-top:36px; }
-    .bite-guy{ display:none; }
   }
 
   /* ============ Moments (bento) ============ */
@@ -558,6 +566,9 @@
       <span class="story-bar" data-story="1"><i></i></span>
       <span class="story-bar" data-story="2"><i></i></span>
     </div>
+    <div class="story-hint" id="storyTapHint" aria-hidden="true">
+      <span>Тапай</span><span aria-hidden="true">→</span>
+    </div>
 
     <div class="story-slide is-active" data-story="0">
       <div class="story-bg story-bg-1" aria-hidden="true"></div>
@@ -684,7 +695,6 @@
           <div class="bite-progress" aria-hidden="true">
             <i data-step="0" class="is-active"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i>
           </div>
-          <img class="bite-guy" src="assets/img/sandwich-guy.png" alt="" aria-hidden="true">
         </div>
         <div class="sandwich" aria-hidden="true">
           <div class="sw-layer sw-top" id="swTop"></div>
@@ -1140,9 +1150,32 @@
         }
       };
 
+      var tapHint = document.getElementById('storyTapHint');
+      var hintTimeout;
+      function hideTapHint(){
+        if(tapHint) tapHint.classList.remove('is-visible');
+      }
+      function maybeShowTapHint(){
+        if(!tapHint) return;
+        var seen = false;
+        try{ seen = !!localStorage.getItem('nastroenie_seen_tap_hint'); }catch(e){}
+        if(seen) return;
+        tapHint.classList.add('is-visible');
+        try{ localStorage.setItem('nastroenie_seen_tap_hint', '1'); }catch(e){}
+        clearTimeout(hintTimeout);
+        hintTimeout = setTimeout(hideTapHint, 4000);
+      }
+      var heroStories = document.getElementById('stories');
+      if(heroStories){
+        heroStories.querySelectorAll('.story-tapzone').forEach(function(btn){
+          btn.addEventListener('click', hideTapHint);
+        });
+      }
+
       function goToQuizStep(n){
         quizSteps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
         quizDots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
+        if(n === 3){ maybeShowTapHint(); }
       }
 
       charBtns.forEach(function(btn){
