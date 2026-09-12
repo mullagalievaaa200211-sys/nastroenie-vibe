@@ -451,8 +451,14 @@
 
 
   /* ============ Contacts ============ */
-  .contacts{ padding:110px 0 60px; background:var(--bg); }
-  .contacts-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,70px); align-items:center; }
+  .contacts{ position:relative; padding:110px 0 60px; background:var(--bg); overflow:hidden; }
+  .contacts-bg{
+    position:absolute; inset:0; z-index:0;
+    background-image: linear-gradient(rgba(74,10,15,.96), rgba(74,10,15,.96)), url('assets/img/contacts-bg.jpg');
+    filter:saturate(.4);
+    background-size:cover; background-position:center;
+  }
+  .contacts-grid{ position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,70px); align-items:center; }
   .contacts-list{ margin:24px 0 28px; display:flex; flex-direction:column; gap:16px; }
   .contacts-list li{ list-style:none; }
   .contacts-label{ font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mist); font-weight:700; display:block; margin-bottom:3px; }
@@ -461,13 +467,16 @@
   .socials a{ font-weight:700; font-size:.92rem; text-decoration:none; border-bottom:1.5px solid var(--line-on-wine); padding-bottom:2px; }
   .socials a:hover{ border-color:var(--accent); color:var(--accent); }
   .locate-card{
-    background:var(--card-bg); color:var(--ink); border-radius:12px; padding:44px; text-align:center; position:relative; overflow:hidden;
+    background:var(--card-bg); color:var(--ink); border-radius:12px; padding:20px; text-align:center; position:relative; overflow:hidden;
     border:1px solid var(--card-border); min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
   }
-  .locate-ping{ position:relative; width:70px; height:70px; display:flex; align-items:center; justify-content:center; }
-  .locate-ping-ring{ position:absolute; inset:0; border-radius:50%; border:2px solid var(--accent); animation:ping 2.6s cubic-bezier(.2,.7,.3,1) infinite; }
-  .locate-ping-dot{ width:16px; height:16px; border-radius:50%; background:var(--accent); }
-  @keyframes ping{ 0%{ transform:scale(.5); opacity:.9; } 100%{ transform:scale(2.1); opacity:0; } }
+  .locate-map{
+    position:relative; width:100%; aspect-ratio:4/3; border-radius:8px; overflow:hidden; border:1px solid var(--card-border);
+  }
+  .locate-map iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0; display:block;
+    filter:grayscale(1) sepia(60%) hue-rotate(300deg) saturate(220%) brightness(.85) contrast(1.15);
+  }
   .locate-card a{ margin-top:6px; font-weight:700; font-size:.9rem; color:var(--accent); text-decoration:none; border-bottom:1.5px dashed var(--accent); padding-bottom:2px; }
 
   footer{ padding:36px 0 30px; text-align:center; font-size:.82rem; color:var(--ink-soft); background:var(--bg); }
@@ -781,6 +790,7 @@
 
   <!-- CONTACTS -->
   <section class="contacts" id="contacts">
+    <div class="contacts-bg" aria-hidden="true"></div>
     <div class="wrap contacts-grid">
       <div class="reveal">
         <p class="eyebrow">Контакты</p>
@@ -796,9 +806,8 @@
         </div>
       </div>
       <div class="locate-card reveal">
-        <div class="locate-ping" aria-hidden="true">
-          <div class="locate-ping-ring"></div>
-          <div class="locate-ping-dot"></div>
+        <div class="locate-map">
+          <iframe src="https://yandex.ru/map-widget/v1/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1&z=16" width="100%" height="100%" frameborder="0" title="Карта — Настроение"></iframe>
         </div>
         <p style="color:var(--ink-soft);font-size:.94rem;max-width:26ch;">Сириус, Триумфальная улица, 26/1</p>
         <a href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">Построить маршрут →</a>
@@ -920,6 +929,7 @@
     var current = 0;
     var duration = 4500;
     var timer = null;
+    var inView = false;
 
     function clearFill(bar){
       if(!bar) return;
@@ -944,12 +954,12 @@
         b.classList.toggle('is-done', i < current);
         b.classList.toggle('is-active', i === current);
       });
-      startFill();
     }
 
     function scheduleAdvance(){
       clearTimeout(timer);
-      if(document.hidden) return;
+      if(document.hidden || !inView) return;
+      startFill();
       timer = setTimeout(function(){
         current = (current + 1) % total;
         render();
@@ -966,7 +976,6 @@
 
     function resetTimer(){
       clearFill(bars[current]);
-      startFill();
       scheduleAdvance();
     }
 
@@ -982,8 +991,16 @@
       else{ scheduleAdvance(); }
     });
 
+    var visibilityObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        inView = entry.isIntersecting;
+        if(inView){ scheduleAdvance(); }
+        else{ clearTimeout(timer); clearFill(bars[current]); }
+      });
+    }, { threshold:.5 });
+    visibilityObserver.observe(stories);
+
     render();
-    scheduleAdvance();
 
     if(stories.id){ storiesControllers[stories.id] = { resetTimer: resetTimer }; }
 
