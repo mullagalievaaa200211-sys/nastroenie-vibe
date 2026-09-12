@@ -209,10 +209,23 @@
   .story-content .quiz-restart,
   .story-content .btn{ pointer-events:auto; }
 
-  .stories-progress{ position:absolute; top:0; left:0; right:0; z-index:5; display:flex; gap:6px; padding:18px clamp(16px,4vw,40px) 0; }
+  .story-header{
+    position:absolute; top:0; left:0; right:0; z-index:5; display:flex; align-items:center; gap:9px;
+    padding:16px clamp(16px,4vw,40px) 0;
+  }
+  .story-avatar{
+    width:26px; height:26px; border-radius:50%; object-fit:contain; padding:5px;
+    background:rgba(255,255,255,.14); border:1px solid rgba(253,251,247,.4); flex-shrink:0;
+  }
+  .story-brand{ font-family:var(--font-body); font-weight:700; font-size:.86rem; color:var(--cream-on-wine); }
+  .story-time{ margin-left:auto; font-family:var(--font-body); font-weight:400; font-size:.78rem; color:rgba(253,251,247,.6); }
+
+  .stories-progress{ position:absolute; top:46px; left:0; right:0; z-index:5; display:flex; gap:6px; padding:0 clamp(16px,4vw,40px); }
   .story-bar{ flex:1; height:3px; border-radius:2px; background:rgba(253,251,247,.3); overflow:hidden; }
-  .story-bar i{ display:block; height:100%; width:0%; background:var(--cream-on-wine); transition:width .25s ease; }
-  .story-bar.is-done i, .story-bar.is-active i{ width:100%; }
+  .story-bar i{ display:block; height:100%; width:0%; background:var(--cream-on-wine); }
+  .story-bar.is-done i{ width:100%; }
+  .story-bar i.is-filling{ animation-name:storyBarFill; animation-timing-function:linear; animation-fill-mode:forwards; }
+  @keyframes storyBarFill{ from{ width:0%; } to{ width:100%; } }
 
   .story-hint{
     position:absolute; top:50%; right:clamp(16px,5vw,40px); transform:translateY(-50%);
@@ -222,6 +235,23 @@
   }
   .story-hint.is-visible{ opacity:1; animation:storyHintNudge 1.2s ease-in-out infinite; }
   @keyframes storyHintNudge{ 0%,100%{ transform:translateY(-50%) translateX(0); } 50%{ transform:translateY(-50%) translateX(6px); } }
+
+  .story-intro-hint{
+    position:absolute; inset:0; z-index:4; pointer-events:none; opacity:0; transition:opacity .5s ease;
+  }
+  .story-intro-hint.is-visible{ opacity:1; }
+  .story-intro-hint-dot{
+    position:absolute; top:50%; width:46px; height:46px; margin-top:-23px; border-radius:50%;
+    background:rgba(253,251,247,.16); border:1px solid rgba(253,251,247,.5);
+    animation:storyIntroPulse 1.6s ease-in-out infinite;
+  }
+  .story-intro-hint-dot-left{ left:clamp(14px,4vw,32px); }
+  .story-intro-hint-dot-right{ right:clamp(14px,4vw,32px); animation-delay:.5s; }
+  @keyframes storyIntroPulse{
+    0%{ transform:scale(.7); opacity:.9; }
+    70%{ transform:scale(1.25); opacity:0; }
+    100%{ transform:scale(1.25); opacity:0; }
+  }
 
   @media (max-width:768px){
     .stories{ height:100dvh; }
@@ -524,6 +554,11 @@
 
   <!-- STORIES -->
   <section class="stories" id="stories">
+    <div class="story-header" aria-hidden="true">
+      <img class="story-avatar" src="assets/img/story-avatar.png" alt="">
+      <span class="story-brand">Настроение</span>
+      <span class="story-time">сейчас</span>
+    </div>
     <div class="stories-progress" aria-hidden="true">
       <span class="story-bar" data-story="0"><i></i></span>
       <span class="story-bar" data-story="1"><i></i></span>
@@ -531,6 +566,10 @@
     </div>
     <div class="story-hint" id="storyTapHint" aria-hidden="true">
       <span>Тапай</span><span aria-hidden="true">→</span>
+    </div>
+    <div class="story-intro-hint" id="storiesIntroHint" aria-hidden="true">
+      <span class="story-intro-hint-dot story-intro-hint-dot-left"></span>
+      <span class="story-intro-hint-dot story-intro-hint-dot-right"></span>
     </div>
 
     <div class="story-slide is-active" data-story="0">
@@ -682,10 +721,19 @@
 
     <!-- MENU STORIES -->
     <div class="stories stories--menu" id="menuStories">
+      <div class="story-header" aria-hidden="true">
+        <img class="story-avatar" src="assets/img/story-avatar.png" alt="">
+        <span class="story-brand">Настроение</span>
+        <span class="story-time">сейчас</span>
+      </div>
       <div class="stories-progress" aria-hidden="true">
         <span class="story-bar" data-story="0"><i></i></span>
         <span class="story-bar" data-story="1"><i></i></span>
         <span class="story-bar" data-story="2"><i></i></span>
+      </div>
+      <div class="story-intro-hint" id="menuStoriesIntroHint" aria-hidden="true">
+        <span class="story-intro-hint-dot story-intro-hint-dot-left"></span>
+        <span class="story-intro-hint-dot story-intro-hint-dot-right"></span>
       </div>
 
       <div class="story-slide is-active" data-story="0">
@@ -908,34 +956,99 @@
   }
 
   // Stories
+  var storiesControllers = {};
   document.querySelectorAll('.stories').forEach(function(stories){
     var slides = stories.querySelectorAll('.story-slide');
     var bars = stories.querySelectorAll('.story-bar');
     var total = slides.length;
     var current = 0;
+    var duration = 4500;
+    var timer = null;
+
+    function clearFill(bar){
+      if(!bar) return;
+      var i = bar.querySelector('i');
+      i.classList.remove('is-filling');
+      i.style.animationDuration = '';
+    }
+
+    function startFill(){
+      var bar = bars[current];
+      if(!bar) return;
+      var i = bar.querySelector('i');
+      i.style.animationDuration = duration + 'ms';
+      void i.offsetWidth;
+      i.classList.add('is-filling');
+    }
 
     function render(){
       slides.forEach(function(s, i){ s.classList.toggle('is-active', i === current); });
       bars.forEach(function(b, i){
+        clearFill(b);
         b.classList.toggle('is-done', i < current);
         b.classList.toggle('is-active', i === current);
       });
+      startFill();
+    }
+
+    function scheduleAdvance(){
+      clearTimeout(timer);
+      if(document.hidden) return;
+      timer = setTimeout(function(){
+        current = (current + 1) % total;
+        render();
+        scheduleAdvance();
+      }, duration);
     }
 
     function goTo(n){
       if(n < 0 || n >= total) return;
       current = n;
       render();
+      scheduleAdvance();
+    }
+
+    function resetTimer(){
+      clearFill(bars[current]);
+      startFill();
+      scheduleAdvance();
     }
 
     stories.querySelectorAll('.story-tapzone-left').forEach(function(btn){
       btn.addEventListener('click', function(){ goTo(current - 1); });
     });
     stories.querySelectorAll('.story-tapzone-right').forEach(function(btn){
-      btn.addEventListener('click', function(){ goTo(current + 1); });
+      btn.addEventListener('click', function(){ goTo((current + 1) % total); });
+    });
+
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){ clearTimeout(timer); }
+      else{ scheduleAdvance(); }
     });
 
     render();
+    scheduleAdvance();
+
+    if(stories.id){ storiesControllers[stories.id] = { resetTimer: resetTimer }; }
+
+    // First-visit intro hint (once per block)
+    var introHint = stories.querySelector('.story-intro-hint');
+    if(introHint && stories.id){
+      var seenKey = 'nastroenie_seen_intro_' + stories.id;
+      var seenIntro = false;
+      try{ seenIntro = !!localStorage.getItem(seenKey); }catch(e){}
+      if(!seenIntro){
+        var hideIntro = function(){
+          introHint.classList.remove('is-visible');
+          try{ localStorage.setItem(seenKey, '1'); }catch(e){}
+        };
+        setTimeout(function(){ introHint.classList.add('is-visible'); }, 500);
+        setTimeout(hideIntro, 3200);
+        stories.querySelectorAll('.story-tapzone').forEach(function(btn){
+          btn.addEventListener('click', hideIntro, { once:true });
+        });
+      }
+    }
   });
 
   // Slide 1 of hero stories: mood quiz
@@ -999,6 +1112,7 @@
       function goToQuizStep(n){
         quizSteps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
         quizDots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
+        if(storiesControllers.stories){ storiesControllers.stories.resetTimer(); }
         if(n === 3){ maybeShowTapHint(); }
       }
 
