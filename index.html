@@ -437,25 +437,12 @@
     .sandwich{ margin-top:36px; }
   }
 
-  /* ============ Moments (bento) ============ */
+  /* ============ Moments -> Creator collab ============ */
   .moments{ padding:120px 0; background:var(--bg); }
-  .moments-head{ max-width:640px; margin-bottom:52px; }
-  .moments-head p{ color:var(--ink-soft); font-size:1.02rem; margin-top:14px; }
-  .bento{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-  .bento-card{
-    border-radius:12px; background:var(--card-bg); border:1px solid var(--card-border); color:var(--ink);
-    display:flex; flex-direction:column; position:relative; overflow:hidden; min-height:280px; justify-content:flex-end;
-  }
-  .bento-tag{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
-  .bento-title{ font-family:var(--font-display); font-weight:800; font-size:1.28rem; line-height:1.18; margin:10px 0 6px; text-wrap:balance; }
-  .bento-desc{ font-size:.92rem; color:var(--ink-soft); max-width:32ch; }
-  .bento-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; z-index:0; }
-  .bento-card.has-photo::after{ content:""; position:absolute; inset:0; background:var(--wine); opacity:.5; z-index:1; }
-  .bento-card-body{ position:relative; z-index:2; padding:22px 24px 26px; display:flex; flex-direction:column; }
-  @media (max-width:900px){
-    .bento{ grid-template-columns:1fr 1fr; gap:20px; }
-    .bento-photo{ object-position:center top; }
-  }
+  .collab{ max-width:640px; }
+  .collab-eyebrow{ color:var(--cream-on-wine); }
+  .collab h2{ margin:0 0 16px; }
+  .collab-text{ font-size:1.06rem; color:rgba(253,251,247,.75); max-width:48ch; margin:0 0 32px; }
 
   /* ============ Menu ============ */
   .menu{ position:relative; background:var(--bg); overflow:hidden; }
@@ -490,13 +477,6 @@
     .wrap{ padding:0 1rem; }
     .hero, .stories, .moments, .menu, .contacts, footer{ margin-bottom:0; margin-top:0; }
     .moments{ padding:48px 0; }
-    .moments-head{ margin-bottom:28px; }
-    .bento{
-      display:flex !important; grid-template-columns:none; overflow-x:auto !important;
-      scroll-snap-type:x mandatory !important; -webkit-overflow-scrolling:touch;
-      gap:1rem; padding-bottom:1rem; margin:0 -1rem; padding-left:1rem; padding-right:1rem;
-    }
-    .bento-card{ flex:0 0 85% !important; scroll-snap-align:center; min-height:320px; }
     .contacts{ padding:48px 0 36px; }
     .contacts-grid{ grid-template-columns:1fr; gap:32px; }
     .contacts-list{ margin:16px 0 20px; gap:12px; }
@@ -789,36 +769,11 @@
   <!-- MOMENTS -->
   <section class="moments" id="moments">
     <div class="wrap">
-      <div class="moments-head reveal">
-        <p class="eyebrow">Не случайные моменты</p>
-        <h2 class="h2">Из чего складывается вайб</h2>
-        <p>От утренних сетов до уютных деталей, которые обычно замечают только постоянные.</p>
-      </div>
-      <div class="bento">
-        <article class="bento-card is-event has-photo reveal">
-          <img class="bento-photo" src="assets/img/morning-disco.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Анонс</span>
-            <h3 class="bento-title">Утренняя дискотека</h3>
-            <p class="bento-desc">Главный тренд Сириуса: утренний тусич на рассвете. Заряжаемся громкой музыкой, горячим кофе и свежей выпечкой. Следи за анонсом — дату объявим совсем скоро!</p>
-          </div>
-        </article>
-        <article class="bento-card is-event has-photo reveal">
-          <img class="bento-photo" src="assets/img/dog-coffee-party.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Анонс</span>
-            <h3 class="bento-title">Dog &amp; Coffee Party</h3>
-            <p class="bento-desc">Тусовка для пушистых: догпучино, фотозона и спешелти хозяевам.</p>
-          </div>
-        </article>
-        <article class="bento-card is-detail has-photo reveal">
-          <img class="bento-photo" src="assets/img/pet-friendly.jpg" alt="" aria-hidden="true">
-          <div class="bento-card-body">
-            <span class="bento-tag">Деталь</span>
-            <h3 class="bento-title">Pet-friendly вайб</h3>
-            <p class="bento-desc">Свежая вода, внимание бариста и дофамин — для тех, кто пришёл на четырёх лапах.</p>
-          </div>
-        </article>
+      <div class="collab reveal">
+        <p class="eyebrow collab-eyebrow">Снимаешь контент?</p>
+        <h2 class="h2">Го в коллаб</h2>
+        <p class="collab-text">Сними UGC Reels у нас, отметь — увидим и залетим с предложением. Бартер решает.</p>
+        <a class="btn btn-fill collab-cta" href="https://www.instagram.com/nast.cafe/" target="_blank" rel="noopener">Отметить →</a>
       </div>
     </div>
   </section>
