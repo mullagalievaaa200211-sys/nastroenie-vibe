@@ -29,7 +29,7 @@
     --card-border:rgba(253,251,247,.2);
     --field-bg:rgba(255,255,255,.06);
     --shadow: 0 10px 24px -14px rgba(30,4,6,.2);
-    --font-display:'J Audio Cassette','Montserrat',-apple-system,sans-serif;
+    --font-display:'Montserrat',-apple-system,sans-serif;
     --font-body:'Libre Franklin',-apple-system,sans-serif;
   }
 
@@ -172,6 +172,9 @@
     background-color:var(--wine);
     background-image:url('assets/img/story-slide2.jpg');
     background-size:cover; background-position:center;
+  }
+  @media (min-width:769px){
+    .story-bg-2{ background-image:url('assets/img/story-slide2-desktop.jpg'); }
   }
   video.story-bg-3{ width:100%; height:100%; object-fit:cover; background-color:var(--wine); }
   .story-scrim{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(20,5,8,.25) 0%, rgba(20,5,8,.6) 100%); }
