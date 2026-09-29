@@ -142,9 +142,8 @@
     background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3); backdrop-filter:blur(8px);
   }
   .hero-actions .btn-outline:hover{ background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.5); }
-  .hero-links{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 28px; margin-top:30px; }
   .hero-spin-link{
-    display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:.92rem;
+    display:inline-flex; align-items:center; gap:8px; margin-top:30px; font-weight:700; font-size:.92rem;
     color:var(--cream-on-wine); text-decoration:none; border-bottom:1.5px dashed var(--line-on-wine); padding-bottom:3px;
     background:none; border-left:none; border-right:none; border-top:none; padding-left:0; padding-right:0;
   }
@@ -160,7 +159,7 @@
     .hero{ min-height:100dvh; padding:clamp(28vh,36vh,40vh) 0 40px; }
     .hero-title{ font-size:clamp(1.75rem,5vw,2.2rem); line-height:1.1; margin-bottom:14px; }
     .hero-actions{ flex-direction:column; align-items:flex-start; gap:12px; }
-    .hero-links{ flex-direction:column; align-items:flex-start; gap:14px; margin-top:20px; }
+    .hero-spin-link{ margin-top:20px; }
   }
 
   /* ============ Stories ============ */
@@ -355,64 +354,6 @@
     .quiz-options{ flex-direction:column; align-items:center; gap:16px; }
   }
 
-  /* ============ Spinner overlay ============ */
-  .spin-overlay{
-    position:fixed; inset:0; z-index:900; display:flex; align-items:center; justify-content:center;
-    padding:20px; background:rgba(20,6,4,.6); backdrop-filter:blur(3px);
-    opacity:0; visibility:hidden; transition:opacity .35s ease;
-  }
-  .spin-overlay.is-open{ opacity:1; visibility:visible; }
-  .spin-card{
-    position:relative; width:100%; max-width:460px; background:var(--card-bg);
-    backdrop-filter:blur(20px); border:1px solid var(--card-border); color:var(--ink);
-    border-radius:16px; padding:clamp(28px,4vw,44px); box-shadow:0 20px 48px -24px rgba(20,4,6,.5);
-    max-height:92vh; overflow-y:auto;
-  }
-  .spin-close{
-    position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%;
-    border:1px solid var(--line-on-wine); background:none; color:var(--ink); font-size:1rem; line-height:1;
-  }
-  .spin-close:hover{ background:rgba(255,255,255,.08); }
-  .spin-eyebrow{ font-weight:700; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mist); margin-bottom:8px; }
-  .spin-title{ font-family:var(--font-display); font-weight:800; font-size:1.4rem; line-height:1.2; margin-bottom:22px; padding-right:30px; }
-  .wheel-zone{ display:flex; flex-direction:column; align-items:center; gap:22px; }
-  .wheel-pointer{ width:0; height:0; border-left:12px solid transparent; border-right:12px solid transparent; border-top:16px solid var(--accent); margin-bottom:-4px; }
-  .wheel{
-    width:min(260px,72vw); height:min(260px,72vw); border-radius:50%; position:relative;
-    background:conic-gradient(var(--wine-deep) 0deg 90deg, var(--accent) 90deg 180deg, var(--mist) 180deg 270deg, var(--mist-deep) 270deg 360deg);
-    border:5px solid var(--card-bg); outline:2px solid var(--line-on-wine); transition:transform 4.2s cubic-bezier(.14,.67,.24,1);
-  }
-  .wheel-label{
-    position:absolute; top:50%; left:50%; width:50%; transform-origin:0% 50%;
-    font-family:var(--font-display); font-weight:700; font-size:.72rem; color:var(--cream-on-wine);
-    text-transform:uppercase; letter-spacing:.02em; padding-left:14px;
-  }
-  .wheel-hub{
-    position:absolute; top:50%; left:50%; width:20%; height:20%; transform:translate(-50%,-50%);
-    background:var(--wine); border-radius:50%; border:2px solid var(--line-on-wine);
-  }
-  .spin-btn{ width:100%; }
-  .spin-result{ display:none; text-align:center; }
-  .spin-result.is-active{ display:block; }
-  .spin-prize-tag{
-    display:inline-block; background:var(--accent); color:var(--cream-on-wine); font-family:var(--font-display); font-weight:800;
-    padding:12px 22px; border-radius:12px; font-size:1.15rem; margin-bottom:16px; text-transform:uppercase;
-  }
-  .spin-result p{ color:var(--ink-soft); font-size:.94rem; margin-bottom:20px; }
-  .spin-email-row{ display:flex; gap:10px; margin-bottom:12px; }
-  .spin-email-row input{
-    flex:1; min-width:0; padding:13px 16px; border-radius:12px; border:1.5px solid var(--line-on-wine);
-    background:var(--field-bg); color:var(--ink); font-size:.94rem;
-  }
-  .spin-email-row input::placeholder{ color:var(--ink-soft); }
-  .spin-email-row input:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
-  .spin-skip{ font-size:.82rem; color:var(--ink-soft); background:none; border:none; text-decoration:underline; padding:6px; }
-  .mail-preview{ display:none; margin-top:20px; border:1.5px dashed var(--line-on-wine); border-radius:12px; padding:18px; text-align:left; }
-  .mail-preview.is-active{ display:block; }
-  .mail-preview-head{ font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin-bottom:10px; font-weight:700; }
-  .mail-preview-body{ font-family:var(--font-display); font-weight:700; }
-  .mail-preview-code{ display:inline-block; margin-top:10px; padding:8px 14px; background:rgba(255,255,255,.08); color:var(--cream-on-wine); border-radius:8px; letter-spacing:.08em; }
-  .spin-fine{ font-size:.76rem; color:var(--ink-soft); margin-top:18px; }
 
   /* ============ Reveal ============ */
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
@@ -439,6 +380,26 @@
   @media (max-width:900px){
     .bite-grid{ grid-template-columns:1fr; }
     .sandwich{ margin-top:36px; }
+  }
+
+  /* ============ Loyalty ============ */
+  .loyalty{ padding:120px 0; background:var(--bg); }
+  .loyalty-inner{ max-width:640px; }
+  .loyalty-inner h2{ margin:0 0 16px; }
+  .loyalty-text{ font-size:1.06rem; color:rgba(253,251,247,.75); max-width:48ch; margin:0 0 32px; }
+  .loyalty-steps{ display:flex; flex-direction:column; gap:16px; margin-bottom:32px; }
+  .loyalty-step{
+    display:flex; align-items:center; gap:14px;
+    font-family:var(--font-display); font-weight:700; font-size:1.02rem; color:var(--cream-on-wine);
+  }
+  .loyalty-step-num{
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    width:32px; height:32px; border-radius:50%; border:1.5px solid var(--line-on-wine);
+    font-family:var(--font-body); font-size:.9rem; font-weight:700; color:var(--accent);
+  }
+  .loyalty-fine{ font-size:.8rem; color:var(--ink-soft); margin-top:16px; max-width:44ch; }
+  @media (max-width:768px){
+    .loyalty{ padding:48px 0; }
   }
 
   /* ============ Moments -> Creator collab ============ */
@@ -531,10 +492,7 @@
         <a href="#menu" class="btn btn-fill">Заглянуть в меню</a>
         <a href="#contacts" class="btn btn-outline">Проложить маршрут</a>
       </div>
-      <div class="hero-links">
-        <button class="hero-spin-link" id="openSpinBtn" type="button">☕ Крутани колесо настроения →</button>
-        <a class="hero-spin-link" href="https://swip.one/wallet-card/guri" target="_blank" rel="noopener">⭐ Программа лояльности →</a>
-      </div>
+      <a class="hero-spin-link" href="https://swip.one/wallet-card/guri" target="_blank" rel="noopener">⭐ Лови 300 ₽ вайба →</a>
     </div>
     <div class="hero-stamp" aria-hidden="true">
       <svg viewBox="0 0 170 170" width="170" height="170">
@@ -644,49 +602,6 @@
     </div>
   </section>
 
-  <!-- SPINNER MODAL -->
-  <div class="spin-overlay" id="spinOverlay" role="dialog" aria-modal="true" aria-labelledby="spinTitle">
-    <div class="spin-card">
-      <button class="spin-close" id="spinClose" aria-label="Закрыть">✕</button>
-
-      <div id="spinIntro">
-        <p class="spin-eyebrow">Настроение дня</p>
-        <h3 class="spin-title" id="spinTitle">Какое у тебя сегодня настроение? Прокрути и зафиксируй фаворита!</h3>
-        <div class="wheel-zone">
-          <div class="wheel-pointer" aria-hidden="true"></div>
-          <div class="wheel" id="wheel" aria-hidden="true">
-            <span class="wheel-label" style="transform:rotate(45deg);">Скидка 15%</span>
-            <span class="wheel-label" style="transform:rotate(135deg);">Секретный десерт</span>
-            <span class="wheel-label" style="transform:rotate(225deg);">Догпучино</span>
-            <span class="wheel-label" style="transform:rotate(315deg);">Стикерпак</span>
-            <div class="wheel-hub"></div>
-          </div>
-          <button class="btn btn-fill spin-btn" id="spinBtn" type="button">Крутить колесо</button>
-        </div>
-      </div>
-
-      <div class="spin-result" id="spinResult">
-        <span class="spin-prize-tag" id="prizeTag">Скидка 15%</span>
-        <p>Оставь почту — продублируем приз, чтобы не потерять. Или просто покажи этот экран бариста.</p>
-        <form id="spinForm">
-          <div class="spin-email-row">
-            <input type="email" placeholder="почта@пример.ру" id="spinEmail" required>
-            <button class="btn btn-fill" type="submit" style="padding:13px 18px;">Ок</button>
-          </div>
-        </form>
-        <button class="spin-skip" id="spinSkip" type="button">Пропустить, просто покажу экран</button>
-
-        <div class="mail-preview" id="mailPreview">
-          <div class="mail-preview-head">Так будет выглядеть письмо (демо превью)</div>
-          <div class="mail-preview-body">Настроение — твой приз внутри ✨</div>
-          <div class="mail-preview-code" id="mailCode">NASTR-15OFF</div>
-        </div>
-        <p class="spin-fine">* Демо-механика для питча. Реальная отправка письма подключается на бэкенде.</p>
-      </div>
-    </div>
-  </div>
-
-
   <!-- BITE SCROLLER -->
   <section class="bite-section">
     <div class="bite-sticky">
@@ -783,6 +698,24 @@
 
   </section>
 
+  <!-- LOYALTY -->
+  <section class="loyalty" id="loyalty">
+    <div class="wrap">
+      <div class="loyalty-inner reveal">
+        <p class="eyebrow">Программа лояльности</p>
+        <h2 class="h2">Первый кофе — почти за наш счёт</h2>
+        <p class="loyalty-text">Регистрируешься один раз — и сразу 300 ₽ вайба на карту. Дальше просто копишь и списываешь баллами.</p>
+        <div class="loyalty-steps">
+          <div class="loyalty-step"><span class="loyalty-step-num">1</span>Добавь карту в Wallet</div>
+          <div class="loyalty-step"><span class="loyalty-step-num">2</span>Получи 300 ₽ вайба</div>
+          <div class="loyalty-step"><span class="loyalty-step-num">3</span>Списывай баллами за покупки</div>
+        </div>
+        <a class="btn btn-fill loyalty-cta" href="https://swip.one/wallet-card/guri" target="_blank" rel="noopener">Забрать карту →</a>
+        <p class="loyalty-fine">Подробные условия начисления и списания баллов — в карте после регистрации.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- MOMENTS -->
   <section class="moments" id="moments">
     <div class="wrap">
@@ -866,66 +799,6 @@
   }
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
-
-  // Spinner
-  var overlay = document.getElementById('spinOverlay');
-  var openBtn = document.getElementById('openSpinBtn');
-  var closeBtn = document.getElementById('spinClose');
-  var spinBtn = document.getElementById('spinBtn');
-  var wheel = document.getElementById('wheel');
-  var intro = document.getElementById('spinIntro');
-  var result = document.getElementById('spinResult');
-  var prizeTag = document.getElementById('prizeTag');
-  var mailPreview = document.getElementById('mailPreview');
-  var mailCode = document.getElementById('mailCode');
-  var spinForm = document.getElementById('spinForm');
-  var spinSkip = document.getElementById('spinSkip');
-  var prizes = [
-    { name:'Скидка 15%', code:'NASTR-15OFF' },
-    { name:'Секретный десерт', code:'NASTR-DESERT' },
-    { name:'Догпучино', code:'NASTR-DOGCUP' },
-    { name:'Стикерпак', code:'NASTR-STICKR' }
-  ];
-  var hasSpun = false;
-
-  function openSpin(){ overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
-  function closeSpin(){ overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
-
-  if(openBtn){ openBtn.addEventListener('click', openSpin); }
-  closeBtn.addEventListener('click', closeSpin);
-  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeSpin(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeSpin(); });
-
-  spinBtn.addEventListener('click', function(){
-    if(hasSpun) return;
-    hasSpun = true;
-    var index = Math.floor(Math.random() * prizes.length);
-    var spins = 5;
-    var target = spins * 360 + (360 - (index * 90 + 45));
-    wheel.style.transform = 'rotate(' + target + 'deg)';
-    spinBtn.disabled = true;
-    setTimeout(function(){
-      prizeTag.textContent = prizes[index].name;
-      mailCode.textContent = prizes[index].code;
-      intro.style.display = 'none';
-      result.classList.add('is-active');
-      try{ localStorage.setItem('nastroenie_spin_prize', prizes[index].name); }catch(e){}
-    }, 4300);
-  });
-
-  function revealMail(){
-    mailPreview.classList.add('is-active');
-    spinForm.style.display = 'none';
-    spinSkip.style.display = 'none';
-  }
-  spinForm.addEventListener('submit', function(e){ e.preventDefault(); revealMail(); });
-  spinSkip.addEventListener('click', revealMail);
-
-  var already = false;
-  try{ already = !!localStorage.getItem('nastroenie_spin_prize'); }catch(e){}
-  if(!already && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    setTimeout(openSpin, 7000);
-  }
 
   // Stories
   var storiesControllers = {};
