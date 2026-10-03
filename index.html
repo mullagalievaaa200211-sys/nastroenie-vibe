@@ -372,11 +372,11 @@
   .bite-progress i.is-active{ background:var(--accent); }
   .sandwich{ position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1; }
   .sw-layer{ position:absolute; left:8%; right:8%; border-radius:999px; transition:transform .25s ease, opacity .25s ease; }
-  .sw-top{ top:8%; height:16%; background:var(--accent); }
+  .sw-top{ top:8%; height:16%; background:var(--accent); border-radius:999px 999px 14px 14px; }
   .sw-lettuce{ top:24%; height:10%; background:var(--mist-deep); clip-path:polygon(0% 50%,8% 0%,16% 60%,24% 5%,32% 55%,40% 0%,48% 60%,56% 5%,64% 55%,72% 0%,80% 60%,88% 5%,100% 50%,100% 100%,0% 100%); }
-  .sw-patty{ top:36%; height:16%; background:var(--wine); }
-  .sw-cheese{ top:53%; height:8%; background:var(--mist); clip-path:polygon(0 0,100% 0,96% 100%,4% 100%); }
-  .sw-bottom{ top:63%; height:20%; background:var(--accent-deep); border-radius:999px 999px 40px 40px; }
+  .sw-patty{ top:45%; height:16%; background:color-mix(in srgb, var(--accent-deep) 45%, #000); border-radius:14px; }
+  .sw-cheese{ top:36%; height:8%; background:var(--mist); clip-path:polygon(0 0,100% 0,96% 100%,4% 100%); }
+  .sw-bottom{ top:63%; height:20%; background:var(--accent-deep); border-radius:14px 14px 999px 999px / 14px 14px 60px 60px; }
   .sw-seed{ position:absolute; width:6%; aspect-ratio:1/1; background:var(--bg); border-radius:50%; top:11%; }
   @media (max-width:900px){
     .bite-grid{ grid-template-columns:1fr; }
