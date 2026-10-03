@@ -305,9 +305,6 @@
   .mood{ position:relative; width:100%; min-height:60vh; background:var(--bg); overflow:hidden; display:flex; align-items:center; }
   .mood-inner{ width:100%; padding:48px 0 56px; }
   .quiz{ max-width:640px; margin:0 auto; text-align:center; }
-  .quiz-progress{ display:flex; justify-content:center; gap:6px; margin-bottom:22px; }
-  .quiz-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
-  .quiz-progress i.is-active{ background:var(--accent); }
   .quiz-step{ display:none; }
   .quiz-step.is-active{ display:block; animation:quizFade .4s ease; }
   @keyframes quizFade{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
@@ -316,24 +313,11 @@
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.02em;
     font-size:clamp(1.4rem,3.2vw,2rem); line-height:1.25; color:var(--ink); margin:0 0 24px;
   }
-  .quiz-characters{ display:flex; justify-content:center; align-items:flex-end; gap:clamp(8px,3vw,20px); flex-wrap:nowrap; }
-  .quiz-char{
-    background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:clamp(6px,1.5vw,14px);
-    padding:clamp(4px,1vw,12px); border-radius:16px; min-width:0; flex:1 1 0; max-width:190px;
-    transition:transform .3s cubic-bezier(.2,.8,.2,1);
-  }
-  .quiz-char:hover, .quiz-char.is-selected{ transform:translateY(-6px); }
-  .quiz-char img{ width:100%; max-width:clamp(64px,13vw,120px); height:auto; }
-  .quiz-char span{
-    font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em;
-    font-size:clamp(.6rem,1.8vw,.86rem); line-height:1.25; color:var(--ink);
-  }
-
   .quiz-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:720px; margin:0 auto; }
   .quiz-card{
     position:relative; aspect-ratio:9/16; border:none; border-radius:14px; overflow:hidden; cursor:pointer;
     background:var(--wine) var(--img) center/cover no-repeat; display:flex; align-items:flex-end; justify-content:flex-start;
-    padding:clamp(10px,2.4vw,20px); text-align:left; color:#fff; transition:transform .3s cubic-bezier(.2,.8,.2,1);
+    padding:clamp(12px,2.4vw,20px) clamp(12px,2.4vw,20px) clamp(26px,7vw,48px); text-align:left; color:#fff; transition:transform .3s cubic-bezier(.2,.8,.2,1);
   }
   .quiz-card::before{
     content:''; position:absolute; inset:0;
@@ -351,18 +335,19 @@
   }
   .mood-result.is-active{ display:flex; animation:quizFade .5s ease; }
   .mood-result::before{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,5,8,.15) 0%, rgba(20,5,8,.9) 100%); }
-  .mood-result-body{ position:relative; width:100%; max-width:640px; margin:0 auto; padding:56px clamp(20px,5vw,56px) 44px; text-align:left; color:#fff; }
+  .mood-result-body{ position:relative; width:100%; max-width:640px; margin:0 auto; padding:56px clamp(20px,5vw,56px) 72px; text-align:left; color:#fff; }
   .mood-result-title{
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.01em;
     font-size:clamp(1.5rem,4vw,2.4rem); line-height:1.15; margin:0 0 12px;
   }
+  .mood-result-price{ font-family:var(--font-display); font-weight:800; font-size:clamp(1.3rem,4vw,1.8rem); color:var(--accent); margin:0 0 10px; }
+  .mood-result-price:empty{ display:none; }
   .mood-result-sub{ font-family:var(--font-body); font-size:1.05rem; line-height:1.4; color:rgba(255,255,255,.85); margin:0 0 24px; max-width:44ch; }
   .mood-result-actions{ display:flex; flex-wrap:wrap; gap:12px; }
   .mood-result-actions .btn-outline{ background:rgba(255,255,255,.1); color:#fff; border-color:rgba(255,255,255,.45); backdrop-filter:blur(8px); }
   @media (max-width:768px){
     .mood{ min-height:60dvh; }
     .mood-inner{ padding:36px 0 44px; }
-    .quiz-progress{ margin-bottom:18px; }
     .quiz-question{ margin-bottom:18px; }
   }
 
@@ -497,34 +482,12 @@
   <section class="mood" id="mood">
     <div class="mood-inner wrap">
       <div class="quiz" id="storyQuiz">
-        <div class="quiz-progress" aria-hidden="true">
-          <i data-quiz-step="1" class="is-active"></i><i data-quiz-step="2"></i><i data-quiz-step="3"></i>
-        </div>
-
         <div class="quiz-step is-active" data-quiz-step="1">
-          <p class="quiz-question">Какой сегодня вайб?</p>
-          <div class="quiz-characters">
-            <button class="quiz-char" type="button" data-mood="tired">
-              <img src="assets/img/mood-tired.png" alt="">
-              <span>На нуле</span>
-            </button>
-            <button class="quiz-char" type="button" data-mood="rush">
-              <img src="assets/img/mood-rush.png" alt="">
-              <span>Ворваться в рабочий режим</span>
-            </button>
-            <button class="quiz-char" type="button" data-mood="aesthetic">
-              <img src="assets/img/mood-aesthetic.png" alt="">
-              <span>Хочу красиво</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="quiz-step" data-quiz-step="2">
-          <p class="quiz-question">Что нужно прямо сейчас?</p>
+          <p class="quiz-question">Какой у тебя сегодня вайб?</p>
           <div class="quiz-cards">
             <button class="quiz-card" type="button" data-need="calm" style="--img:url('assets/img/chill-photo.jpg?v=2')"><span>Просто чилл</span></button>
             <button class="quiz-card" type="button" data-need="focus" style="--img:url('assets/img/laptop-photo.jpg?v=2')"><span>Открыть ноут</span></button>
-            <button class="quiz-card" type="button" data-need="shot" style="--img:url('assets/img/aesthetic-photo.jpg?v=3')"><span>Эстетика</span></button>
+            <button class="quiz-card" type="button" data-need="shot" style="--img:url('assets/img/aesthetic-photo.jpg?v=3')"><span>Хочу красиво</span></button>
           </div>
         </div>
       </div>
@@ -533,6 +496,7 @@
     <div class="mood-result" id="moodResult">
       <div class="mood-result-body">
         <h3 class="mood-result-title" id="moodResultTitle"></h3>
+        <p class="mood-result-price" id="moodResultPrice"></p>
         <p class="mood-result-sub" id="moodResultSub"></p>
         <div class="mood-result-actions">
           <a class="btn btn-fill" href="#contacts">Ждём в «Настроении»</a>
@@ -903,51 +867,50 @@
     var quiz = document.getElementById('storyQuiz');
     if(!quiz) return;
     var steps = quiz.querySelectorAll('.quiz-step');
-    var dots = quiz.querySelectorAll('.quiz-progress i');
     var result = document.getElementById('moodResult');
     var resultTitle = document.getElementById('moodResultTitle');
+    var resultPrice = document.getElementById('moodResultPrice');
     var resultSub = document.getElementById('moodResultSub');
     var inner = document.querySelector('.mood-inner');
 
     var results = {
       calm:{
         title:'Сэндвич с тунцом + Латте Фисташка-Малина',
+        price:'',
         sub:'Срочная реанимация ресурса: сытный сэндвич и сладкая доза эндорфинов.',
         img:'assets/img/sandwich-front.jpg'
       },
       focus:{
         title:'Эспрессо-тоник + Чиабатта',
+        price:'= 760 ₽',
         sub:'Доза чистого кофеина, твой босс пока даже не догадывается, на что ты способен.',
-        img:'assets/img/blue-drink-hand.jpg'
+        img:'assets/img/aesthetic-photo.jpg?v=3'
       },
       shot:{
         title:'Авторский Раф + Свежий круассан',
+        price:'',
         sub:'100% попадание в сохранёнки Pinterest.',
         img:'assets/img/croissant-ambient.jpg'
       }
     };
 
-    function goTo(n){
-      steps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
-      dots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
-      var showResult = n === 3;
+    function show(showResult){
+      steps.forEach(function(s){ s.classList.toggle('is-active', !showResult); });
       result.classList.toggle('is-active', showResult);
       inner.style.visibility = showResult ? 'hidden' : '';
     }
 
-    quiz.querySelectorAll('.quiz-char[data-mood]').forEach(function(btn){
-      btn.addEventListener('click', function(){ goTo(2); });
-    });
     quiz.querySelectorAll('.quiz-card').forEach(function(btn){
       btn.addEventListener('click', function(){
         var r = results[btn.getAttribute('data-need')];
         resultTitle.textContent = r.title;
+        resultPrice.textContent = r.price;
         resultSub.textContent = r.sub;
         result.style.setProperty('--img', "url('" + r.img + "')");
-        goTo(3);
+        show(true);
       });
     });
-    document.getElementById('quizRestart').addEventListener('click', function(){ goTo(1); });
+    document.getElementById('quizRestart').addEventListener('click', function(){ show(false); });
   })();
 
   // Мобильное меню
