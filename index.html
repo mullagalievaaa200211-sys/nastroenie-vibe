@@ -207,10 +207,6 @@
     font-family:var(--font-display); font-weight:500; font-size:clamp(32px,2.9vw,46px); line-height:1.15;
     color:var(--cream-on-wine); margin:0;
   }
-  .story-content .quiz-char,
-  .story-content .quiz-option,
-  .story-content .quiz-result-invite,
-  .story-content .quiz-restart,
   .story-content .btn{ pointer-events:auto; }
 
   .story-header{
@@ -230,15 +226,6 @@
   .story-bar.is-done i{ width:100%; }
   .story-bar i.is-filling{ animation-name:storyBarFill; animation-timing-function:linear; animation-fill-mode:forwards; }
   @keyframes storyBarFill{ from{ width:0%; } to{ width:100%; } }
-
-  .story-hint{
-    position:absolute; top:50%; right:clamp(16px,5vw,40px); transform:translateY(-50%);
-    z-index:6; display:flex; align-items:center; gap:8px; pointer-events:none;
-    font-family:var(--font-body); font-weight:700; font-size:.95rem; color:var(--cream-on-wine);
-    opacity:0; transition:opacity .4s ease;
-  }
-  .story-hint.is-visible{ opacity:1; animation:storyHintNudge 1.2s ease-in-out infinite; }
-  @keyframes storyHintNudge{ 0%,100%{ transform:translateY(-50%) translateX(0); } 50%{ transform:translateY(-50%) translateX(6px); } }
 
   .story-intro-hint{
     position:absolute; inset:0; z-index:4; pointer-events:none; opacity:0; transition:opacity .5s ease;
@@ -294,9 +281,31 @@
     .story-menu-item{ padding:16px 0; }
   }
 
-  /* ============ Mood quiz (stories slide 1) ============ */
-  .quiz{ max-width:760px; margin:0 auto; text-align:center; }
-  .quiz-progress{ display:flex; justify-content:center; gap:6px; margin-bottom:34px; }
+  .story-steps{ list-style:none; margin:22px 0 26px; padding:0; display:flex; flex-direction:column; gap:10px; counter-reset:st; }
+  .story-steps li{
+    counter-increment:st; display:flex; align-items:center; gap:12px;
+    font-family:var(--font-body); font-weight:600; font-size:1.02rem; color:var(--cream-on-wine);
+  }
+  .story-steps li::before{
+    content:counter(st); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    width:26px; height:26px; border-radius:50%; border:1.5px solid rgba(253,251,247,.45);
+    font-size:.8rem; font-weight:700; color:var(--accent);
+  }
+  .story-lead-lg + .story-sub{ margin-top:8px; }
+
+  /* ============ Mood game ============ */
+  .hero::after{
+    content:''; position:absolute; left:0; right:0; bottom:-1px; height:26vh; z-index:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(74,10,15,0) 0%, rgba(74,10,15,.55) 45%, var(--bg) 100%);
+  }
+  .stories::before{
+    content:''; position:absolute; left:0; right:0; top:0; height:16vh; z-index:2; pointer-events:none;
+    background:linear-gradient(180deg, var(--bg) 0%, rgba(74,10,15,0) 100%);
+  }
+  .mood{ position:relative; width:100%; min-height:60vh; background:var(--bg); overflow:hidden; display:flex; align-items:center; }
+  .mood-inner{ width:100%; padding:48px 0 56px; }
+  .quiz{ max-width:640px; margin:0 auto; text-align:center; }
+  .quiz-progress{ display:flex; justify-content:center; gap:6px; margin-bottom:22px; }
   .quiz-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
   .quiz-progress i.is-active{ background:var(--accent); }
   .quiz-step{ display:none; }
@@ -305,54 +314,56 @@
 
   .quiz-question{
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.02em;
-    font-size:clamp(1.9rem,4vw,3rem); line-height:1.25; color:var(--ink); margin:0 0 30px;
+    font-size:clamp(1.4rem,3.2vw,2rem); line-height:1.25; color:var(--ink); margin:0 0 24px;
   }
   .quiz-characters{ display:flex; justify-content:center; align-items:flex-end; gap:clamp(8px,3vw,20px); flex-wrap:nowrap; }
   .quiz-char{
     background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:clamp(6px,1.5vw,14px);
-    padding:clamp(4px,1vw,12px); border-radius:16px; min-width:0; flex:1 1 0; max-width:180px;
-    transition:transform .3s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
+    padding:clamp(4px,1vw,12px); border-radius:16px; min-width:0; flex:1 1 0; max-width:190px;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1);
   }
   .quiz-char:hover, .quiz-char.is-selected{ transform:translateY(-6px); }
-  .quiz-char{ animation:quizCharPulse 1.4s ease-in-out 3; }
-  .quiz-char:nth-child(2){ animation-delay:.15s; }
-  .quiz-char:nth-child(3){ animation-delay:.3s; }
-  @keyframes quizCharPulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.05); } }
-  .quiz-char img{ width:100%; max-width:clamp(72px,16vw,150px); height:auto; }
+  .quiz-char img{ width:100%; max-width:clamp(64px,13vw,120px); height:auto; }
   .quiz-char span{
     font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.02em;
-    font-size:clamp(.64rem,1.8vw,.9rem); color:var(--ink);
+    font-size:clamp(.6rem,1.8vw,.86rem); line-height:1.25; color:var(--ink);
   }
 
-  .quiz-options{ display:flex; justify-content:center; gap:clamp(16px,4vw,36px); flex-wrap:wrap; }
-  .quiz-option{
-    font-family:var(--font-body); font-weight:700; font-size:clamp(.78rem,2vw,1.05rem); padding:8px 2px; border:none;
-    border-bottom:2px solid transparent; background:transparent; color:var(--ink); cursor:pointer;
-    text-transform:uppercase; letter-spacing:.02em;
-    transition:border-color .25s ease, color .25s ease;
+  .quiz-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:720px; margin:0 auto; }
+  .quiz-card{
+    position:relative; aspect-ratio:9/16; border:none; border-radius:14px; overflow:hidden; cursor:pointer;
+    background:var(--wine) var(--img) center/cover no-repeat; display:flex; align-items:flex-end; justify-content:flex-start;
+    padding:clamp(10px,2.4vw,20px); text-align:left; color:#fff; transition:transform .3s cubic-bezier(.2,.8,.2,1);
   }
-  .quiz-option:hover{ border-color:var(--accent); color:var(--cream-on-wine); }
+  .quiz-card::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,5,8,0) 35%, rgba(20,5,8,.9) 100%);
+  }
+  .quiz-card span{
+    position:relative; font-family:var(--font-display); font-weight:900; text-transform:uppercase;
+    letter-spacing:.02em; font-size:clamp(.82rem,3.4vw,1.4rem); line-height:1.15; color:#fff;
+  }
+  .quiz-card:hover, .quiz-card:focus-visible{ transform:translateY(-4px); }
 
-  .quiz-result{ display:flex; flex-direction:column; align-items:center; gap:18px; }
-  .quiz-result-char{ width:150px; height:auto; }
-  .quiz-result-title{
-    font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:0;
-    font-size:clamp(1.25rem,2.2vw,1.55rem); line-height:1.25; color:var(--ink); max-width:34ch; margin:0;
+  .mood-result{
+    position:absolute; inset:0; z-index:3; display:none; align-items:flex-end;
+    background:var(--wine) var(--img) center/cover no-repeat;
   }
-  .quiz-result-invite{
-    font-family:var(--font-body); font-weight:700; font-size:1.05rem; color:var(--cream-on-wine); margin:0;
-    text-decoration:underline; text-decoration-color:var(--line-on-wine); text-underline-offset:4px;
-    transition:text-decoration-color .25s ease, color .25s ease;
+  .mood-result.is-active{ display:flex; animation:quizFade .5s ease; }
+  .mood-result::before{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,5,8,.15) 0%, rgba(20,5,8,.9) 100%); }
+  .mood-result-body{ position:relative; width:100%; max-width:640px; margin:0 auto; padding:56px clamp(20px,5vw,56px) 44px; text-align:left; color:#fff; }
+  .mood-result-title{
+    font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.01em;
+    font-size:clamp(1.5rem,4vw,2.4rem); line-height:1.15; margin:0 0 12px;
   }
-  .quiz-result-invite:hover{ color:var(--accent); text-decoration-color:var(--accent); }
-  .quiz-restart{
-    font-family:var(--font-body); font-size:.84rem; color:var(--ink-soft); background:none; border:none;
-    text-decoration:underline; cursor:pointer; margin-top:4px;
-  }
+  .mood-result-sub{ font-family:var(--font-body); font-size:1.05rem; line-height:1.4; color:rgba(255,255,255,.85); margin:0 0 24px; max-width:44ch; }
+  .mood-result-actions{ display:flex; flex-wrap:wrap; gap:12px; }
+  .mood-result-actions .btn-outline{ background:rgba(255,255,255,.1); color:#fff; border-color:rgba(255,255,255,.45); backdrop-filter:blur(8px); }
   @media (max-width:768px){
-    .quiz-progress{ margin-bottom:26px; }
-    .quiz-question{ margin-bottom:24px; }
-    .quiz-options{ flex-direction:column; align-items:center; gap:16px; }
+    .mood{ min-height:60dvh; }
+    .mood-inner{ padding:36px 0 44px; }
+    .quiz-progress{ margin-bottom:18px; }
+    .quiz-question{ margin-bottom:18px; }
   }
 
 
@@ -361,16 +372,17 @@
   .reveal.is-visible{ opacity:1; transform:none; }
 
   /* ============ Bite scroller ============ */
-  .bite-section{ position:relative; height:260vh; background:var(--bg); }
-  .bite-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
+  .bite-section{ position:relative; background:var(--bg); padding:96px 0; }
   .bite-grid{ position:relative; z-index:1; width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
   .bite-copy{ position:relative; }
   .bite-copy .h2{ margin-bottom:22px; }
   .bite-copy p{ font-size:1.06rem; color:var(--ink-soft); max-width:44ch; }
-  .bite-progress{ display:flex; gap:6px; margin-top:30px; }
-  .bite-progress i{ width:34px; height:4px; border-radius:2px; background:var(--line-on-wine); transition:background .3s; }
-  .bite-progress i.is-active{ background:var(--accent); }
-  .sandwich{ position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1; }
+  .sandwich{
+    position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1;
+    -webkit-mask-composite:source-in; mask-composite:intersect; transition:transform .12s ease, opacity .4s ease;
+  }
+  .sandwich.is-chomp{ transform:scale(.96) rotate(-1.5deg); }
+  .sandwich.is-gone{ opacity:0; }
   .sw-layer{ position:absolute; left:8%; right:8%; border-radius:999px; transition:transform .25s ease, opacity .25s ease; }
   .sw-top{ top:8%; height:16%; background:var(--accent); border-radius:999px 999px 14px 14px; }
   .sw-lettuce{ top:24%; height:10%; background:var(--mist-deep); clip-path:polygon(0% 50%,8% 0%,16% 60%,24% 5%,32% 55%,40% 0%,48% 60%,56% 5%,64% 55%,72% 0%,80% 60%,88% 5%,100% 50%,100% 100%,0% 100%); }
@@ -379,36 +391,10 @@
   .sw-bottom{ top:63%; height:20%; background:var(--accent-deep); border-radius:14px 14px 999px 999px / 14px 14px 60px 60px; }
   .sw-seed{ position:absolute; width:6%; aspect-ratio:1/1; background:var(--bg); border-radius:50%; top:11%; }
   @media (max-width:900px){
+    .bite-section{ padding:56px 0; }
     .bite-grid{ grid-template-columns:1fr; }
     .sandwich{ margin-top:36px; }
   }
-
-  /* ============ Loyalty ============ */
-  .loyalty{ padding:120px 0; background:var(--bg); }
-  .loyalty-inner{ max-width:640px; }
-  .loyalty-inner h2{ margin:0 0 16px; }
-  .loyalty-text{ font-size:1.06rem; color:rgba(253,251,247,.75); max-width:48ch; margin:0 0 32px; }
-  .loyalty-steps{ display:flex; flex-direction:column; gap:16px; margin-bottom:32px; }
-  .loyalty-step{
-    display:flex; align-items:center; gap:14px;
-    font-family:var(--font-display); font-weight:700; font-size:1.02rem; color:var(--cream-on-wine);
-  }
-  .loyalty-step-num{
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-    width:32px; height:32px; border-radius:50%; border:1.5px solid var(--line-on-wine);
-    font-family:var(--font-body); font-size:.9rem; font-weight:700; color:var(--accent);
-  }
-  .loyalty-fine{ font-size:.8rem; color:var(--ink-soft); margin-top:16px; max-width:44ch; }
-  @media (max-width:768px){
-    .loyalty{ padding:48px 0; }
-  }
-
-  /* ============ Moments -> Creator collab ============ */
-  .moments{ padding:120px 0; background:var(--bg); }
-  .collab{ max-width:640px; }
-  .collab-eyebrow{ color:var(--cream-on-wine); }
-  .collab h2{ margin:0 0 16px; }
-  .collab-text{ font-size:1.06rem; color:rgba(253,251,247,.75); max-width:48ch; margin:0 0 32px; }
 
   /* ============ Menu ============ */
   .menu{ position:relative; background:var(--bg); overflow:hidden; }
@@ -429,6 +415,8 @@
   .contacts-list li{ list-style:none; }
   .contacts-label{ font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mist); font-weight:700; display:block; margin-bottom:3px; }
   .contacts-value{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; }
+  .contacts-phone{ color:inherit; text-decoration:none; }
+  .contacts-phone:hover{ color:var(--accent); }
   .socials{ display:flex; gap:20px; }
   .socials a{ font-weight:700; font-size:.92rem; text-decoration:none; border-bottom:1.5px solid var(--line-on-wine); padding-bottom:2px; }
   .socials a:hover{ border-color:var(--accent); color:var(--accent); }
@@ -450,8 +438,7 @@
   /* -- Compact section rhythm on mobile -- */
   @media (max-width:768px){
     .wrap{ padding:0 1rem; }
-    .hero, .stories, .moments, .menu, .contacts, footer{ margin-bottom:0; margin-top:0; }
-    .moments{ padding:48px 0; }
+    .hero, .stories, .menu, .contacts, footer{ margin-bottom:0; margin-top:0; }
     .contacts{ padding:48px 0 36px; }
     .contacts-grid{ grid-template-columns:1fr; gap:32px; }
     .contacts-list{ margin:16px 0 20px; gap:12px; }
@@ -469,7 +456,6 @@
     </a>
     <nav class="main-nav">
       <a href="#menu">Меню</a>
-      <a href="#moments">Моменты</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <a href="https://eda.yandex.ru/r/nastroenie?is_ad=true&amp;placeSlug=nastroenie_rkp7w" target="_blank" rel="noopener" class="btn btn-fill nav-cta">Заказать доставку</a>
@@ -507,6 +493,55 @@
     </div>
   </section>
 
+  <!-- MOOD GAME -->
+  <section class="mood" id="mood">
+    <div class="mood-inner wrap">
+      <div class="quiz" id="storyQuiz">
+        <div class="quiz-progress" aria-hidden="true">
+          <i data-quiz-step="1" class="is-active"></i><i data-quiz-step="2"></i><i data-quiz-step="3"></i>
+        </div>
+
+        <div class="quiz-step is-active" data-quiz-step="1">
+          <p class="quiz-question">Какой сегодня вайб?</p>
+          <div class="quiz-characters">
+            <button class="quiz-char" type="button" data-mood="tired">
+              <img src="assets/img/mood-tired.png" alt="">
+              <span>На нуле</span>
+            </button>
+            <button class="quiz-char" type="button" data-mood="rush">
+              <img src="assets/img/mood-rush.png" alt="">
+              <span>Ворваться в рабочий режим</span>
+            </button>
+            <button class="quiz-char" type="button" data-mood="aesthetic">
+              <img src="assets/img/mood-aesthetic.png" alt="">
+              <span>Хочу красиво</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-step" data-quiz-step="2">
+          <p class="quiz-question">Что нужно прямо сейчас?</p>
+          <div class="quiz-cards">
+            <button class="quiz-card" type="button" data-need="calm" style="--img:url('assets/img/chill-photo.jpg?v=2')"><span>Просто чилл</span></button>
+            <button class="quiz-card" type="button" data-need="focus" style="--img:url('assets/img/laptop-photo.jpg?v=2')"><span>Открыть ноут</span></button>
+            <button class="quiz-card" type="button" data-need="shot" style="--img:url('assets/img/aesthetic-photo.jpg?v=3')"><span>Эстетика</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mood-result" id="moodResult">
+      <div class="mood-result-body">
+        <h3 class="mood-result-title" id="moodResultTitle"></h3>
+        <p class="mood-result-sub" id="moodResultSub"></p>
+        <div class="mood-result-actions">
+          <a class="btn btn-fill" href="#contacts">Ждём в «Настроении»</a>
+          <button class="btn btn-outline" id="quizRestart" type="button">Пройти ещё раз</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- STORIES -->
   <section class="stories" id="stories">
     <div class="story-header" aria-hidden="true">
@@ -519,61 +554,29 @@
       <span class="story-bar" data-story="1"><i></i></span>
       <span class="story-bar" data-story="2"><i></i></span>
     </div>
-    <div class="story-hint" id="storyTapHint" aria-hidden="true">
-      <span>Тапай</span><span aria-hidden="true">→</span>
-    </div>
     <div class="story-intro-hint" id="storiesIntroHint" aria-hidden="true">
       <span class="story-intro-hint-dot story-intro-hint-dot-left"></span>
       <span class="story-intro-hint-dot story-intro-hint-dot-right"></span>
     </div>
 
     <div class="story-slide is-active" data-story="0">
-      <div class="story-bg story-bg-1" aria-hidden="true"></div>
-      <div class="story-scrim" aria-hidden="true"></div>
+      <video class="story-bg story-bg-3" autoplay muted loop playsinline aria-hidden="true">
+        <source src="assets/img/story-slide3-desktop.mp4" type="video/mp4" media="(min-width: 769px)">
+        <source src="assets/img/story-slide3.mp4" type="video/mp4">
+      </video>
+      <div class="story-scrim story-scrim--flat" aria-hidden="true"></div>
       <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
       <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
-      <div class="story-content">
-        <div class="quiz" id="storyQuiz">
-          <div class="quiz-progress" aria-hidden="true">
-            <i data-quiz-step="1" class="is-active"></i><i data-quiz-step="2"></i><i data-quiz-step="3"></i>
-          </div>
-
-          <div class="quiz-step is-active" data-quiz-step="1">
-            <p class="quiz-question">Какой сегодня вайб?</p>
-            <div class="quiz-characters">
-              <button class="quiz-char" type="button" data-mood="tired">
-                <img src="assets/img/mood-tired.png" alt="">
-                <span>На нуле</span>
-              </button>
-              <button class="quiz-char" type="button" data-mood="rush">
-                <img src="assets/img/mood-rush.png" alt="">
-                <span>В тонусе</span>
-              </button>
-              <button class="quiz-char" type="button" data-mood="aesthetic">
-                <img src="assets/img/mood-aesthetic.png" alt="">
-                <span>Хочу красиво</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="quiz-step" data-quiz-step="2">
-            <p class="quiz-question">Чего ты хочешь?</p>
-            <div class="quiz-options">
-              <button class="quiz-option" type="button" data-need="calm">Дивана и тишины</button>
-              <button class="quiz-option" type="button" data-need="focus">Розетки и фокуса</button>
-              <button class="quiz-option" type="button" data-need="shot">Того самого кадра</button>
-            </div>
-          </div>
-
-          <div class="quiz-step" data-quiz-step="3">
-            <div class="quiz-result">
-              <img class="quiz-result-char" id="quizResultChar" src="" alt="">
-              <h3 class="quiz-result-title" id="quizResultTitle"></h3>
-              <a class="quiz-result-invite" id="quizResultBtn" href="https://yandex.ru/maps/?text=Сириус%2C%20Триумфальная%20улица%2C%2026%2F1" target="_blank" rel="noopener">В общем, тебе к нам.</a>
-              <button class="quiz-restart" id="quizRestart" type="button">Пройти ещё раз</button>
-            </div>
-          </div>
-        </div>
+      <div class="story-content story-content--bottom">
+        <p class="story-eyebrow">Программа лояльности</p>
+        <p class="story-lead-lg">Лови 300 ₽ вайба</p>
+        <p class="story-sub">за регистрацию карты в «Настроении»</p>
+        <ul class="story-steps">
+          <li>Заполни анкету</li>
+          <li>Добавь карту в Wallet</li>
+          <li>Получи 300 ₽ вайба</li>
+        </ul>
+        <a class="btn btn-fill" href="https://swip.one/wallet-card/guri" target="_blank" rel="noopener">Забрать карту →</a>
       </div>
     </div>
 
@@ -589,11 +592,8 @@
     </div>
 
     <div class="story-slide" data-story="2">
-      <video class="story-bg story-bg-3" autoplay muted loop playsinline aria-hidden="true">
-        <source src="assets/img/story-slide3-desktop.mp4" type="video/mp4" media="(min-width: 769px)">
-        <source src="assets/img/story-slide3.mp4" type="video/mp4">
-      </video>
-      <div class="story-scrim story-scrim--flat" aria-hidden="true"></div>
+      <div class="story-bg story-bg-1" aria-hidden="true"></div>
+      <div class="story-scrim" aria-hidden="true"></div>
       <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
       <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
       <div class="story-content story-content--bottom">
@@ -605,15 +605,12 @@
 
   <!-- BITE SCROLLER -->
   <section class="bite-section">
-    <div class="bite-sticky">
       <div class="bite-grid">
         <div class="bite-copy reveal">
           <p class="eyebrow">О нас</p>
           <h2 class="h2">Всё временно. Даже этот сэндвич.</h2>
           <p>Ничего не задерживается навсегда — ни очереди, ни список дел, составленный вчерашним оптимистом. Заходи выдохнуть, съесть свежий круассан и пересобрать мысли.</p>
-          <div class="bite-progress" aria-hidden="true">
-            <i data-step="0" class="is-active"></i><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i>
-          </div>
+
         </div>
         <div class="sandwich" aria-hidden="true">
           <div class="sw-layer sw-top" id="swTop"></div>
@@ -626,7 +623,6 @@
           <div class="sw-seed" style="left:62%;"></div>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- MENU -->
@@ -700,36 +696,6 @@
 
   </section>
 
-  <!-- LOYALTY -->
-  <section class="loyalty" id="loyalty">
-    <div class="wrap">
-      <div class="loyalty-inner reveal">
-        <p class="eyebrow">Программа лояльности</p>
-        <h2 class="h2">Первый кофе — почти за наш счёт</h2>
-        <p class="loyalty-text">Регистрируешься один раз — и сразу 300 ₽ вайба на карту. Дальше просто копишь и списываешь баллами.</p>
-        <div class="loyalty-steps">
-          <div class="loyalty-step"><span class="loyalty-step-num">1</span>Добавь карту в Wallet</div>
-          <div class="loyalty-step"><span class="loyalty-step-num">2</span>Получи 300 ₽ вайба</div>
-          <div class="loyalty-step"><span class="loyalty-step-num">3</span>Списывай баллами за покупки</div>
-        </div>
-        <a class="btn btn-fill loyalty-cta" href="https://swip.one/wallet-card/guri" target="_blank" rel="noopener">Забрать карту →</a>
-        <p class="loyalty-fine">Подробные условия начисления и списания баллов — в карте после регистрации.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- MOMENTS -->
-  <section class="moments" id="moments">
-    <div class="wrap">
-      <div class="collab reveal">
-        <p class="eyebrow collab-eyebrow">Снимаешь контент?</p>
-        <h2 class="h2">Го в коллаб</h2>
-        <p class="collab-text">Сними UGC Reels у нас, отметь — увидим и залетим с предложением. Бартер решает.</p>
-        <a class="btn btn-fill collab-cta" href="https://www.instagram.com/nast.cafe/" target="_blank" rel="noopener">Отметить →</a>
-      </div>
-    </div>
-  </section>
-
   <!-- CONTACTS -->
   <section class="contacts" id="contacts">
     <div class="contacts-bg" aria-hidden="true"></div>
@@ -740,11 +706,10 @@
         <ul class="contacts-list">
           <li><span class="contacts-label">Адрес</span><span class="contacts-value">Сириус, ул. Триумфальная, 26/1</span></li>
           <li><span class="contacts-label">Часы работы</span><span class="contacts-value">Ежедневно 08:00–20:00</span></li>
+          <li><span class="contacts-label">Телефон</span><a class="contacts-value contacts-phone" href="tel:+79654574766">+7 (965) 457-47-66</a></li>
         </ul>
         <div class="socials">
-          <a href="#" target="_blank" rel="noopener">Instagram</a>
-          <a href="#" target="_blank" rel="noopener">Telegram</a>
-          <a href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://www.instagram.com/nast.cafe/" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
       <div class="locate-card reveal">
@@ -772,35 +737,62 @@
   }, { threshold:.15 });
   els.forEach(function(el){ io.observe(el); });
 
-  // Sandwich bite scroller
-  var biteSection = document.querySelector('.bite-section');
-  var layers = {
-    top: document.getElementById('swTop'),
-    lettuce: document.getElementById('swLettuce'),
-    patty: document.getElementById('swPatty'),
-    cheese: document.getElementById('swCheese'),
-    bottom: document.getElementById('swBottom')
-  };
-  var dots = document.querySelectorAll('.bite-progress i');
-  function applyBite(step){
-    var order = [layers.top, layers.lettuce, layers.cheese, layers.patty];
-    order.forEach(function(layer, i){
-      if(i < step){ layer.style.opacity = '0'; layer.style.transform = 'translateY(-40px)'; }
-      else { layer.style.opacity = '1'; layer.style.transform = 'none'; }
-    });
-    dots.forEach(function(d){ d.classList.toggle('is-active', +d.dataset.step === step); });
-  }
-  function onScroll(){
-    if(!biteSection) return;
-    var rect = biteSection.getBoundingClientRect();
-    var total = biteSection.offsetHeight - window.innerHeight;
-    var scrolled = -rect.top;
-    var progress = Math.min(1, Math.max(0, scrolled / total));
-    var step = Math.min(3, Math.floor(progress * 4));
-    applyBite(step);
-  }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
+  // Sandwich: три укуса, когда блок появляется на экране
+  (function(){
+    var sw = document.querySelector('.sandwich');
+    if(!sw || !('IntersectionObserver' in window)) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bites = [100, 66, 32];
+    var ys = [30, 62];
+    var R = 0.30;
+    var biteDur = 320, gap = 480;
+    var radii = [0, 0, 0];
+
+    function setMask(){
+      var w = sw.offsetWidth, layers = [];
+      bites.forEach(function(x, i){
+        if(radii[i] <= 0) return;
+        var r = radii[i] * R * w;
+        ys.forEach(function(y){
+          layers.push('radial-gradient(circle at ' + x + '% ' + y + '%, transparent ' + r + 'px, #000 ' + (r + 0.6) + 'px)');
+        });
+      });
+      var v = layers.join(',');
+      sw.style.webkitMaskImage = v;
+      sw.style.maskImage = v;
+    }
+
+    function play(){
+      var t0 = null;
+      var chomped = [false, false, false];
+      function frame(t){
+        if(t0 === null) t0 = t;
+        var dt = t - t0, done = true;
+        bites.forEach(function(x, i){
+          var p = (dt - i * (biteDur + gap)) / biteDur;
+          if(p > 0 && !chomped[i]){
+            chomped[i] = true;
+            sw.classList.add('is-chomp');
+            setTimeout(function(){ sw.classList.remove('is-chomp'); }, 140);
+          }
+          radii[i] = Math.max(0, Math.min(1, p));
+          radii[i] = 1 - Math.pow(1 - radii[i], 3);
+          if(p < 1) done = false;
+        });
+        setMask();
+        if(!done){ requestAnimationFrame(frame); }
+        else { setTimeout(function(){ sw.classList.add('is-gone'); }, 150); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ io.disconnect(); setTimeout(play, 400); }
+      });
+    }, { threshold:.7 });
+    io.observe(sw);
+  })();
 
   // Stories
   var storiesControllers = {};
@@ -906,96 +898,56 @@
     }
   });
 
-  // Slide 1 of hero stories: mood quiz
+  // Mood game
   (function(){
-    var storyQuiz = document.getElementById('storyQuiz');
-    if(storyQuiz){
-      var quizSteps = storyQuiz.querySelectorAll('.quiz-step');
-      var quizDots = storyQuiz.querySelectorAll('.quiz-progress i');
-      var charBtns = storyQuiz.querySelectorAll('.quiz-char');
-      var optionBtns = storyQuiz.querySelectorAll('.quiz-option');
-      var restartBtn = document.getElementById('quizRestart');
-      var resultChar = document.getElementById('quizResultChar');
-      var resultTitle = document.getElementById('quizResultTitle');
-      var quizState = { mood:null, need:null };
+    var quiz = document.getElementById('storyQuiz');
+    if(!quiz) return;
+    var steps = quiz.querySelectorAll('.quiz-step');
+    var dots = quiz.querySelectorAll('.quiz-progress i');
+    var result = document.getElementById('moodResult');
+    var resultTitle = document.getElementById('moodResultTitle');
+    var resultSub = document.getElementById('moodResultSub');
+    var inner = document.querySelector('.mood-inner');
 
-      var chars = {
-        tired: 'assets/img/mood-tired.png',
-        rush: 'assets/img/mood-rush.png',
-        aesthetic: 'assets/img/mood-aesthetic.png'
-      };
-      var results = {
-        tired:{
-          calm:'Плотный фильтр, диван в углу — и тишина.',
-          focus:'Раф с орехом, розетка рядом — заряжайся сам.',
-          shot:'Какао и мягкий свет — устал, но мило.'
-        },
-        rush:{
-          calm:'Эспрессо на бегу, пауза на пять минут.',
-          focus:'Двойной эспрессо, угловой стол — добивай дедлайн.',
-          shot:'Айс-латте, свет из окна — кадр за минуту.'
-        },
-        aesthetic:{
-          calm:'Матча-эссенс у растений — красиво и тихо.',
-          focus:'Раф фисташка-малина — работай под шум кофемашины.',
-          shot:'Спешелти в стекле, свет что надо — снимай.'
-        }
-      };
-
-      var tapHint = document.getElementById('storyTapHint');
-      var hintTimeout;
-      function hideTapHint(){
-        if(tapHint) tapHint.classList.remove('is-visible');
+    var results = {
+      calm:{
+        title:'Сэндвич с тунцом + Латте Фисташка-Малина',
+        sub:'Срочная реанимация ресурса: сытный сэндвич и сладкая доза эндорфинов.',
+        img:'assets/img/sandwich-front.jpg'
+      },
+      focus:{
+        title:'Эспрессо-тоник + Чиабатта',
+        sub:'Доза чистого кофеина, твой босс пока даже не догадывается, на что ты способен.',
+        img:'assets/img/blue-drink-hand.jpg'
+      },
+      shot:{
+        title:'Авторский Раф + Свежий круассан',
+        sub:'100% попадание в сохранёнки Pinterest.',
+        img:'assets/img/croissant-ambient.jpg'
       }
-      function maybeShowTapHint(){
-        if(!tapHint) return;
-        var seen = false;
-        try{ seen = !!localStorage.getItem('nastroenie_seen_tap_hint'); }catch(e){}
-        if(seen) return;
-        tapHint.classList.add('is-visible');
-        try{ localStorage.setItem('nastroenie_seen_tap_hint', '1'); }catch(e){}
-        clearTimeout(hintTimeout);
-        hintTimeout = setTimeout(hideTapHint, 4000);
-      }
-      var heroStories = document.getElementById('stories');
-      if(heroStories){
-        heroStories.querySelectorAll('.story-tapzone').forEach(function(btn){
-          btn.addEventListener('click', hideTapHint);
-        });
-      }
+    };
 
-      function goToQuizStep(n){
-        quizSteps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
-        quizDots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
-        if(storiesControllers.stories){ storiesControllers.stories.resetTimer(); }
-        if(n === 3){ maybeShowTapHint(); }
-      }
-
-      charBtns.forEach(function(btn){
-        btn.addEventListener('click', function(){
-          quizState.mood = btn.getAttribute('data-mood');
-          goToQuizStep(2);
-        });
-      });
-
-      optionBtns.forEach(function(btn){
-        btn.addEventListener('click', function(){
-          quizState.need = btn.getAttribute('data-need');
-          if(quizState.mood && quizState.need){
-            resultChar.src = chars[quizState.mood];
-            resultTitle.textContent = results[quizState.mood][quizState.need];
-          }
-          goToQuizStep(3);
-        });
-      });
-
-      if(restartBtn){
-        restartBtn.addEventListener('click', function(){
-          quizState = { mood:null, need:null };
-          goToQuizStep(1);
-        });
-      }
+    function goTo(n){
+      steps.forEach(function(s){ s.classList.toggle('is-active', s.getAttribute('data-quiz-step') === String(n)); });
+      dots.forEach(function(d){ d.classList.toggle('is-active', +d.getAttribute('data-quiz-step') <= n); });
+      var showResult = n === 3;
+      result.classList.toggle('is-active', showResult);
+      inner.style.visibility = showResult ? 'hidden' : '';
     }
+
+    quiz.querySelectorAll('.quiz-char[data-mood]').forEach(function(btn){
+      btn.addEventListener('click', function(){ goTo(2); });
+    });
+    quiz.querySelectorAll('.quiz-card').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var r = results[btn.getAttribute('data-need')];
+        resultTitle.textContent = r.title;
+        resultSub.textContent = r.sub;
+        result.style.setProperty('--img', "url('" + r.img + "')");
+        goTo(3);
+      });
+    });
+    document.getElementById('quizRestart').addEventListener('click', function(){ goTo(1); });
   })();
 
   // Мобильное меню
