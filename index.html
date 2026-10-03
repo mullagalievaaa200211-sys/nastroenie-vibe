@@ -340,8 +340,6 @@
     font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.01em;
     font-size:clamp(1.5rem,4vw,2.4rem); line-height:1.15; margin:0 0 12px;
   }
-  .mood-result-price{ font-family:var(--font-display); font-weight:800; font-size:clamp(1.3rem,4vw,1.8rem); color:var(--accent); margin:0 0 10px; }
-  .mood-result-price:empty{ display:none; }
   .mood-result-sub{ font-family:var(--font-body); font-size:1.05rem; line-height:1.4; color:rgba(255,255,255,.85); margin:0 0 24px; max-width:44ch; }
   .mood-result-actions{ display:flex; flex-wrap:wrap; gap:12px; }
   .mood-result-actions .btn-outline{ background:rgba(255,255,255,.1); color:#fff; border-color:rgba(255,255,255,.45); backdrop-filter:blur(8px); }
@@ -496,7 +494,6 @@
     <div class="mood-result" id="moodResult">
       <div class="mood-result-body">
         <h3 class="mood-result-title" id="moodResultTitle"></h3>
-        <p class="mood-result-price" id="moodResultPrice"></p>
         <p class="mood-result-sub" id="moodResultSub"></p>
         <div class="mood-result-actions">
           <a class="btn btn-fill" href="#contacts">Ждём в «Настроении»</a>
@@ -688,7 +685,7 @@
 
 </main>
 
-<footer>© 2026 Настроение · концепт-питч, не финальная версия сайта</footer>
+<footer>© 2026 Настроение — место, где тебя ждут в любом настроении</footer>
 
 <script>
 (function(){
@@ -869,26 +866,22 @@
     var steps = quiz.querySelectorAll('.quiz-step');
     var result = document.getElementById('moodResult');
     var resultTitle = document.getElementById('moodResultTitle');
-    var resultPrice = document.getElementById('moodResultPrice');
     var resultSub = document.getElementById('moodResultSub');
     var inner = document.querySelector('.mood-inner');
 
     var results = {
       calm:{
         title:'Сэндвич с тунцом + Латте Фисташка-Малина',
-        price:'',
         sub:'Срочная реанимация ресурса: сытный сэндвич и сладкая доза эндорфинов.',
         img:'assets/img/sandwich-front.jpg'
       },
       focus:{
         title:'Эспрессо-тоник + Чиабатта',
-        price:'= 760 ₽',
         sub:'Доза чистого кофеина, твой босс пока даже не догадывается, на что ты способен.',
         img:'assets/img/aesthetic-photo.jpg?v=3'
       },
       shot:{
         title:'Авторский Раф + Свежий круассан',
-        price:'',
         sub:'100% попадание в сохранёнки Pinterest.',
         img:'assets/img/croissant-ambient.jpg'
       }
@@ -904,7 +897,6 @@
       btn.addEventListener('click', function(){
         var r = results[btn.getAttribute('data-need')];
         resultTitle.textContent = r.title;
-        resultPrice.textContent = r.price;
         resultSub.textContent = r.sub;
         result.style.setProperty('--img', "url('" + r.img + "')");
         show(true);
