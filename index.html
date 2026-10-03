@@ -168,7 +168,6 @@
   .story-slide{ position:absolute; inset:0; opacity:0; visibility:hidden; transition:opacity .3s ease; }
   .story-slide.is-active{ opacity:1; visibility:visible; }
   .story-bg{ position:absolute; inset:0; z-index:0; }
-  .story-bg-1{ background:linear-gradient(160deg, var(--wine) 0%, var(--accent-deep) 170%); }
   .story-bg-2{
     background-color:var(--wine);
     background-image:url('assets/img/story-slide2.jpg');
@@ -177,6 +176,11 @@
   @media (min-width:769px){
     .story-bg-2{ background-image:url('assets/img/story-slide2-desktop.jpg'); }
   }
+  .story-bg-wait{
+    background-color:var(--wine); background-image:url('assets/img/story-waiting.jpg');
+    background-size:cover; background-position:center top;
+  }
+  .story-scrim--wait{ background:linear-gradient(180deg, rgba(20,5,8,.1) 0%, rgba(20,5,8,.15) 45%, rgba(20,5,8,.85) 100%); }
   video.story-bg-3{ width:100%; height:100%; object-fit:cover; background-color:var(--wine); }
   .story-scrim{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(20,5,8,.25) 0%, rgba(20,5,8,.6) 100%); }
   .story-scrim--flat{ background:rgba(20,5,8,.5); }
@@ -553,8 +557,8 @@
     </div>
 
     <div class="story-slide" data-story="2">
-      <div class="story-bg story-bg-1" aria-hidden="true"></div>
-      <div class="story-scrim" aria-hidden="true"></div>
+      <div class="story-bg story-bg-wait" aria-hidden="true"></div>
+      <div class="story-scrim story-scrim--wait" aria-hidden="true"></div>
       <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
       <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
       <div class="story-content story-content--bottom">
