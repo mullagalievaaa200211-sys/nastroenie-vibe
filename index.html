@@ -255,7 +255,7 @@
   }
 
   /* ---- Menu stories: photo teaser, bottom-anchored ---- */
-  .stories--menu .story-content{ align-items:flex-start; justify-content:flex-end; text-align:left; }
+  .stories--menu .story-content{ align-items:flex-start; justify-content:flex-end; text-align:left; padding-bottom:calc(48px + 14vh); }
   .stories--menu .story-scrim{ background:linear-gradient(180deg, rgba(20,5,8,0) 0%, rgba(20,5,8,.7) 62%, rgba(20,5,8,.95) 100%); }
   .story-bg-menu-1{
     background-color:var(--wine); background-image:url('assets/img/menu-slide1.jpg');
@@ -383,6 +383,21 @@
     .sandwich{ margin-top:36px; }
   }
 
+  /* ============ Collab ============ */
+  .collab-section{ position:relative; z-index:2; padding:120px 0; background:var(--bg); }
+  .collab-section::before{
+    content:''; position:absolute; left:0; right:0; top:-14vh; height:14vh; pointer-events:none;
+    background:linear-gradient(180deg, rgba(74,10,15,0) 0%, rgba(74,10,15,.6) 55%, var(--bg) 100%);
+  }
+  .collab{ max-width:640px; }
+  .collab-eyebrow{ color:var(--cream-on-wine); }
+  .collab h2{ margin:0 0 16px; }
+  .collab-text{ font-size:1.06rem; color:rgba(253,251,247,.75); max-width:48ch; margin:0 0 32px; }
+  .contacts::before{
+    content:''; position:absolute; left:0; right:0; top:0; height:16vh; z-index:1; pointer-events:none;
+    background:linear-gradient(180deg, var(--bg) 0%, rgba(74,10,15,0) 100%);
+  }
+
   /* ============ Menu ============ */
   .menu{ position:relative; background:var(--bg); overflow:hidden; }
 
@@ -426,6 +441,7 @@
   @media (max-width:768px){
     .wrap{ padding:0 1rem; }
     .hero, .stories, .menu, .contacts, footer{ margin-bottom:0; margin-top:0; }
+    .collab-section{ padding:56px 0; }
     .contacts{ padding:48px 0 36px; }
     .contacts-grid{ grid-template-columns:1fr; gap:32px; }
     .contacts-list{ margin:16px 0 20px; gap:12px; }
@@ -659,6 +675,18 @@
       </div>
     </div>
 
+  </section>
+
+  <!-- COLLAB -->
+  <section class="collab-section" id="collab">
+    <div class="wrap">
+      <div class="collab reveal">
+        <p class="eyebrow collab-eyebrow">Снимаешь контент?</p>
+        <h2 class="h2">Го в коллаб</h2>
+        <p class="collab-text">Сними UGC Reels у нас, отметь — увидим и залетим с предложением. Бартер решает.</p>
+        <a class="btn btn-fill collab-cta" href="https://www.instagram.com/nast.cafe/" target="_blank" rel="noopener">Отметить →</a>
+      </div>
+    </div>
   </section>
 
   <!-- CONTACTS -->
