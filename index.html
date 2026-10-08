@@ -363,6 +363,8 @@
   .bite-grid{ position:relative; z-index:1; width:100%; max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,5vw,70px); align-items:center; }
   .bite-copy{ position:relative; }
   .bite-copy .h2{ margin-bottom:22px; }
+  .bite-tip{ min-height:3.2em; transition:opacity .35s ease; }
+  .bite-tip.is-swap{ opacity:0; }
   .bite-copy p{ font-size:1.06rem; color:var(--ink-soft); max-width:44ch; }
   .sandwich{
     position:relative; width:100%; max-width:340px; margin:0 auto; aspect-ratio:1/1;
@@ -654,9 +656,8 @@
   <section class="bite-section">
       <div class="bite-grid">
         <div class="bite-copy reveal">
-          <p class="eyebrow">Манифест</p>
-          <h2 class="h2">Всё временно. Даже этот сэндвич.</h2>
-          <p>Ничего не задерживается навсегда — ни очереди, ни список дел, составленный вчерашним оптимистом. Заходи выдохнуть, съесть свежий круассан и пересобрать мысли.</p>
+          <p class="eyebrow">Совет от сэндвича</p>
+          <h2 class="h2 bite-tip" id="biteTip">Всё временно. Даже этот сэндвич.</h2>
 
         </div>
         <div class="sandwich" aria-hidden="true">
@@ -784,7 +785,7 @@
   }, { threshold:.15 });
   els.forEach(function(el){ io.observe(el); });
 
-  // Sandwich: три укуса, пауза 5 секунд, сэндвич появляется снова
+  // Sandwich: три укуса, пауза 5 секунд, сэндвич появляется снова с новым советом
   (function(){
     var sw = document.querySelector('.sandwich');
     if(!sw || !('IntersectionObserver' in window)) return;
@@ -794,7 +795,41 @@
     var R = 0.30;
     var biteDur = 320, gap = 480, pause = 5000;
     var radii = [0, 0, 0];
-    var visible = false, busy = false;
+    var visible = false, busy = false, firstCycle = true;
+
+    var tipEl = document.getElementById('biteTip');
+    var days = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+    var tips = [
+      'Всё временно. Даже этот сэндвич.',
+      'Дедлайн подождёт. Кофе остынет.',
+      'Сомневаешься? Бери круассан.',
+      'Не пиши на голодный желудок.',
+      'Круассан — тоже результат.',
+      'Выдохни. Это просто ' + days[new Date().getDay()] + '.',
+      'Диван и розетка — уже план.',
+      'Сегодня можно не успеть.'
+    ];
+    var tipNow = 0, tipQueue = [];
+
+    function nextTip(){
+      if(!tipQueue.length){
+        for(var i = 0; i < tips.length; i++){ if(i !== tipNow) tipQueue.push(i); }
+        for(var j = tipQueue.length - 1; j > 0; j--){
+          var k = Math.floor(Math.random() * (j + 1));
+          var t = tipQueue[j]; tipQueue[j] = tipQueue[k]; tipQueue[k] = t;
+        }
+      }
+      return tipQueue.pop();
+    }
+    function swapTip(){
+      if(!tipEl) return;
+      tipEl.classList.add('is-swap');
+      setTimeout(function(){
+        tipNow = nextTip();
+        tipEl.textContent = tips[tipNow];
+        tipEl.classList.remove('is-swap');
+      }, 350);
+    }
 
     function setMask(){
       var w = sw.offsetWidth, layers = [];
@@ -837,6 +872,8 @@
     function cycle(){
       if(!visible || busy) return;
       busy = true;
+      if(!firstCycle){ swapTip(); }
+      firstCycle = false;
       radii = [0, 0, 0];
       setMask();
       sw.classList.remove('is-gone');
