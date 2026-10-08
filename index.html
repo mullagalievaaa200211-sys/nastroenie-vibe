@@ -260,33 +260,47 @@
   /* ---- Menu stories: photo teaser, bottom-anchored ---- */
   .stories--menu .story-content{ align-items:flex-start; justify-content:flex-end; text-align:left; }
   .stories--menu .story-scrim{ background:linear-gradient(180deg, rgba(20,5,8,0) 0%, rgba(20,5,8,.7) 62%, rgba(20,5,8,.95) 100%); }
-  .story-bg-menu-1{
-    background-color:var(--wine); background-image:url('assets/img/menu-slide1.jpg');
+  .story-bg-top5{ background:linear-gradient(170deg, #3a070b 0%, var(--wine) 45%, #2b0508 100%); }
+  .story-bg-interior-1{
+    background-color:var(--wine); background-image:url('assets/img/interior-hall.jpg');
+    background-size:cover; background-position:62% center;
+  }
+  .story-bg-interior-2{
+    background-color:var(--wine); background-image:url('assets/img/interior-bar.jpg');
     background-size:cover; background-position:center;
   }
-  .story-bg-menu-2{
-    background-color:var(--wine); background-image:url('assets/img/menu-slide2.jpg');
-    background-size:cover; background-position:center;
+  .stories--menu .story-scrim--bottom{ background:linear-gradient(180deg, rgba(20,5,8,.1) 0%, rgba(20,5,8,.15) 50%, rgba(20,5,8,.88) 100%); }
+
+  .stories--menu .story-content--top5{ justify-content:flex-start; align-items:flex-start; padding-top:84px; padding-bottom:36px; }
+  .story-content .top5-title{ font-size:clamp(1.4rem,5vw,2rem); margin:0 0 22px; }
+  .collage{ position:relative; flex:none; align-self:flex-start; width:min(100%, calc((100dvh - 350px) * .78)); aspect-ratio:7/9; margin-bottom:22px; }
+  .cg{ position:absolute; margin:0; transform:rotate(var(--r)); transition:transform .4s cubic-bezier(.2,.8,.2,1); }
+  .cg img{ width:100%; height:100%; object-fit:cover; border-radius:16px; display:block; box-shadow:0 14px 28px -12px rgba(0,0,0,.6); }
+  .cg figcaption{
+    position:absolute; left:-4%; bottom:-5%; max-width:92%; background:var(--cream-on-wine); color:var(--wine);
+    padding:6px 10px 7px; border-radius:10px; line-height:1.15; transform:rotate(calc(var(--r) * -1.4));
+    display:flex; flex-direction:column; gap:2px; box-shadow:0 8px 16px -8px rgba(0,0,0,.5);
   }
-  .story-bg-menu-3{
-    background-color:var(--wine); background-image:url('assets/img/menu-slide3.jpg');
-    background-size:cover; background-position:center;
-  }
-  .story-menu-list{ width:100%; }
-  .story-menu-item{
-    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
-    padding:20px 0; border-bottom:1px solid var(--line-on-wine);
-  }
-  .story-menu-item:last-child{ border-bottom:none; }
-  .story-menu-name{ font-family:var(--font-body); font-weight:600; font-size:1.05rem; }
-  .story-menu-price{
-    font-family:var(--font-body); font-weight:700; font-variant-numeric:tabular-nums;
-    font-size:1.05rem; color:var(--accent); white-space:nowrap;
+  .cg figcaption b{ font-family:var(--font-body); font-weight:700; font-size:.78rem; }
+  .cg figcaption span{ font-family:var(--font-body); font-weight:700; font-size:.78rem; color:var(--accent-deep); font-variant-numeric:tabular-nums; }
+  .cg-1{ left:0; top:0; width:54%; aspect-ratio:1/1; z-index:2; }
+  .cg-2{ right:0; top:4%; width:42%; aspect-ratio:1/1; z-index:1; }
+  .cg-3{ right:4%; top:38%; width:42%; aspect-ratio:1/1; z-index:3; }
+  .cg-4{ left:2%; top:44%; width:44%; aspect-ratio:1/1; z-index:1; }
+  .cg-5{ right:14%; top:70%; width:38%; aspect-ratio:1/1; z-index:2; }
+  @media (min-width:900px){
+    .stories--menu .story-content--top5{ max-width:1060px; padding-left:clamp(20px,4vw,56px); padding-right:clamp(20px,4vw,56px); }
+    .collage{ width:min(100%, calc((100dvh - 330px) * 2.1)); aspect-ratio:2.1/1; }
+    .cg-1{ left:1%; top:6%; width:21%; }
+    .cg-2{ left:21%; right:auto; top:50%; width:19%; }
+    .cg-3{ left:40%; right:auto; top:2%; width:22%; }
+    .cg-4{ left:60%; right:auto; top:47%; width:21%; }
+    .cg-5{ left:78%; right:auto; top:5%; width:21%; }
+    .cg figcaption b, .cg figcaption span{ font-size:.8rem; }
   }
   .story-menu-cta{ margin-top:32px; }
   @media (max-width:768px){
-    .story-menu-item{ padding:16px 0; }
-  }
+    }
 
   .story-steps{ list-style:none; margin:22px 0 26px; padding:0; display:flex; flex-direction:column; gap:10px; counter-reset:st; }
   .story-steps li{
@@ -697,50 +711,42 @@
       </div>
 
       <div class="story-slide is-active" data-story="0">
-        <div class="story-bg story-bg-menu-1" aria-hidden="true"></div>
-        <div class="story-scrim" aria-hidden="true"></div>
+        <div class="story-bg story-bg-top5" aria-hidden="true"></div>
         <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
         <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
-        <div class="story-content">
-          <p class="h2">Сэндвичи</p>
-          <div class="story-menu-list">
-            <div class="story-menu-item"><span class="story-menu-name">«Зверский аппетит»</span><span class="story-menu-price">560/760 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">«Почти на диете»</span><span class="story-menu-price">560/760 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">«Острый на язык»</span><span class="story-menu-price">560/760 ₽</span></div>
+        <div class="story-content story-content--top5">
+          <p class="story-eyebrow">Топ-5</p>
+          <p class="h2 top5-title">Что точно стоит попробовать</p>
+          <div class="collage">
+            <figure class="cg cg-1" style="--r:-5deg"><img src="assets/img/top5-sandwich.jpg" alt=""><figcaption><b>«Острый на язык»</b><span>560/760 ₽</span></figcaption></figure>
+            <figure class="cg cg-2" style="--r:6deg"><img src="assets/img/top5-almond.jpg" alt=""><figcaption><b>Круассан миндальный</b><span>360 ₽</span></figcaption></figure>
+            <figure class="cg cg-3" style="--r:4deg"><img src="assets/img/top5-raf.jpg" alt=""><figcaption><b>Раф лесной орех</b><span>330/390 ₽</span></figcaption></figure>
+            <figure class="cg cg-4" style="--r:-4deg"><img src="assets/img/top5-latte.jpg" alt=""><figcaption><b>Латте фисташка-малина</b><span>330/390 ₽</span></figcaption></figure>
+            <figure class="cg cg-5" style="--r:7deg"><img src="assets/img/top5-cappuccino.jpg" alt=""><figcaption><b>Капучино солёный попкорн</b><span>330/360 ₽</span></figcaption></figure>
           </div>
+          <a class="btn btn-fill story-menu-cta" href="assets/docs/menu-full.pdf" target="_blank" rel="noopener">Смотреть полное меню</a>
         </div>
       </div>
 
       <div class="story-slide" data-story="1">
-        <div class="story-bg story-bg-menu-2" aria-hidden="true"></div>
-        <div class="story-scrim" aria-hidden="true"></div>
+        <div class="story-bg story-bg-interior-1" aria-hidden="true"></div>
+        <div class="story-scrim story-scrim--bottom" aria-hidden="true"></div>
         <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
         <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
         <div class="story-content">
-          <p class="h2">Выпечка</p>
-          <div class="story-menu-list">
-            <div class="story-menu-item"><span class="story-menu-name">Круассан классический</span><span class="story-menu-price">260 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">Круассан с начинкой</span><span class="story-menu-price">290 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">Круассан миндальный</span><span class="story-menu-price">360 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">Улитка с орехами и изюмом</span><span class="story-menu-price">300 ₽</span></div>
-          </div>
+          <p class="story-eyebrow">Внутри</p>
+          <p class="story-lead-lg">Диван, розетки и никто не торопит.</p>
         </div>
       </div>
 
       <div class="story-slide" data-story="2">
-        <div class="story-bg story-bg-menu-3" aria-hidden="true"></div>
-        <div class="story-scrim" aria-hidden="true"></div>
+        <div class="story-bg story-bg-interior-2" aria-hidden="true"></div>
+        <div class="story-scrim story-scrim--bottom" aria-hidden="true"></div>
         <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
         <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
         <div class="story-content">
-          <p class="h2">Хитовые напитки</p>
-          <div class="story-menu-list">
-            <div class="story-menu-item"><span class="story-menu-name">Раф лесной орех</span><span class="story-menu-price">330/390 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">Капучино солёный попкорн</span><span class="story-menu-price">330/360 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">Латте фисташка-малина</span><span class="story-menu-price">330/390 ₽</span></div>
-            <div class="story-menu-item"><span class="story-menu-name">Молочный коктейль клубничный</span><span class="story-menu-price">330 ₽</span></div>
-          </div>
-          <a class="btn btn-fill story-menu-cta" href="assets/docs/menu-full.pdf" target="_blank" rel="noopener">Смотреть полное меню</a>
+          <p class="story-eyebrow">Бар</p>
+          <p class="story-lead-lg">Круассаны печём каждое утро.</p>
         </div>
       </div>
     </div>
