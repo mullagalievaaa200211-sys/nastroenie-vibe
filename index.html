@@ -266,12 +266,16 @@
   }
   .stories--menu .story-scrim--top5{ background:linear-gradient(180deg, rgba(20,5,8,.62) 0%, rgba(20,5,8,.3) 45%, rgba(20,5,8,.78) 100%); }
   .story-bg-entrance{
-    background-color:var(--wine); background-image:url('assets/img/interior-entrance.jpg');
-    background-size:cover; background-position:50% 25%;
+    background-color:var(--wine); background-image:url('assets/img/entrance-mobile.jpg');
+    background-size:cover; background-position:50% 35%;
   }
   .story-bg-hall{
-    background-color:var(--wine); background-image:url('assets/img/interior-hall.jpg');
-    background-size:cover; background-position:62% center;
+    background-color:var(--wine); background-image:url('assets/img/hall-mobile.jpg');
+    background-size:cover; background-position:50% 40%;
+  }
+  @media (min-width:769px){
+    .story-bg-entrance{ background-image:url('assets/img/entrance-desktop.jpg'); background-position:center; }
+    .story-bg-hall{ background-image:url('assets/img/hall-desktop.jpg'); background-position:center; }
   }
   .stories--menu .story-scrim--bottom{ background:linear-gradient(180deg, rgba(20,5,8,.1) 0%, rgba(20,5,8,.15) 50%, rgba(20,5,8,.88) 100%); }
 
