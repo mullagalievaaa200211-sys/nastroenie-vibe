@@ -260,43 +260,46 @@
   /* ---- Menu stories: photo teaser, bottom-anchored ---- */
   .stories--menu .story-content{ align-items:flex-start; justify-content:flex-end; text-align:left; }
   .stories--menu .story-scrim{ background:linear-gradient(180deg, rgba(20,5,8,0) 0%, rgba(20,5,8,.7) 62%, rgba(20,5,8,.95) 100%); }
-  .story-bg-top5{ background:linear-gradient(170deg, #3a070b 0%, var(--wine) 45%, #2b0508 100%); }
-  .story-bg-interior-1{
+  .story-bg-top5{
+    background-color:var(--wine); background-image:url('assets/img/top5-bg.jpg');
+    background-size:cover; background-position:center;
+  }
+  .stories--menu .story-scrim--top5{ background:linear-gradient(180deg, rgba(20,5,8,.62) 0%, rgba(20,5,8,.3) 45%, rgba(20,5,8,.78) 100%); }
+  .story-bg-entrance{
+    background-color:var(--wine); background-image:url('assets/img/interior-entrance.jpg');
+    background-size:cover; background-position:50% 25%;
+  }
+  .story-bg-hall{
     background-color:var(--wine); background-image:url('assets/img/interior-hall.jpg');
     background-size:cover; background-position:62% center;
-  }
-  .story-bg-interior-2{
-    background-color:var(--wine); background-image:url('assets/img/interior-bar.jpg');
-    background-size:cover; background-position:center;
   }
   .stories--menu .story-scrim--bottom{ background:linear-gradient(180deg, rgba(20,5,8,.1) 0%, rgba(20,5,8,.15) 50%, rgba(20,5,8,.88) 100%); }
 
   .stories--menu .story-content--top5{ justify-content:flex-start; align-items:flex-start; padding-top:84px; padding-bottom:36px; }
   .story-content .top5-title{ font-size:clamp(1.4rem,5vw,2rem); margin:0 0 22px; }
-  .collage{ position:relative; flex:none; align-self:flex-start; width:min(100%, calc((100dvh - 350px) * .78)); aspect-ratio:7/9; margin-bottom:22px; }
-  .cg{ position:absolute; margin:0; transform:rotate(var(--r)); transition:transform .4s cubic-bezier(.2,.8,.2,1); }
-  .cg img{ width:100%; height:100%; object-fit:cover; border-radius:16px; display:block; box-shadow:0 14px 28px -12px rgba(0,0,0,.6); }
-  .cg figcaption{
-    position:absolute; left:-4%; bottom:-5%; max-width:92%; background:var(--cream-on-wine); color:var(--wine);
-    padding:6px 10px 7px; border-radius:10px; line-height:1.15; transform:rotate(calc(var(--r) * -1.4));
-    display:flex; flex-direction:column; gap:2px; box-shadow:0 8px 16px -8px rgba(0,0,0,.5);
+  .collage{ display:flex; flex-direction:column; gap:14px; width:100%; margin-bottom:26px; }
+  .tag{
+    display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; max-width:92%;
+    background:var(--cream-on-wine); color:var(--wine); padding:12px 16px 13px; border-radius:14px;
+    transform:rotate(var(--r)); box-shadow:0 12px 22px -12px rgba(0,0,0,.6);
   }
-  .cg figcaption b{ font-family:var(--font-body); font-weight:700; font-size:.78rem; }
-  .cg figcaption span{ font-family:var(--font-body); font-weight:700; font-size:.78rem; color:var(--accent-deep); font-variant-numeric:tabular-nums; }
-  .cg-1{ left:0; top:0; width:54%; aspect-ratio:1/1; z-index:2; }
-  .cg-2{ right:0; top:4%; width:42%; aspect-ratio:1/1; z-index:1; }
-  .cg-3{ right:4%; top:38%; width:42%; aspect-ratio:1/1; z-index:3; }
-  .cg-4{ left:2%; top:44%; width:44%; aspect-ratio:1/1; z-index:1; }
-  .cg-5{ right:14%; top:70%; width:38%; aspect-ratio:1/1; z-index:2; }
+  .tag i{
+    font-style:normal; font-family:var(--font-display); font-weight:800; font-size:.8rem; color:#fff; background:var(--accent-deep);
+    width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; align-self:center; flex-shrink:0;
+  }
+  .tag b{ font-family:var(--font-display); font-weight:800; font-size:1.05rem; line-height:1.2; }
+  .tag span{ flex-basis:100%; padding-left:34px; font-family:var(--font-body); font-weight:700; font-size:.9rem; color:var(--accent-deep); font-variant-numeric:tabular-nums; }
+  .tag:nth-child(2){ align-self:flex-end; }
+  .tag:nth-child(3){ margin-left:12%; }
+  .tag:nth-child(4){ align-self:flex-end; margin-right:8%; }
+  .tag:nth-child(5){ margin-left:4%; }
   @media (min-width:900px){
     .stories--menu .story-content--top5{ max-width:1060px; padding-left:clamp(20px,4vw,56px); padding-right:clamp(20px,4vw,56px); }
-    .collage{ width:min(100%, calc((100dvh - 330px) * 2.1)); aspect-ratio:2.1/1; }
-    .cg-1{ left:1%; top:6%; width:21%; }
-    .cg-2{ left:21%; right:auto; top:50%; width:19%; }
-    .cg-3{ left:40%; right:auto; top:2%; width:22%; }
-    .cg-4{ left:60%; right:auto; top:47%; width:21%; }
-    .cg-5{ left:78%; right:auto; top:5%; width:21%; }
-    .cg figcaption b, .cg figcaption span{ font-size:.8rem; }
+    .collage{ flex-direction:row; flex-wrap:wrap; gap:22px 26px; align-items:flex-start; max-width:900px; }
+    .tag, .tag:nth-child(n){ align-self:auto; margin:0; max-width:none; }
+    .tag:nth-child(odd){ transform:rotate(var(--r)) translateY(-6px); }
+    .tag:nth-child(even){ transform:rotate(var(--r)) translateY(14px); }
+    .tag b{ font-size:1.2rem; }
   }
   .story-menu-cta{ margin-top:32px; }
   @media (max-width:768px){
@@ -712,41 +715,42 @@
 
       <div class="story-slide is-active" data-story="0">
         <div class="story-bg story-bg-top5" aria-hidden="true"></div>
+        <div class="story-scrim story-scrim--top5" aria-hidden="true"></div>
         <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
         <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
         <div class="story-content story-content--top5">
           <p class="story-eyebrow">Топ-5</p>
           <p class="h2 top5-title">Что точно стоит попробовать</p>
           <div class="collage">
-            <figure class="cg cg-1" style="--r:-5deg"><img src="assets/img/top5-sandwich.jpg" alt=""><figcaption><b>«Острый на язык»</b><span>560/760 ₽</span></figcaption></figure>
-            <figure class="cg cg-2" style="--r:6deg"><img src="assets/img/top5-almond.jpg" alt=""><figcaption><b>Круассан миндальный</b><span>360 ₽</span></figcaption></figure>
-            <figure class="cg cg-3" style="--r:4deg"><img src="assets/img/top5-raf.jpg" alt=""><figcaption><b>Раф лесной орех</b><span>330/390 ₽</span></figcaption></figure>
-            <figure class="cg cg-4" style="--r:-4deg"><img src="assets/img/top5-latte.jpg" alt=""><figcaption><b>Латте фисташка-малина</b><span>330/390 ₽</span></figcaption></figure>
-            <figure class="cg cg-5" style="--r:7deg"><img src="assets/img/top5-cappuccino.jpg" alt=""><figcaption><b>Капучино солёный попкорн</b><span>330/360 ₽</span></figcaption></figure>
+            <div class="tag" style="--r:-4deg"><i>1</i><b>«Острый на язык»</b><span>сэндвич · 560/760 ₽</span></div>
+            <div class="tag" style="--r:3deg"><i>2</i><b>Круассан миндальный</b><span>360 ₽</span></div>
+            <div class="tag" style="--r:-2deg"><i>3</i><b>Раф лесной орех</b><span>330/390 ₽</span></div>
+            <div class="tag" style="--r:4deg"><i>4</i><b>Латте фисташка-малина</b><span>330/390 ₽</span></div>
+            <div class="tag" style="--r:-3deg"><i>5</i><b>Капучино солёный попкорн</b><span>330/360 ₽</span></div>
           </div>
           <a class="btn btn-fill story-menu-cta" href="assets/docs/menu-full.pdf" target="_blank" rel="noopener">Смотреть полное меню</a>
         </div>
       </div>
 
       <div class="story-slide" data-story="1">
-        <div class="story-bg story-bg-interior-1" aria-hidden="true"></div>
+        <div class="story-bg story-bg-entrance" aria-hidden="true"></div>
         <div class="story-scrim story-scrim--bottom" aria-hidden="true"></div>
         <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
         <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
         <div class="story-content">
-          <p class="story-eyebrow">Внутри</p>
-          <p class="story-lead-lg">Диван, розетки и никто не торопит.</p>
+          <p class="story-eyebrow">Вход</p>
+          <p class="story-lead-lg">Мы в пяти минутах от вокзала.</p>
         </div>
       </div>
 
       <div class="story-slide" data-story="2">
-        <div class="story-bg story-bg-interior-2" aria-hidden="true"></div>
+        <div class="story-bg story-bg-hall" aria-hidden="true"></div>
         <div class="story-scrim story-scrim--bottom" aria-hidden="true"></div>
         <button class="story-tapzone story-tapzone-left" type="button" aria-label="Назад"></button>
         <button class="story-tapzone story-tapzone-right" type="button" aria-label="Вперёд"></button>
         <div class="story-content">
-          <p class="story-eyebrow">Бар</p>
-          <p class="story-lead-lg">Круассаны печём каждое утро.</p>
+          <p class="story-eyebrow">Зал</p>
+          <p class="story-lead-lg">Диван, розетки и никто не торопит.</p>
         </div>
       </div>
     </div>
