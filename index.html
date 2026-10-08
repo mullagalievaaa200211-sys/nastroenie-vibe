@@ -261,8 +261,8 @@
   .stories--menu .story-content{ align-items:flex-start; justify-content:flex-end; text-align:left; }
   .stories--menu .story-scrim{ background:linear-gradient(180deg, rgba(20,5,8,0) 0%, rgba(20,5,8,.7) 62%, rgba(20,5,8,.95) 100%); }
   .story-bg-top5{
-    background-color:var(--wine); background-image:url('assets/img/top5-bg.jpg');
-    background-size:cover; background-position:center;
+    background-color:#0b0405; background-image:url('assets/img/top5-bg.jpg');
+    background-size:cover; background-position:58% center;
   }
   .stories--menu .story-scrim--top5{ background:linear-gradient(180deg, rgba(20,5,8,.62) 0%, rgba(20,5,8,.3) 45%, rgba(20,5,8,.78) 100%); }
   .story-bg-entrance{
@@ -299,11 +299,9 @@
   .tag:nth-child(5){ margin-left:4%; }
   @media (min-width:900px){
     .stories--menu .story-content--top5{ max-width:1060px; padding-left:clamp(20px,4vw,56px); padding-right:clamp(20px,4vw,56px); }
-    .collage{ flex-direction:row; flex-wrap:wrap; gap:22px 26px; align-items:flex-start; max-width:900px; }
-    .tag, .tag:nth-child(n){ align-self:auto; margin:0; max-width:none; }
-    .tag:nth-child(odd){ transform:rotate(var(--r)) translateY(-6px); }
-    .tag:nth-child(even){ transform:rotate(var(--r)) translateY(14px); }
-    .tag b{ font-size:1.2rem; }
+    .collage{ gap:14px; max-width:430px; }
+    .tag{ max-width:100%; }
+    .tag b{ font-size:1.12rem; }
   }
   .story-menu-cta{ margin-top:32px; }
   @media (max-width:768px){
