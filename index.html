@@ -180,6 +180,9 @@
     background-color:var(--wine); background-image:url('assets/img/story-waiting.jpg');
     background-size:cover; background-position:center top;
   }
+  @media (min-width:769px){
+    .story-bg-wait{ background-image:url('assets/img/story-waiting-desktop.jpg'); background-position:center 45%; }
+  }
   .story-scrim--wait{ background:linear-gradient(180deg, rgba(20,5,8,.1) 0%, rgba(20,5,8,.15) 45%, rgba(20,5,8,.85) 100%); }
   video.story-bg-3{ width:100%; height:100%; object-fit:cover; background-color:var(--wine); }
   .story-scrim{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(20,5,8,.25) 0%, rgba(20,5,8,.6) 100%); }
